@@ -8,7 +8,7 @@
 osThreadId_t tid_Thread;                        // thread id
 int Init_Thread (void);  
 void Thread (void *argument);                   // thread function
-GPIO_InitTypeDef led_ld1 = {
+GPIO_InitTypeDef led_ld1 = { 
         .Pin = GPIO_PIN_0,
         .Mode = GPIO_MODE_OUTPUT_PP,
         .Pull = GPIO_NOPULL,
@@ -54,10 +54,11 @@ int Init_Thread (void) {
 }
  
 void Thread (void *argument) {
+	static uint32_t a=0;
   mygpio_pin *gpio = (mygpio_pin *)argument;
 	HAL_GPIO_Init(gpio->port, &(gpio->pin));	
   while (1) {
-    gpio->counter=~gpio->counter;
+    gpio->counter++;
 		HAL_GPIO_TogglePin(gpio->port, gpio->pin.Pin);
 		osDelay(gpio->delay);
   }
