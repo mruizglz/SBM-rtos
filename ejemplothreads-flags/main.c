@@ -100,8 +100,14 @@ static void Error_Handler(void);
      */
   HAL_Init();
 
-  /* Configure the system clock to 168 MHz */
-  SystemClock_Config();
+#ifndef SIMULATOR
+  /* Configure the system clock to 168 MHz only if the hardware is present
+	
+	*/
+	  SystemClock_Config();
+#endif
+	
+
   SystemCoreClockUpdate();
 
   /* Add your application code here

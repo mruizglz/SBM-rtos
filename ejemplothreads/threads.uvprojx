@@ -337,7 +337,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>HSE_VALUE=8000000</Define>
+              <Define>HSE_VALUE=8000000 SIMULATOR</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
