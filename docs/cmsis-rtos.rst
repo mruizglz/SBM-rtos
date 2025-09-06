@@ -11,6 +11,14 @@ Los ejemplos se han implementado para el STM32F429 utilizado en la asignatura Si
 Descarga del código
 *******************
 
+.. note:: Descarga del código
+
+  git clone https://github.com/mruizglz/SBM-rtos.git
+
+  
+
+
+
 *******************
 Ejemplos incluidos
 *******************
