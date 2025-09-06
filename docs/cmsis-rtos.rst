@@ -13,9 +13,11 @@ Descarga del código
 
 .. note:: Descarga del código
 
-  git clone https://github.com/mruizglz/SBM-rtos.git
+    .. code-block:: shell 
+    
+      git clone https://github.com/mruizglz/SBM-rtos.git
 
-  
+
 
 
 
