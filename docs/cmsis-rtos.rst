@@ -1,4 +1,3 @@
-
 ================================
 Ejemplos de uso de CMSIS RTOS V2
 ================================
@@ -16,6 +15,21 @@ Descarga del código
 Ejemplos incluidos
 *******************
 
+
+.. list-table:: Ejemplos incluidos
+   :header-rows: 1
+
+   * - Carpeta
+     - ejemplothreads
+     - ejemplothreads-flags
+     - ejemplothreads-queues
+     - ejemplothreads-timers
+   * - Objetivos
+     - Aprender el manejo básico de creación de threads. Uso de la misma función con parámetros parea crear multiples threads
+     - Sincronización de threads usando flags 
+     - Intercambio de datos entre threads usando colas
+     - Gestion de timers "software"
+  
 
 **************************
 Configuración del Proyecto
