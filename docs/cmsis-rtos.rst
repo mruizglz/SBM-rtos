@@ -20,16 +20,16 @@ Ejemplos incluidos
    :header-rows: 1
 
    * - Carpeta
-     - ejemplothreads
-     - ejemplothreads-flags
-     - ejemplothreads-queues
-     - ejemplothreads-timers
-   * - Objetivos
+     - Objetivos
+   * - ejemplothreads
      - Aprender el manejo básico de creación de threads. Uso de la misma función con parámetros parea crear multiples threads
-     - Sincronización de threads usando flags 
-     - Intercambio de datos entre threads usando colas
+   * - ejemplothreads-flags
+     - Sincronización de threads usando flags
+   * - ejemplothreads-queues
+     - Intercambio de datos entre threads usando colas 
+   * - ejemplothreads-timers
      - Gestion de timers "software"
-  
+
 
 **************************
 Configuración del Proyecto
