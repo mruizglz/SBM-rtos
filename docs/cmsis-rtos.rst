@@ -53,28 +53,73 @@ Uso del simulador
 
 En Keil Microvision dispone de opciones para configurar el target (Options for Target). Seleccione Debug y active el uso del simulador (Use Simulator). Configure el fichero 
 
+Control de LEDs con CMSIS RTOS v2 en STM32
+==========================================
 
-=====================================
-Thread LED Control with CMSIS RTOS v2
-=====================================
+Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes.
 
-This example demonstrates how to use CMSIS RTOS v2 to control two LEDs on an STM32F4 board using separate threads.
+Descripción General
+-------------------
 
-Overview
---------
+El programa crea dos hilos que controlan dos LEDs conectados a los pines PB0 y PB7 del microcontrolador STM32F4. Cada hilo alterna el estado de su LED con una frecuencia distinta, utilizando funciones del sistema operativo en tiempo real (RTOS) y la biblioteca HAL para la configuración y manipulación de los pines GPIO.
 
-Two GPIO pins (PB0 and PB7) are configured as outputs. Each pin is controlled by a separate thread that toggles the LED state with a specific delay.
+Estructura de Datos Personalizada
+---------------------------------
 
-Code
-----
+Se define una estructura llamada ``mygpio_pin`` que encapsula toda la información necesaria para controlar un LED:
+
+- ``GPIO_InitTypeDef pin``: configuración del pin (modo, velocidad, tipo de salida).
+- ``GPIO_TypeDef *port``: puerto GPIO al que pertenece el pin.
+- ``int delay``: retardo en milisegundos entre cada cambio de estado del LED.
+- ``uint8_t counter``: contador que se alterna en cada iteración del hilo.
+
+Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.
+
+Inicialización de los Hilos
+---------------------------
+
+La función ``Init_Thread`` realiza las siguientes tareas:
+
+1. Habilita el reloj del puerto GPIOB.
+2. Configura dos instancias de ``mygpio_pin`` para los pines PB0 y PB7.
+3. Crea dos hilos con ``osThreadNew``, cada uno ejecutando la función ``Thread`` con una instancia diferente de ``mygpio_pin``.
+
+Cada hilo se ejecuta de forma independiente y controla su propio LED.
+
+Función del Hilo
+----------------
+
+La función ``Thread`` realiza lo siguiente:
+
+1. Inicializa el pin GPIO usando ``HAL_GPIO_Init``.
+2. Entra en un bucle infinito donde:
+   - Alterna el valor del contador con ``~counter``.
+   - Cambia el estado del pin con ``HAL_GPIO_TogglePin``.
+   - Espera el tiempo definido en ``delay`` usando ``osDelay``.
+
+Esto provoca que el LED conectado al pin correspondiente parpadee con una frecuencia determinada.
+
+Uso de HAL y CMSIS RTOS
+------------------------
+
+- **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
+- **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``.
+
+Sincronización de los Hilos
+---------------------------
+
+Aunque los hilos no están sincronizados explícitamente entre sí, cada uno tiene su propio retardo y ejecuta su bucle de forma independiente. Esto permite que los LEDs parpadeen de forma asíncrona, simulando tareas concurrentes en el sistema embebido.
+
+Código Fuente
+-------------
 
 .. code-block:: c
 
-    #include "cmsis_os2.h"                          // CMSIS RTOS header file
+    #include "cmsis_os2.h"
     #include "stm32f4xx_hal.h"
     #include <stdlib.h>
 
-    osThreadId_t tid_Thread;                        // thread id
+    osThreadId_t tid_Thread;
 
     GPIO_InitTypeDef led_ld1 = {
         .Pin = GPIO_PIN_0,
@@ -130,20 +175,81 @@ Code
         }
     }
 
-Explanation
------------
-
-- ``Init_Thread`` initializes the GPIO pins and creates two threads.
-- Each thread runs the ``Thread`` function, which toggles the LED state.
-- The delay between toggles is defined per pin (PB0: 15ms, PB7: 10ms).
-- ``HAL_GPIO_TogglePin`` is used to change the LED state.
-- ``osDelay`` introduces a delay in the thread execution.
-
-Dependencies
+Dependencias
 ------------
 
-- STM32 HAL library
-- CMSIS RTOS v2
-- STM32CubeMX (for project setup)
+- Biblioteca HAL de STM32.
+- CMSIS RTOS v2.
 
 
+Preguntas frecuentes sobre el código CMSIS RTOS v2 para control de LEDs
+=======================================================================
+
+Esta sección contiene una serie de preguntas frecuentes (FAQ) con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
+
+.. contents:: Tabla de contenido
+   :depth: 1
+   :local:
+
+¿Qué hace este código?
+----------------------
+
+Este código crea dos hilos (threads) que controlan dos LEDs conectados a los pines PB0 y PB7 de una placa STM32F4. Cada hilo alterna el estado del LED (encendido/apagado) con una frecuencia determinada utilizando funciones del sistema operativo en tiempo real CMSIS RTOS v2.
+
+¿Qué es la estructura `mygpio_pin`?
+------------------------------------
+
+Es una estructura personalizada que encapsula toda la información necesaria para controlar un pin GPIO:
+
+- ``pin``: configuración del pin (tipo, velocidad, modo).
+- ``port``: puerto GPIO al que pertenece el pin (por ejemplo, GPIOB).
+- ``delay``: retardo en milisegundos entre cada cambio de estado del LED.
+- ``counter``: variable auxiliar que se alterna en cada ciclo.
+
+¿Cómo se inicializan los hilos?
+-------------------------------
+
+La función ``Init_Thread()`` habilita el reloj del puerto GPIOB, configura los parámetros de cada LED y crea dos hilos con ``osThreadNew()``, pasando como argumento la estructura ``mygpio_pin`` correspondiente a cada LED.
+
+¿Qué hace la función `Thread()`?
+--------------------------------
+
+La función ``Thread(void *argument)`` es ejecutada por cada hilo. Dentro de ella:
+
+1. Se inicializa el pin GPIO usando ``HAL_GPIO_Init``.
+2. Se entra en un bucle infinito donde:
+   - Se alterna el valor de ``counter``.
+   - Se cambia el estado del LED con ``HAL_GPIO_TogglePin``.
+   - Se espera el tiempo definido en ``delay`` usando ``osDelay``.
+
+¿Se ejecutan los hilos al mismo tiempo?
+---------------------------------------
+
+Sí. CMSIS RTOS v2 permite la ejecución concurrente de múltiples hilos. Cada hilo funciona de forma independiente, alternando el estado de su LED con su propio retardo.
+
+¿Qué significa `osDelay()`?
+---------------------------
+
+Es una función del RTOS que suspende la ejecución del hilo actual durante un número determinado de milisegundos. Esto permite que otros hilos se ejecuten mientras tanto.
+
+¿Para qué sirve `HAL_GPIO_TogglePin()`?
+---------------------------------------
+
+Esta función cambia el estado lógico del pin GPIO: si está en alto (LED encendido), lo pone en bajo (LED apagado), y viceversa.
+
+¿Qué pasa si `osThreadNew()` devuelve NULL?
+-------------------------------------------
+
+Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()`` devuelve -1 como señal de error.
+
+¿Qué librerías se utilizan?
+---------------------------
+
+- ``cmsis_os2.h``: para funciones del sistema operativo en tiempo real.
+- ``stm32f4xx_hal.h``: para funciones de acceso a hardware (HAL).
+- ``stdlib.h``: para funciones estándar de C.
+
+¿Se puede ampliar este código?
+------------------------------
+
+Sí. Se pueden agregar más hilos para controlar otros LEDs o dispositivos, modificar los retardos, o incluir lógica adicional en la función del hilo.
