@@ -42,3 +42,25 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+simplepdf_vars = {
+#    'primary': '#a023fa',
+#    'secondary': '#379683',
+#    'cover': '#ffffff',
+#    'white': '#ffffff',
+#    'links': 'FA2323',
+#    'cover-bg': 'url(cover-bg.jpg) no-repeat center',
+#    'cover-overlay': 'rgba(250, 35, 35, 0.5)',
+    'top-left-content': 'counter(page)',
+    'bottom-center-content': 'string(heading)',
+}
+
+numfig = True
+simplepdf_file_name = "SBM-CMSIS-RTOS-V2.pdf"
+
+numfig_format = {
+    'code-block': 'Listing %s',
+    'figure': 'Fig. %s',
+    'section': 'Section',
+    'table': 'Table %s',
+}
