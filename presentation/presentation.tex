@@ -90,6 +90,98 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
     
 \end{frame}
 
+\begin{frame}[fragile]{Thread in Keil Microvision}
+    \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+    #include "cmsis_os2.h"
+    
+    osThreadId_t tid_thread; // tid_thread identifica al thread.Se usará en funciones específicas del RTOS
+    ...
+    
+    tid_Thread = osThreadNew(Thread, NULL, NULL);
+    if (tid_Thread == NULL) {
+        return(-1);
+    }
+
+
+    void Thread (void *argument){
+        // inserte el código que solo quiera que se ejecute una vez
+        while(1){
+        // inserte el código que quiera que se ejecute continuamente
+        
+        }
+        // nunca se llega a este punto en este ejemplo
+    
+    }
+    \end{minted}
+    \begin{itemize}
+        \item Es altamente aconsejable crear un fichero de cabecera donde se deberán declarar la función de inicio para poder ser utilizados por otros módulos del software
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Thread in Keil Microvision}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+#include "cmsis_os2.h"
+#include "ThDisplay.h"
+
+osThreadId_t tid_ThDisplay; 
+...
+
+tid_ThDisplay = osThreadNew(ThDisplay, 
+                NULL, NULL);
+if (tid_ThDisplay == NULL) {
+    return(-1);
+}
+
+
+void ThDisplay (void *argument){
+    int ciclo=0;
+    Init_display();
+    while(1){
+    .....
+    
+    }
+   
+
+}
+            \end{minted}
+        \end{column}
+    \begin{column}{0.50\textwidth}
+        \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+        // Fichero principal
+        int main(void){
+            int status=0;
+            HAL_Init();
+            SystemClock_Config();
+            SystemCoreClockUpdate();
+        #ifdef RTE_CMSIS_RTOS2
+            oskernelInitilize();
+            status|= Init_ThDisplay();
+            osKernelStart();
+        #endif
+        }
+        \end{minted}
+        \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+        // Fichero de cabecera      
+        #include "stm32f4xx_hal.h"
+        
+        #ifndef __THDISPLAY__H
+        #define __THDISPLAY__H
+            #define S_PINTA  0x0001U
+            int Init_ThDisplay(void);
+        #endif
+        
+        \end{minted}
+    \end{column}
+    \end{columns}
+    \begin{itemize}
+        \item Es altamente aconsejable crear un fichero de cabecera donde se deberán declarar la función de inicio para poder ser utilizados por otros módulos del software
+
+    \end{itemize}
+\end{frame}
+
 % \begin{frame}{Internet of Things: Applications}
 %     \begin{itemize}
 %         \item Smart Greenhouse
