@@ -1,0 +1,264 @@
+\section{Content}
+
+\begin{frame}{Desarrollo de aplicaciones con Microprocesadores}
+    \begin{itemize}
+        \item Aplicaciones sencillas (fácil implementarlas mediante un bucle while, algunos timers y algunas interrupciones)
+Si la complejidad de la aplicación crece, el número de temporizaciones aumenta frente al número de timers disponibles en el microprocesador y la lógica de la misma es compleja, la gestión, desarrollo y depuración de la aplicación se complican enormemente.
+        \item Para simplificar esta situación se han desarrollado Sistemas Operativos “ligeros” para ser implementados en arquitecturas basadas en microprocesadores. Su utilización permite que el desarrollo de software sea más sencillo, seguro, y eficiente, redundando en un mantenimiento más sencillo del software.      
+    \end{itemize}
+     \centering
+     \includegraphics[width=0.5\textwidth]{trainingmaterials/project2-iot/schemacomplete.jpg}
+\end{frame}
+
+
+\begin{frame}{CMSIS-RTOS}
+    \begin{itemize}
+      \item API C/C++ para sistemas operativos en tiempo real
+      \item Diseñado para procesadores Cortex M
+      \item Versión a utilizar CMSIS-RTOS2. Está se puede configurar para usar los kernels CMSIS-RTX (o keil RTX5), freeRTOS, Zephyr, embOS, Azure Thread y Micrium.
+Versiones
+      \item En SBM usamos 2.1.3 que se basa en CMSIS v5 con RTX https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html
+      \item ARM ya ha lanzado la versión 2.3.0 que se basa en CMSIS V6 https://arm-software.github.io/CMSIS_6/latest/RTOS2/group__CMSIS__RTOS__ThreadMgmt.html  
+    
+\end{frame}
+
+\begin{frame}{CMSIS-RTOS: Características}
+    \begin{itemize}
+  \item \textbf{Aplicaciones multihilo}: basada en la utilización de hilos concurrentes.
+  \item Aporta mecanismos de comunicación y sincronización entre hilos.
+  \item \textbf{Thread}:
+    \begin{itemize}
+        \item Porción de código que realiza una función concreta.
+        \item Típicamente es una función con un bucle infinito y sin retorno.
+        \item El RTOS permite compartir la ejecución con otros threads.
+        \item 5 estados: \texttt{Running}, \texttt{Ready}, \texttt{Waiting/Blocked}, \texttt{Inactive}, \texttt{Terminated}.
+    \end{itemize}
+  \item \textbf{Scheduler}:
+    \begin{itemize}
+        \item Planificación y compartición de los recursos de CPU.
+        \item Gestiona la ejecución de threads asignando tiempo (\texttt{SysTick}) de procesador a cada hilo.
+    \end{itemize}
+  \item \textbf{Timeslice}:
+    \begin{itemize}
+        \item Período de tiempo asignado a cada hilo.
+        \item Múltiplo del Tick (5) generado por el \texttt{SysTick} (1ms).
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+% \begin{frame}{Internet of Things: Applications}
+%     \begin{itemize}
+%         \item Smart Greenhouse
+%         \begin{itemize}
+%             \item Plant Health Monitoring
+%             \item Watering Control
+%             \item Locate Plants in Greenhouses
+%             \item Stock and Management
+%         \end{itemize}
+%         \begin{center}
+%              \includegraphics[width=0.5\textwidth]{trainingmaterials/project2-iot/greenhose.png}
+%         \end{center}
+%         \item Smart Supermarket
+%         \begin{itemize}
+%             \item Automated identification and restocking
+%             \item Automatic payment authorization
+%         \end{itemize}
+%         \item Monitoring elderly/convalescent patients at home
+%         \item Traffic regulation
+%         \item Power grid management
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Internet of Things: Technologies}
+%   \begin{itemize}
+%     \item \textbf{Top Edge/Gateway}
+%     \begin{itemize}
+%       \item Linux (67\%)
+%       \begin{itemize}
+%         \item Ubuntu (27\%)
+%         \item Raspbian (28\%)
+%         \item Debian (28\%)
+%       \end{itemize}
+%       \item Windows (26\%)
+%       \item Android (22\%)
+%     \end{itemize}
+%     \item \textbf{Constrained Devices}
+%     \begin{itemize}
+%       \item Linux (45\%)
+%       \item FreeRTOS (29\%)
+%       \item Bare Metal (21\%)
+%       \item Zephyr (21\%)
+%       \item Eclipse Threadx (13\%)
+%     \end{itemize}
+%     \item \textbf{Constrained Devices}
+%     \begin{itemize}
+%       \item 68\% ARM
+%       \item 28\% ESP32
+%       \item 13\% RISC-V
+%     \end{itemize}
+%   \end{itemize}
+
+% \end{frame}
+
+% \begin{frame}{Internet of Things: Technologies}
+%     \begin{itemize}
+%         \item Programming Languages 
+%         \begin{itemize}
+%             \item Constrained Devices: C (55\%), C++(36\%), Java (29\%), Python(32\%)
+%             \item Gateways/Edge: Java (32\%), Python(39\%), Javascript (15\%), C++ (29\%)
+%         \end{itemize}
+%         \item Connectivity: Cellular (59\%), Ethernet (45\%), WiFi(46\%), Bluetooth (31\%)
+%         \item Cloud Platforms: AWS(45\%), Azure(22\%), Google Cloud Platform (19\%)
+%     \end{itemize}
+%     \footnote{Source: Eclipse IOT Survey 2024 Percentage over complete system of applications under survey. Applications may include more than one technology in the system}
+% \end{frame}
+
+% \section{UDP/IP}
+% \begin{frame}{UDP/IP}
+%     \begin{columns}
+%         \begin{column}{0.5\textwidth}
+%             \begin{itemize}
+%                 \item System connected on Local Area Network (LAN)
+%                 \item Members: 
+%                 \begin{itemize}
+%                     \item RPI (Use UDP in Linux)
+%                     \item Wifi Router
+%                     \item Host Machine with Virtualized Ubuntu (Use UDP in Linux)
+%                 \end{itemize}
+%             \end{itemize}
+%         \end{column}
+%         \begin{column}{0.5\textwidth}
+%             \centering
+%             \includegraphics[]{trainingmaterials/project2-iot/ip.jpg}
+%         \end{column}
+%     \end{columns}
+% \end{frame}
+
+% \begin{frame}[fragile]{Server UDP/IP  C/C++} % important using minted you need fragile
+%     \begin{columns}
+%         \begin{column}{0.35\textwidth}
+%             \begin{itemize}
+%                 \item UDP Server operation
+%                     \begin{itemize}
+%                         \item Create UDP Socket
+%                         \item Bind Socket to server address (Server IP address)
+%                         \item Send and receive messages
+%                         \item Close Socket
+%                     \end{itemize}
+%             \end{itemize}  
+%         \end{column}
+%         \begin{column}{0.65\textwidth}
+%             \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+%     int sockfd = socket(int domain, int type, 
+%         int protocol);
+    
+%     bind(int sockfd, const struct sockaddr *addr, 
+%             socklen_t addrlen);
+    
+%     sendto(int sockfd, const void *buf, 
+%             size_t len, 
+%             int flags, 
+%             const struct sockaddr *dest_addr, 
+%             socklen_t addrlen);
+    
+%     revfrom(int sockfd, const void *buf, 
+%             size_t len, 
+%             int flags, 
+%             const struct sockaddr *dest_addr, 
+%             socklen_t addrlen);
+
+%     close(int sockfd);
+    
+%              \end{minted}      
+%         \end{column}   
+%     \end{columns}
+% \end{frame}
+
+% \begin{frame}[fragile]{Client UDP/IP  C/C++} % important using minted you need fragile
+%     \begin{columns}
+%         \begin{column}{0.35\textwidth}
+%             \begin{itemize}
+%                 \item UDP Client operation
+%                     \begin{itemize}
+%                         \item Create UDP Socket
+%                         \item Send and receive messages
+%                         \item Close Socket
+%                     \end{itemize}
+%             \end{itemize}  
+%         \end{column}
+%         \begin{column}{0.65\textwidth}
+%             \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+%     int sockfd = socket(int domain, int type, 
+%         int protocol);
+
+    
+%     sendto(int sockfd, const void *buf, 
+%             size_t len, 
+%             int flags, 
+%             const struct sockaddr *dest_addr, 
+%             socklen_t addrlen);
+    
+%     revfrom(int sockfd, const void *buf, 
+%             size_t len, 
+%             int flags, 
+%             const struct sockaddr *dest_addr, 
+%             socklen_t addrlen);
+
+%     close(int sockfd);
+    
+%              \end{minted}      
+%         \end{column}   
+%     \end{columns}
+% \end{frame}
+
+% \begin{frame}{UDP Client/Server}
+% \centering
+%     \includegraphics[width=0.65\textwidth]{trainingmaterials/project2-iot/udp-protocol.jpeg}
+% \end{frame}
+
+% \section{Project III: UDP Communication RPI/Ubuntu}
+% \begin{frame}{System Minimal Requirements (Phase I: Mandatory)}
+%     \begin{itemize}
+%         \item Maximun grade 8.5 in 10
+%             \begin{itemize}
+%                 \item Hard-coding parameters is not allowed
+%                 \item Pay attention to code clarity
+%             \end{itemize}
+%         \item Buildroot Linux Project II
+%         \item UDP Client implemented in RPI
+%         \item RPI samples data at 1 Sample/s
+%         \item RPI sends data to server every 10s
+%         \item Server calculates Mean/Max/Min/Std each minute
+%         \item Information displayed in server terminal
+%          \item Sensors: Accelerometer MPU6050 and TCS34725 (RGB)
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}[fragile]{System Minimal Requirements (Phase II: Optional)}
+%     \begin{itemize} 
+%         \item 1.5 additional mark 
+%         \item Remote communications: MQTT Client in RPI (mosquitto client). Use Buildroot software packages
+%         \item Information display: Thingsboard (dashboard)
+%             \begin{itemize}
+%                 \item \href {https://thingsboard.io/docs/user-guide/install/ubuntu/}{Thingsboard installation }
+%                 \item You can use the mosquito client installed with Buildroot
+%                 \begin{minted}{bash}
+% mosquitto_pub -d -q 1 -h “hostip" -p "1883" -t "v1/devices/me/telemetry" -u “xxxxx" -m {“your variable":25}
+%                 \end{minted}
+%                 \item \href{https://thingsboard.io/docs/getting-started-guides/helloworld/?connectdevice=mqtt-linux}{MQTT ...more details}
+
+%             \end{itemize}
+%     \end{itemize}
+% \end{frame}
+
+% \section{Project III Deliverables}
+% \begin{frame}{Deliverables}
+%     \begin{itemize}
+%         \item Source code (Phase I): Both Client/Server side (Commented)
+%         \item Optional part (in case you complete it)
+%         \item Due date: 19/05/2025 (8:30)
+%         \item PowerPoint presentation 
+%         \item Oral presentation + Demo Class on 19/05/2025 at 12:30
+%     \end{itemize}
+% \end{frame}

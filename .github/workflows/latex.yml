@@ -1,0 +1,81 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - name: Install Pygments
+        run: pip install Pygments
+        
+      - name: LaTeX compilation I
+        # You may pin to the exact commit or the version.
+        # uses: dante-ev/latex-action@49cf7cb5f79e7b2006dbdffea85e02bec0b6244b
+        uses: dante-ev/latex-action@2021-A
+        with:
+          # The root LaTeX file to be compiled
+          root_file: UPMSBM-CMSIS-RTOS.tex
+          args: -pdf -shell-escape -f
+          # The working directory for the latex compiler to be invoked
+          working_directory: .
+          
+      
+
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: UPMSBM-CMSIS-RTOS.pdf
+          path: UPMSBM-CMSIS-RTOS.pdf
+          
+          
+      - name: Delete Release
+        run:
+           gh release delete 1 --cleanup-tag --yes
+          
+        env: 
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+           
+      - name: Create Release 
+        id: create_release 
+        uses: actions/create-release@v1 
+        with: 
+             tag_name: 1.0 
+             release_name: 1.0
+             draft: false 
+             prerelease: false 
+             body: | 
+                Release notes for 1.0: This presentation always contains the last version of the slides
+        env: 
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
+           
+      - name: Upload Release Asset I
+        uses: actions/upload-release-asset@v1 
+        with: 
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: UPMSBM-CMSIS-RTOS.pdf 
+          asset_name: UPMSBM-CMSIS-RTOS.pdf 
+          asset_content_type: application/pdf
+        env: 
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           
+      

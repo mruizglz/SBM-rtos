@@ -1,0 +1,102 @@
+%\documentclass[fleqn,xcolor=dvipsnames]{beamer}
+\usetheme{Madrid}
+%\usetheme{Boadilla}
+%\usetheme{default}
+%\usetheme{Warsaw}
+%\usetheme{CambridgeUS}
+%\usetheme{Sybila}
+%\usetheme[hideothersubsections]{Berkeley}
+%\usetheme[hideothersubsections]{PaloAlto}
+%%\usetheme[hideothersubsections]{Goettingen}
+%\usetheme{CambridgeUS}
+%\usetheme{Bergen} % This template has nagivation on the left
+%\usetheme{Frankfurt} % Similar to the default with an extra region at the top.
+
+% Uncomment the following line if you want page numbers and using Warsaw theme%
+%\setbeamertemplate{footline}[page number]
+
+\definecolor{aggiemaroon}{RGB}{80,0,0} % Official RGB code for aggie maroon
+\usecolortheme[named=aggiemaroon]{structure}
+\useoutertheme{shadow}
+\useinnertheme{rounded}
+\setbeamertemplate{navigation symbols}{}
+\setbeamerfont{structure}{family=\rmfamily,series=\bfseries}
+\setbeamerfont{footline}{size=\tiny}
+\usefonttheme[stillsansseriftext]{serif}
+
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{graphicx,comment}
+\usepackage[english]{babel}
+\usepackage{rotating}
+\usepackage{multicol}
+\usepackage{enumerate}
+%\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage{minted}
+
+\usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{hyperref} %always the last to avoid problems
+
+
+\usebackgroundtemplate{
+\tikz\node[opacity=0.035, rotate = 0] {\includegraphics[scale=0.5]{UPM-logo.png}};}
+%{\includegraphics[height=1in,width=1in]{TAM-Logo.png}};}
+
+
+\title[Universidad Politecnica de Madrid]{Embedded System Design with Raspberry-pi}
+
+\author [M. Ruiz]{Mariano Ruiz}
+
+\date[01/15/2025]{February-May 2025}
+
+\institute[UPM] % (optional, but mostly needed)
+{\emph{Professor}, ETSI Sistemas de Telecomunicación Copiado de Bootlin \\
+ \includegraphics[scale=0.60]{UPM-logo.png} \\ [0.0 cm]
+ }
+
+
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+   % \frametitle{Section \thesection} %this add the section number only
+   \frametitle{\insertsectionhead}
+    \tableofcontents[currentsection, hideallsubsections]
+  \end{frame}
+}
+%\newcommand{\codelink}[1]{\texttt{#1}}
+
+\newcommand{\codecolor}{\usebeamercolor[fg]{code}}
+\newcommand{\code}[1]{{\codecolor \path{#1}}}
+\newcommand{\codelink}[1]{{\usebeamercolor[fg]{darkblue} \path{#1}}}
+\newcommand{\codewithhash}[1]{{\codecolor \tt{#1}}}
+%\newcommand{\code}[1] {\path{#1}}
+
+\newcommand\projdir[2]{\href{https://elixir.bootlin.com/#1/latest/source/#2/}{\codelink{#2/}}}
+\newcommand\projfile[2]{\href{https://elixir.bootlin.com/#1/latest/source/#2}{\codelink{#2}}}
+\newcommand\kconfig[1]{\href{https://elixir.bootlin.com/linux/latest/K/ident/#1}{\codelink{#1}}}
+\newcommand\kconfigval[2]{\href{https://elixir.bootlin.com/linux/latest/K/ident/#1}{\codelink{#1=#2}}}
+\newcommand\kdir[1]{\projdir{linux}{#1}}
+\newcommand\kfile[1]{\projfile{linux}{#1}}
+\newcommand\kfileversion[2]{\href{https://elixir.bootlin.com/linux/v#2/source/#1}{\codelink{#1}}}
+\newcommand\kstruct[1]{\href{https://elixir.bootlin.com/linux/latest/ident/#1}{\codelink{struct #1}}}
+\newcommand\kdochtml[1]{\href{https://www.kernel.org/doc/html/latest/#1.html}{\codelink{#1}}}
+\newcommand\kdochtmldir[1]{\href{https://www.kernel.org/doc/html/latest/#1/}{\codelink{#1/}}}
+\newcommand{\training}{linux-kernel}
+
+\lstset{
+  language=C,
+  frame=single, % Adds a frame around the code
+  basicstyle=\ttfamily, % Typewriter font
+  keywordstyle=\color{blue}, % Keywords in blue
+  commentstyle=\color{green}, % Comments in green
+  stringstyle=\color{red}, % Strings in red
+  numbers=left, % Line numbers on the left
+  numberstyle=\tiny\color{gray}, % Line number style
+  breaklines=true, % Line breaking
+  %backgroundcolor=\color{lightgray!20} % Background color
+}
