@@ -56,7 +56,7 @@ Es necesario que configure el fichero de inicialización (**Initialization File*
 .. literalinclude:: ../ejemplothreads/simulator.ini
   :language: ini
   :linenos:
-  :emphasize-lines: 3
+  
 
 El significado de estas instrucciones es habilitar para el simulador las operaciones de lectura  escritura en las zonas de memoria donde se encuentran los periféricos.
 
