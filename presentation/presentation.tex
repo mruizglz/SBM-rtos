@@ -16,9 +16,9 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
       \item API C/C++ para sistemas operativos en tiempo real
       \item Diseñado para procesadores Cortex M
       \item Versión a utilizar CMSIS-RTOS2. Está se puede configurar para usar los kernels CMSIS-RTX (o keil RTX5), freeRTOS, Zephyr, embOS, Azure Thread y Micrium.
-Versiones
-      \item En SBM usamos 2.1.3 que se basa en CMSIS v5 con RTX https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html
-      \item ARM ya ha lanzado la versión 2.3.0 que se basa en CMSIS V6 https://arm-software.github.io/CMSIS_6/latest/RTOS2/group__CMSIS__RTOS__ThreadMgmt.html  
+      \item En SBM usamos 2.1.3 que se basa en CMSIS v5 con RTX \href{https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html}{Documentación 2.1.3}
+      \item ARM ya ha lanzado la versión 2.3.0 que se basa en CMSIS V6 \href{https://arm-software.github.io/CMSIS_6/latest/RTOS2/group__CMSIS__RTOS__ThreadMgmt.html}{Documentación 2.3.0}
+    \end{itemize}
     
 \end{frame}
 
@@ -45,6 +45,49 @@ Versiones
     \end{itemize}
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}{CMSIS-RTOS: Planificador}
+    \begin{itemize}
+      \item \textbf{Pre-emptive}
+          \begin{itemize}
+            \item Desalojo de hilos “–prioritarios” por hilos “+prioritarios”.
+          \end{itemize}
+      \item \textbf{Round-Robin}
+          \begin{itemize}
+            \item Todos los hilos con la misma prioridad.
+            \item Se ejecutan unos detrás de otros en secuencia durante un “timeslice”.
+      \end{itemize}
+      \item \textbf{Round-Robin Pre-emptive}
+          \begin{itemize}
+            \item Los hilos pueden tener distinta prioridad.
+            \item Los hilos con igual prioridad se ejecutan de forma Round-Robin mientras no haya otro hilo de +prioridad en estado \texttt{READY}.
+            \item Cuidado con las prioridades para no “colgar” la aplicación.
+            \item Por defecto en CMSIS-RTOS - RTX.
+      \end{itemize}
+      \item \textbf{Cooperative Multitasking}
+          \begin{itemize}
+            \item Todos los hilos con igual prioridad.
+            \item No Round-Robin.
+            \item Cada hilo se ejecuta hasta bloquearse (pasa a \texttt{WAIT}) o hasta pasar la ejecución a otro (\texttt{yield}).
+          \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{CMSIS-RTOS: Estados en Threads}
+    \begin{itemize}
+        \item El planificador del SO es el encargado de gestionar la ejecución de un thread
+        \item Estados de un thread:
+       \begin{itemize}
+          \item \textbf{RUNNING}: thread actualmente en ejecución.
+          \item \textbf{READY}: threads preparados para ser ejecutados. Una vez que la tarea que se está ejecutando ha consumido su \textit{timeslice}, la siguiente tarea con máxima prioridad pasa a \textbf{RUNNING}.
+          \item \textbf{BLOCKED/WAITING}: threads esperando la ocurrencia de algún evento.
+          \item \textbf{TERMINATED}: threads terminados pero sin liberar recursos.
+          \item \textbf{INACTIVE}: threads no creados o terminados. No consumen ningún recurso.
+        \end{itemize}
+    \end{itemize}
+    
 \end{frame}
 
 % \begin{frame}{Internet of Things: Applications}
