@@ -99,8 +99,15 @@ int main(void)
      */
   HAL_Init();
 
-  /* Configure the system clock to 168 MHz */
-  SystemClock_Config();
+  
+#ifndef SIMULATOR
+	/* Configure the system clock to 168 MHz only if we are using the real hardware
+	
+	*/
+	
+	SystemClock_Config();
+#endif
+	
   SystemCoreClockUpdate();
 
   /* Add your application code here
