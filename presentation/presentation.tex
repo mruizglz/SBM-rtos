@@ -119,10 +119,11 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Thread in Keil Microvision}
+\begin{frame}[fragile]{Implementación de aplicaciones con Threads}
     \begin{columns}
         \begin{column}{0.50\textwidth}
             \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+// Fichero con thread ThDisplay.c
 #include "cmsis_os2.h"
 #include "ThDisplay.h"
 
@@ -150,7 +151,8 @@ void ThDisplay (void *argument){
         \end{column}
     \begin{column}{0.50\textwidth}
         \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
-        // Fichero principal
+        // Fichero main.c
+        #include "ThDisplay.h"
         int main(void){
             int status=0;
             HAL_Init();
@@ -164,7 +166,7 @@ void ThDisplay (void *argument){
         }
         \end{minted}
         \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
-        // Fichero de cabecera      
+        // Fichero de cabecera  ThDisplay.h    
         #include "stm32f4xx_hal.h"
         
         #ifndef __THDISPLAY__H
@@ -182,218 +184,107 @@ void ThDisplay (void *argument){
     \end{itemize}
 \end{frame}
 
-% \begin{frame}{Internet of Things: Applications}
-%     \begin{itemize}
-%         \item Smart Greenhouse
-%         \begin{itemize}
-%             \item Plant Health Monitoring
-%             \item Watering Control
-%             \item Locate Plants in Greenhouses
-%             \item Stock and Management
-%         \end{itemize}
-%         \begin{center}
-%              \includegraphics[width=0.5\textwidth]{trainingmaterials/project2-iot/greenhose.png}
-%         \end{center}
-%         \item Smart Supermarket
-%         \begin{itemize}
-%             \item Automated identification and restocking
-%             \item Automatic payment authorization
-%         \end{itemize}
-%         \item Monitoring elderly/convalescent patients at home
-%         \item Traffic regulation
-%         \item Power grid management
-%     \end{itemize}
-% \end{frame}
+\begin{frame}{CMSIS RTOs Sincronización}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \begin{itemize}
+                \item Una aplicación usará múltiples threads y recursos que hay que sincronizar
+                \item ¿Cúal es el problema?
+                    \begin{itemize}
+                        \item Varios threads se ejecutan concurrentemente y quieren usar el mismo recurso compartido que puedes ser software o hardware
+                        \item Hay que garantizar el uso secuencial del recurso compartido
+                    \end{itemize}
+                \item ¿Cuál es la solución?
+                \begin{itemize}
+                    \item Usar recursos como eventos, flags, colas, semáforos, etc
+                    \item CMSIS-RTOS V2 implementa una API con estos recursos
+                \end{itemize}
+            \end{itemize}    
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \includegraphics[scale=0.05]{presentation/threads.jpg}
+        \end{column}
+    \end{columns}
+\end{frame}
+\begin{frame}{CMSIS RTOs Sincronización}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \begin{itemize}
+                \item Una posible solución. Se añade una cola gestionada por el Sistema Operativo
+                \item Existe un thread que lee los mensajes que llegan a a la cola para enviarlos al display 
+                \item Cada thread que quiere enviar un mensaje al LCD escribe en la cola
+            \end{itemize}    
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \includegraphics[scale=0.05]{presentation/threads-sync.jpg}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-% \begin{frame}{Internet of Things: Technologies}
-%   \begin{itemize}
-%     \item \textbf{Top Edge/Gateway}
-%     \begin{itemize}
-%       \item Linux (67\%)
-%       \begin{itemize}
-%         \item Ubuntu (27\%)
-%         \item Raspbian (28\%)
-%         \item Debian (28\%)
-%       \end{itemize}
-%       \item Windows (26\%)
-%       \item Android (22\%)
-%     \end{itemize}
-%     \item \textbf{Constrained Devices}
-%     \begin{itemize}
-%       \item Linux (45\%)
-%       \item FreeRTOS (29\%)
-%       \item Bare Metal (21\%)
-%       \item Zephyr (21\%)
-%       \item Eclipse Threadx (13\%)
-%     \end{itemize}
-%     \item \textbf{Constrained Devices}
-%     \begin{itemize}
-%       \item 68\% ARM
-%       \item 28\% ESP32
-%       \item 13\% RISC-V
-%     \end{itemize}
-%   \end{itemize}
+\begin{frame}[fragile]{Sincronización con Thread Flags}
+      \begin{itemize}
+          \item \textbf{Problema:} La tarea 1 genera periódicamente eventos/datos (1s). Queremos que la tarea 2 solo se ejecute cuando haya un dato disponible y que no consuma CPU mientras tanto.
+      \end{itemize}
+      \begin{columns}
+            \begin{column}{0.50\textwidth}
+                \begin{itemize}
+                    \item[]                      
+                    \includegraphics[scale=0.25]{presentation/flags.jpg}
+                    \item El Thread 2 pasa al estado de \textbf{Waiting} hasta que el Thread 1 active el flag.
+                    \item Cuando el flag o el conjunto de flags son activados el hilo pasa al estaddo \textbf{Ready}
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.50\textwidth}
+             \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+void Thread1 (void *argument){
+    while(1){
+    osdelay(1000);
+    osThreadFlagSet(tid_thread2, 0x0001);
+    }
+}
 
-% \end{frame}
+void Thread2 (void *argument){
+    while(1){
+    status = osThreadFlagWait(0x0001,
+             osFlagsWaitAny, 
+             osWaitForever);
+    //
+    }
+}
+             \end{minted}
+             
+            \end{column}
+     \end{columns}
+\end{frame}
 
-% \begin{frame}{Internet of Things: Technologies}
-%     \begin{itemize}
-%         \item Programming Languages 
-%         \begin{itemize}
-%             \item Constrained Devices: C (55\%), C++(36\%), Java (29\%), Python(32\%)
-%             \item Gateways/Edge: Java (32\%), Python(39\%), Javascript (15\%), C++ (29\%)
-%         \end{itemize}
-%         \item Connectivity: Cellular (59\%), Ethernet (45\%), WiFi(46\%), Bluetooth (31\%)
-%         \item Cloud Platforms: AWS(45\%), Azure(22\%), Google Cloud Platform (19\%)
-%     \end{itemize}
-%     \footnote{Source: Eclipse IOT Survey 2024 Percentage over complete system of applications under survey. Applications may include more than one technology in the system}
-% \end{frame}
+\begin{frame}[fragile]{CMSIS RTOs Thead Flags}
 
-% \section{UDP/IP}
-% \begin{frame}{UDP/IP}
-%     \begin{columns}
-%         \begin{column}{0.5\textwidth}
-%             \begin{itemize}
-%                 \item System connected on Local Area Network (LAN)
-%                 \item Members: 
-%                 \begin{itemize}
-%                     \item RPI (Use UDP in Linux)
-%                     \item Wifi Router
-%                     \item Host Machine with Virtualized Ubuntu (Use UDP in Linux)
-%                 \end{itemize}
-%             \end{itemize}
-%         \end{column}
-%         \begin{column}{0.5\textwidth}
-%             \centering
-%             \includegraphics[]{trainingmaterials/project2-iot/ip.jpg}
-%         \end{column}
-%     \end{columns}
-% \end{frame}
+    \begin{itemize}
+        \item []
+         \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+uint32_t osThreadFlagSet(osThreadId_t thread_id, uint32_t flags)
+/* Activa el flag especificado de una tarea activa
+Se puede llamar desde una interrupción */
 
-% \begin{frame}[fragile]{Server UDP/IP  C/C++} % important using minted you need fragile
-%     \begin{columns}
-%         \begin{column}{0.35\textwidth}
-%             \begin{itemize}
-%                 \item UDP Server operation
-%                     \begin{itemize}
-%                         \item Create UDP Socket
-%                         \item Bind Socket to server address (Server IP address)
-%                         \item Send and receive messages
-%                         \item Close Socket
-%                     \end{itemize}
-%             \end{itemize}  
-%         \end{column}
-%         \begin{column}{0.65\textwidth}
-%             \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
-%     int sockfd = socket(int domain, int type, 
-%         int protocol);
-    
-%     bind(int sockfd, const struct sockaddr *addr, 
-%             socklen_t addrlen);
-    
-%     sendto(int sockfd, const void *buf, 
-%             size_t len, 
-%             int flags, 
-%             const struct sockaddr *dest_addr, 
-%             socklen_t addrlen);
-    
-%     revfrom(int sockfd, const void *buf, 
-%             size_t len, 
-%             int flags, 
-%             const struct sockaddr *dest_addr, 
-%             socklen_t addrlen);
+         \end{minted}
+         \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+uint32_t osThreadFlagClear(osThreadId_t thread_id, uint32_t signals)
+/* Borra el flag especificado de una tarea activa
+No se puede llamar desde una interrupción*/
 
-%     close(int sockfd);
-    
-%              \end{minted}      
-%         \end{column}   
-%     \end{columns}
-% \end{frame}
+         \end{minted}
+         \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+uint32_t osThreadFlagsWait(uint32_t flags, uint32_t options, uint32_t timeout)
+/* Espera a uno o más Flags para continuar la ejecución
+No se puede llamar desde una interrupción */
 
-% \begin{frame}[fragile]{Client UDP/IP  C/C++} % important using minted you need fragile
-%     \begin{columns}
-%         \begin{column}{0.35\textwidth}
-%             \begin{itemize}
-%                 \item UDP Client operation
-%                     \begin{itemize}
-%                         \item Create UDP Socket
-%                         \item Send and receive messages
-%                         \item Close Socket
-%                     \end{itemize}
-%             \end{itemize}  
-%         \end{column}
-%         \begin{column}{0.65\textwidth}
-%             \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
-%     int sockfd = socket(int domain, int type, 
-%         int protocol);
+         \end{minted}
+         \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
+uint32_t osThreadFlagGet(void)
+/* Retorna los flags del thread en ejecución 
+No se puede llamar desde una interrupción */
 
-    
-%     sendto(int sockfd, const void *buf, 
-%             size_t len, 
-%             int flags, 
-%             const struct sockaddr *dest_addr, 
-%             socklen_t addrlen);
-    
-%     revfrom(int sockfd, const void *buf, 
-%             size_t len, 
-%             int flags, 
-%             const struct sockaddr *dest_addr, 
-%             socklen_t addrlen);
-
-%     close(int sockfd);
-    
-%              \end{minted}      
-%         \end{column}   
-%     \end{columns}
-% \end{frame}
-
-% \begin{frame}{UDP Client/Server}
-% \centering
-%     \includegraphics[width=0.65\textwidth]{trainingmaterials/project2-iot/udp-protocol.jpeg}
-% \end{frame}
-
-% \section{Project III: UDP Communication RPI/Ubuntu}
-% \begin{frame}{System Minimal Requirements (Phase I: Mandatory)}
-%     \begin{itemize}
-%         \item Maximun grade 8.5 in 10
-%             \begin{itemize}
-%                 \item Hard-coding parameters is not allowed
-%                 \item Pay attention to code clarity
-%             \end{itemize}
-%         \item Buildroot Linux Project II
-%         \item UDP Client implemented in RPI
-%         \item RPI samples data at 1 Sample/s
-%         \item RPI sends data to server every 10s
-%         \item Server calculates Mean/Max/Min/Std each minute
-%         \item Information displayed in server terminal
-%          \item Sensors: Accelerometer MPU6050 and TCS34725 (RGB)
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile]{System Minimal Requirements (Phase II: Optional)}
-%     \begin{itemize} 
-%         \item 1.5 additional mark 
-%         \item Remote communications: MQTT Client in RPI (mosquitto client). Use Buildroot software packages
-%         \item Information display: Thingsboard (dashboard)
-%             \begin{itemize}
-%                 \item \href {https://thingsboard.io/docs/user-guide/install/ubuntu/}{Thingsboard installation }
-%                 \item You can use the mosquito client installed with Buildroot
-%                 \begin{minted}{bash}
-% mosquitto_pub -d -q 1 -h “hostip" -p "1883" -t "v1/devices/me/telemetry" -u “xxxxx" -m {“your variable":25}
-%                 \end{minted}
-%                 \item \href{https://thingsboard.io/docs/getting-started-guides/helloworld/?connectdevice=mqtt-linux}{MQTT ...more details}
-
-%             \end{itemize}
-%     \end{itemize}
-% \end{frame}
-
-% \section{Project III Deliverables}
-% \begin{frame}{Deliverables}
-%     \begin{itemize}
-%         \item Source code (Phase I): Both Client/Server side (Commented)
-%         \item Optional part (in case you complete it)
-%         \item Due date: 19/05/2025 (8:30)
-%         \item PowerPoint presentation 
-%         \item Oral presentation + Demo Class on 19/05/2025 at 12:30
-%     \end{itemize}
-% \end{frame}
+         \end{minted}      
+         \item[] \href{https://arm-software.github.io/CMSIS_5/RTOS2/html/group__CMSIS__RTOS__ThreadFlagsMgmt.html}{\colorbox{BurntOrange}{CMSIS RTOS V2 Thread Flags reference}}
+    \end{itemize}     
+\end{frame}
