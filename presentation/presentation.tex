@@ -79,7 +79,7 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
 \end{frame}
 
 
-\begin{frame}{CMSIS-RTOS: Estados en Threads}
+\begin{frame}[fragile]{CMSIS-RTOS: Estados en Threads}
     \begin{itemize}
         \item El planificador del SO es el encargado de gestionar la ejecución de un thread
         \item Estados de un thread:
@@ -95,7 +95,7 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
       \node[state] (ready) {ready};
       \node[state] (running) [right=of ready] {running};
       \node[state, accepting] (blocked) [right=of running] {blocked};
-      \node[state] (inactive/terminated) [below=of running] {inactive}
+      \node[state] (inactive/terminated) [below=of running] {inactive};
     
       \path[->]
         (ready) edge [bend left] node {preempt} (running)
