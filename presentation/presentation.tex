@@ -91,19 +91,29 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
           \item \textbf{INACTIVE}: threads no creados o terminados. No consumen ningún recurso.
         \end{itemize}
     \end{itemize}
-    \begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, on grid, auto]
-      \node[state] (ready) {ready};
-      \node[state] (running) [right=of ready] {running};
-      \node[state, accepting] (blocked) [right=of running] {blocked};
-      \node[state] (inactive/terminated) [below=of running] {inactive};
+    
+\end{frame}
+\begin{frame}{Frame Title}
+    \resizebox{0.5\textwidth}{!}{
+    \begin{tikzpicture}[shorten >=1pt, node distance=5cm, on grid, auto]
+      \node[state, fill=green] (ready) {ready};
+      \node[state, fill=orange] (running) [right=of ready] {running};
+      \node[state, accepting, fill=red] (blocked) [right=of running] {blocked};
+      \node[state, minimum size=3cm] (inactive-terminated) [below=of running] {inactive-terminated};
     
       \path[->]
-        (ready) edge [bend left] node {preempt} (running)
-        (running) edge [bend left] node {preempt} (ready)
+        (ready) edge  node {preempt} (running)
+        (ready) edge  node {terminate} (inactive-terminated)
+        (inactive-terminated) edge  node {create} (ready)
+        (running) edge  node {preempt} (ready)
         (blocked) edge [bend left] node {events occur} (running)
-        (running) edge [bend left] node {b} (blocked)
-        (blocked) edge [bend left] node {events occur} (ready);
+        (running) edge [bend left] node {wait} (blocked)
+        (blocked) edge [bend left] node {events occur} (ready)
+        (blocked) edge [bend left] node {terminate} (inactive-terminated)
+        (running) edge node {terminate} (inactive-terminated)
+        (inactive-terminated) edge node {create} (running);
     \end{tikzpicture}
+    }
 \end{frame}
 
 \section{Código básico}
