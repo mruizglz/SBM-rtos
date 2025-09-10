@@ -24,6 +24,7 @@
 \setbeamerfont{footline}{size=\tiny}
 \usefonttheme[stillsansseriftext]{serif}
 \usepackage[dvipsnames]{xcolor}
+\usepackage[edges]{forest}
 \usepackage{minted}
 \usepackage{amsmath}
 \usepackage{caption}
@@ -35,27 +36,28 @@
 %\usepackage{enumitem}
 \usepackage{tikz}
 \usepackage{bm}
+\usepackage{datetime2}
 
 
 
 \usepackage{subcaption}
 \usepackage{listings}
 \usepackage{hyperref} %always the last to avoid problems
-
+\usetikzlibrary{automata, positioning}
 
 \usebackgroundtemplate{
 \tikz\node[opacity=0.035, rotate = 0] {\includegraphics[scale=0.5]{UPM-logo.png}};}
 %{\includegraphics[height=1in,width=1in]{TAM-Logo.png}};}
 
 
-\title[Universidad Politecnica de Madrid]{Sistemas Basados en Microprocesador}
+\title[Universidad Politécnica de Madrid]{Introducción a CMSIS-RTOS v2}
 
 \author [M. Ruiz]{Mariano Ruiz}
 
-\date[01/15/2025]{Sep-Ene 2025}
+\date{\today  \DTMcurrentime}
 
 \institute[UPM] % (optional, but mostly needed)
-{\emph{Professor}, ETSI Sistemas de Telecomunicación Copiado parcialmente de Bootlin \\
+{\textbf{Sistemas Basados en Microprocesador}, ETSI Sistemas de Telecomunicación \\ Formato Latex copiado parcialmente de Bootlin \\
  \includegraphics[scale=0.60]{UPM-logo.png} \\ [0.0 cm]
  }
 
