@@ -50,7 +50,7 @@ jobs:
           
       - name: Delete Release
         run:
-           gh release delete 1 --cleanup-tag --yes
+           gh release delete 1.0 --cleanup-tag --yes || echo "Release 1.0 not found, skipping."
           
         env: 
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   

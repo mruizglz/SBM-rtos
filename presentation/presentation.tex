@@ -96,19 +96,19 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
 \begin{frame}{Máquina de estados para un thread}
     \begin{center}    
         \resizebox{0.75\textwidth}{!}{
-        \begin{tikzpicture}[shorten >=1pt, node distance=8cm, on grid, auto, font=\fontsize{18}{22}\selectfont, line width = 3pt]
-          \node[state,  minimum size=3cm, fill=green] (ready) {ready};
-          \node[state,  minimum size=3cm, fill=orange] (running) [right=of ready] {running};
+        \begin{tikzpicture}[shorten >=1pt, node distance=9cm, on grid, auto, font=\fontsize{18}{22}\selectfont, line width = 3pt]
+          \node[state,  minimum size=3cm, fill=orange] (ready) {ready};
+          \node[state,  minimum size=3cm, fill=green] (running) [right=of ready] {running};
           \node[state,  minimum size=3cm, fill=red] (blocked) [right=of running] {blocked};
-          \node[state, minimum size=3cm] (inactive-terminated) [below=of running] {inactive-terminated};
+          \node[state, minimum size=3cm, fill=gray!30] (inactive-terminated) [below=of running] {inactive-terminated};
         
           \path[->]
-            (ready) edge  node {preempt} (running)
+            (ready) edge  node {\textcolor{blue}{preempt}} (running)
             (ready) edge  node {terminate} (inactive-terminated)
             (inactive-terminated) edge  node {create} (ready)
             (running) edge  node {preempt} (ready)
             (blocked) edge [bend left] node {events occur} (running)
-            (running) edge [bend left] node {wait} (blocked)
+            (running) edge [bend left] node {\textcolor{blue}{wait}} (blocked)
             (blocked) edge [bend right] node {events occur} (ready)
             (blocked) edge [bend left] node {terminate} (inactive-terminated)
             (running) edge node {terminate} (inactive-terminated)
