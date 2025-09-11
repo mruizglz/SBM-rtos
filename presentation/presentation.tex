@@ -45,7 +45,7 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
   \item \textbf{Timeslice}:
     \begin{itemize}
         \item Período de tiempo asignado a cada hilo.
-        \item Múltiplo del Tick (5) generado por el \texttt{SysTick} (1ms).
+        \item Múltiplo del Tick (5 por defecto) generado por el \texttt{SysTick} (1ms por defecto).
     \end{itemize}
 \end{itemize}
 
@@ -55,7 +55,7 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
     \begin{itemize}
       \item \textbf{Pre-emptive}
           \begin{itemize}
-            \item Desalojo de hilos “–prioritarios” por hilos “+prioritarios”.
+            \item Desalojo de hilos “ menos prioritarios” por hilos “ mas prioritarios”.
           \end{itemize}
       \item \textbf{Round-Robin}
           \begin{itemize}
@@ -93,27 +93,29 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
     \end{itemize}
     
 \end{frame}
-\begin{frame}{Frame Title}
-    \resizebox{0.5\textwidth}{!}{
-    \begin{tikzpicture}[shorten >=1pt, node distance=5cm, on grid, auto]
-      \node[state, fill=green] (ready) {ready};
-      \node[state, fill=orange] (running) [right=of ready] {running};
-      \node[state, accepting, fill=red] (blocked) [right=of running] {blocked};
-      \node[state, minimum size=3cm] (inactive-terminated) [below=of running] {inactive-terminated};
-    
-      \path[->]
-        (ready) edge  node {preempt} (running)
-        (ready) edge  node {terminate} (inactive-terminated)
-        (inactive-terminated) edge  node {create} (ready)
-        (running) edge  node {preempt} (ready)
-        (blocked) edge [bend left] node {events occur} (running)
-        (running) edge [bend left] node {wait} (blocked)
-        (blocked) edge [bend left] node {events occur} (ready)
-        (blocked) edge [bend left] node {terminate} (inactive-terminated)
-        (running) edge node {terminate} (inactive-terminated)
-        (inactive-terminated) edge node {create} (running);
-    \end{tikzpicture}
-    }
+\begin{frame}{Máquina de estados para un thread}
+    \begin{center}    
+        \resizebox{0.75\textwidth}{!}{
+        \begin{tikzpicture}[shorten >=1pt, node distance=8cm, on grid, auto, font=\fontsize{18}{22}\selectfont, line width = 3pt]
+          \node[state,  minimum size=3cm, fill=green] (ready) {ready};
+          \node[state,  minimum size=3cm, fill=orange] (running) [right=of ready] {running};
+          \node[state,  minimum size=3cm, fill=red] (blocked) [right=of running] {blocked};
+          \node[state, minimum size=3cm] (inactive-terminated) [below=of running] {inactive-terminated};
+        
+          \path[->]
+            (ready) edge  node {preempt} (running)
+            (ready) edge  node {terminate} (inactive-terminated)
+            (inactive-terminated) edge  node {create} (ready)
+            (running) edge  node {preempt} (ready)
+            (blocked) edge [bend left] node {events occur} (running)
+            (running) edge [bend left] node {wait} (blocked)
+            (blocked) edge [bend right] node {events occur} (ready)
+            (blocked) edge [bend left] node {terminate} (inactive-terminated)
+            (running) edge node {terminate} (inactive-terminated)
+            (inactive-terminated) edge node {create} (running);
+        \end{tikzpicture}
+        }
+    \end{center}
 \end{frame}
 
 \section{Código básico}
