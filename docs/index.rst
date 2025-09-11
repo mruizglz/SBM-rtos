@@ -3,4 +3,5 @@
    :caption: Contents:
 
    cmsis-rtos.rst
+   ejemplothreads.rst
    
