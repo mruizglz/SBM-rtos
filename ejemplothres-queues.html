@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ejemplothreads-queues: Uso básico de threads y colas en CMSIS RTOS v2 &mdash; SBM CMIS RTOS Examples Documentation 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SBM CMIS RTOS Examples Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cmsis-rtos.html">Ejemplos de uso de CMSIS RTOS V2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothread.html"><strong>ejemplothread</strong>: Uso básico de un thread en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads.html"><strong>ejemplothreads</strong>: Uso básico de threads en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-queues.html"><strong>ejemplothreads-queues</strong>: Uso básico de threads y colas en CMSIS RTOS v2</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SBM CMIS RTOS Examples Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><strong>ejemplothreads-queues</strong>: Uso básico de threads y colas en CMSIS RTOS v2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ejemplothres-queues.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ejemplothreads-queues-uso-basico-de-threads-y-colas-en-cmsis-rtos-v2">
+<h1><strong>ejemplothreads-queues</strong>: Uso básico de threads y colas en CMSIS RTOS v2<a class="headerlink" href="#ejemplothreads-queues-uso-basico-de-threads-y-colas-en-cmsis-rtos-v2" title="Link to this heading"></a></h1>
+<p>Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes que se comunican con colas.</p>
+<section id="descripcion-general">
+<h2>Descripción General<a class="headerlink" href="#descripcion-general" title="Link to this heading"></a></h2>
+<p>El programa crea dos hilos, denominados <code class="docutils literal notranslate"><span class="pre">Producer</span></code> y <code class="docutils literal notranslate"><span class="pre">Consumer</span></code>. El hilo <code class="docutils literal notranslate"><span class="pre">Producer</span></code> se encarga de introducir datos en la una cola que tiene el identificador <code class="docutils literal notranslate"><span class="pre">id_MsgQueue</span></code>.
+El numero total de mensajes que se introducen en la cola en cada iteración del bucle <code class="docutils literal notranslate"><span class="pre">while</span></code> es 32 con un tiempo de retardo entre operaciones de escritura que es variable
+El <code class="docutils literal notranslate"><span class="pre">Consumer</span></code> se encarga de extraer los datos de cola y de actuar sobre los leds en función del valor leido de la cola.</p>
+</section>
+<section id="estructura-de-datos">
+<h2>Estructura de Datos<a class="headerlink" href="#estructura-de-datos" title="Link to this heading"></a></h2>
+<p>Se define una estructura llamada <code class="docutils literal notranslate"><span class="pre">mygpio_pin</span></code> que encapsula toda la información necesaria para controlar un LED:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GPIO_InitTypeDef</span> <span class="pre">pin</span></code>: configuración del pin (modo, velocidad, tipo de salida).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GPIO_TypeDef</span> <span class="pre">*port</span></code>: puerto GPIO al que pertenece el pin.</p></li>
+</ul>
+<p>Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.</p>
+</section>
+<section id="inicializacion-de-los-hilos">
+<h2>Inicialización de los Hilos<a class="headerlink" href="#inicializacion-de-los-hilos" title="Link to this heading"></a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Init_Thread</span></code> realiza las siguientes operaciones:</p>
+<ol class="arabic simple">
+<li><p>Crea una cola con <code class="docutils literal notranslate"><span class="pre">osMessageQueueNew</span></code> para almacenar hasta 16 mensajes cada uno de tamaño un <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code>, es decir, un solo byte.</p></li>
+<li><p>Crea un hilo <code class="docutils literal notranslate"><span class="pre">Consumer</span></code> con <code class="docutils literal notranslate"><span class="pre">osThreadNew</span></code>, ejecutando la función <code class="docutils literal notranslate"><span class="pre">Consumer</span></code>.</p></li>
+<li><p>Crea un hilo <code class="docutils literal notranslate"><span class="pre">Producer</span></code> con <code class="docutils literal notranslate"><span class="pre">osThreadNew</span></code>, ejecutando la función <code class="docutils literal notranslate"><span class="pre">Producer</span></code>.</p></li>
+</ol>
+</section>
+<section id="funcion-del-hilo-producer">
+<h2>Función del Hilo Producer<a class="headerlink" href="#funcion-del-hilo-producer" title="Link to this heading"></a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Producer(void</span> <span class="pre">*argument)</span></code> realiza las siguientes operaciones:
+1. De manera continua en un bucle infinito inserta en cola en cada iteración del bucle while 32 mensajes de 1 byte con el valor de la variable index.
+2. Los mensajes se introducen con un retardo que varia desde 100ms hasta 400ms
+3. La función osMessageQueuePut introduce los mensajes con timeout 0, lo cúal implica que si no hay sitio en la cola el mensaje no se podrá guardar.</p>
+</section>
+<section id="funcion-del-hilo-consumer">
+<h2>Función del Hilo Consumer<a class="headerlink" href="#funcion-del-hilo-consumer" title="Link to this heading"></a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Consumer(void</span> <span class="pre">*argument)</span></code> realiza las siguientes operaciones:
+1. De manera continua en un bucle infinito extrae de la cola los mensajes introducidos por el hilo <code class="docutils literal notranslate"><span class="pre">Producer</span></code>.
+2. Si se saca un valor de la cola se procede a encender o apagar los leds en función del valor leido.
+3. La variable errors_or_timeout cuenta el número de veces que no se ha podido leer un mensaje de la cola, ya sea por timeout o porque la cola está vacía.</p>
+</section>
+<section id="uso-de-hal-y-cmsis-rtos">
+<h2>Uso de HAL y CMSIS RTOS<a class="headerlink" href="#uso-de-hal-y-cmsis-rtos" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>HAL (Hardware Abstraction Layer)</strong>: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.</p></li>
+<li><p><strong>CMSIS RTOS v2</strong>: proporciona las funciones para crear y gestionar hilos, como <code class="docutils literal notranslate"><span class="pre">osThreadNew</span></code> y <code class="docutils literal notranslate"><span class="pre">osDelay</span></code>.</p></li>
+</ul>
+</section>
+<section id="codigo-fuente">
+<h2>Código Fuente<a class="headerlink" href="#codigo-fuente" title="Link to this heading"></a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>#include “cmsis_os2.h”                          // CMSIS RTOS header file
+#include “stm32f4xx_hal.h”
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+/<a href="#id1"><span class="problematic" id="id2">*</span></a>—————————————————————————-</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Thread 1 ‘Thread_Name’: Sample thread</p></li>
+</ul>
+<p><em>—————————————————————————</em>/</p>
+</div></blockquote>
+<p>osThreadId_t tid_Thread;                        // thread id
+osMessageQueueId_t id_MsgQueue;
+int Init_Thread (void);
+void Producer (void <a href="#id3"><span class="problematic" id="id4">*</span></a>argument);                   // thread function producing data
+void Consumer (void <a href="#id5"><span class="problematic" id="id6">*</span></a>argument);                   // thread function consuming data
+int qsize=0;
+uint16_t h=0;
+uint8_t i=0;</p>
+<dl class="simple">
+<dt>typedef struct  {</dt><dd><dl class="simple">
+<dt>GPIO_InitTypeDef pin;</dt><dd><p>GPIO_TypeDef <a href="#id7"><span class="problematic" id="id8">*</span></a>port;</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>} mygpio_pin;</p>
+<p>mygpio_pin pinB0;
+mygpio_pin pinB7;</p>
+<p>int Init_Thread (void) {</p>
+<blockquote>
+<div><blockquote>
+<div><p>id_MsgQueue = osMessageQueueNew(16, sizeof(uint8_t), NULL);</p>
+</div></blockquote>
+<p>tid_Thread = osThreadNew(Producer, NULL, NULL);
+if (tid_Thread == NULL) {</p>
+<blockquote>
+<div><p>return(-1);</p>
+</div></blockquote>
+<p>}</p>
+<blockquote>
+<div><p>tid_Thread = osThreadNew(Consumer, NULL, NULL);</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if (tid_Thread == NULL) {</dt><dd><p>return(-1);</p>
+</dd>
+</dl>
+<p>}</p>
+<p>return(0);</p>
+</div></blockquote>
+<p>}</p>
+<dl>
+<dt>void Producer (void <a href="#id9"><span class="problematic" id="id10">*</span></a>argument) {</dt><dd><blockquote>
+<div><p>uint8_t index=0;
+osStatus_t status;</p>
+</div></blockquote>
+<dl>
+<dt>while (1) {</dt><dd><blockquote>
+<div><dl>
+<dt>for( h=1; h&lt;5; h++){</dt><dd><dl class="simple">
+<dt>for( i=0; i&lt; 8; i++){</dt><dd><p>status=osMessageQueuePut(id_MsgQueue, &amp;index, 0U, 0U);
+index++;
+osDelay(h*100);</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>}
+void Consumer (void <a href="#id11"><span class="problematic" id="id12">*</span></a>argument) {</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>uint8_t val=0;
+osStatus_t status;
+int errors_or_timeouts=0;
+GPIO_InitTypeDef led_ld1 = {
+.Pin = GPIO_PIN_0,
+.Mode = GPIO_MODE_OUTPUT_PP,
+.Pull = GPIO_NOPULL,
+.Speed = GPIO_SPEED_FREQ_LOW</p>
+</div></blockquote>
+<dl>
+<dt>};</dt><dd><p>GPIO_InitTypeDef led_ld2 = {
+.Pin = GPIO_PIN_7,
+.Mode = GPIO_MODE_OUTPUT_PP,
+.Pull = GPIO_NOPULL,
+.Speed = GPIO_SPEED_FREQ_LOW</p>
+</dd>
+<dt>};</dt><dd><p>__HAL_RCC_GPIOB_CLK_ENABLE();</p>
+<p>HAL_GPIO_Init(GPIOB, &amp;led_ld1);</p>
+<p>HAL_GPIO_Init(GPIOB, &amp;led_ld2);</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>while (1) {</dt><dd><dl>
+<dt>qsize=osMessageQueueGetCount (id_MsgQueue);</dt><dd><p>status = osMessageQueueGet(id_MsgQueue, &amp;val, NULL, 10U);   // wait for message
+if (status == osOK){</p>
+<blockquote>
+<div><p>HAL_GPIO_WritePin(GPIOB,led_ld1.Pin,(GPIO_PinState) val&amp;0x01);
+HAL_GPIO_WritePin(GPIOB,led_ld2.Pin,(GPIO_PinState)(val&amp;0x02)&gt;&gt;1);</p>
+</div></blockquote>
+<p>}
+else {</p>
+<blockquote>
+<div><p>errors_or_timeouts++;</p>
+</div></blockquote>
+<p>}
+osDelay(250); //This delay is to simulate an operation that needs 101ms to complete</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</section>
+<section id="dependencias">
+<h2>Dependencias<a class="headerlink" href="#dependencias" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Librería HAL de STM32.</p></li>
+<li><p>CMSIS RTOS v2.</p></li>
+</ul>
+</section>
+<section id="preguntas-y-respuetas-sobre-ejemplothreads-queues">
+<h2>Preguntas y respuetas sobre <strong>ejemplothreads-queues</strong><a class="headerlink" href="#preguntas-y-respuetas-sobre-ejemplothreads-queues" title="Link to this heading"></a></h2>
+<p>Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.</p>
+</section>
+<section id="cual-es-el-proposito-de-la-cola-de-mensajes-id-msgqueue-en-esta-aplicacion">
+<h2>¿Cuál es el propósito de la cola de mensajes <cite>id_MsgQueue</cite> en esta aplicación?<a class="headerlink" href="#cual-es-el-proposito-de-la-cola-de-mensajes-id-msgqueue-en-esta-aplicacion" title="Link to this heading"></a></h2>
+<p>La cola de mensajes <cite>id_MsgQueue</cite> actúa como un canal de comunicación y sincronización entre los hilos <cite>Producer</cite> y <cite>Consumer</cite>. Permite que el hilo productor envíe datos (índices) al consumidor de forma segura y sincronizada. Al definir una cola con capacidad para 16 elementos de tipo <cite>uint8_t</cite>, se establece un buffer temporal que desacopla la producción y el consumo de datos.</p>
+</section>
+<section id="que-funcion-cumple-el-bucle-anidado-en-el-hilo-producer">
+<h2>¿Qué función cumple el bucle anidado en el hilo <cite>Producer</cite>?<a class="headerlink" href="#que-funcion-cumple-el-bucle-anidado-en-el-hilo-producer" title="Link to this heading"></a></h2>
+<p>El bucle anidado en <cite>Producer</cite> genera una secuencia de valores que se colocan en la cola de mensajes. El bucle externo recorre <cite>h</cite> de 1 a 4, y el interno recorre <cite>i</cite> de 0 a 7. En cada iteración, se coloca un valor en la cola (<cite>index</cite>) y se incrementa. El retardo <cite>osDelay(h*100)</cite> introduce una variabilidad en el tiempo entre envíos, oscilando entre 100 ms y 400 ms. Esto simula diferentes tasas de producción de datos.</p>
+</section>
+<section id="cuanto-tiempo-tarda-en-llenarse-la-cola-de-mensajes-id-msgqueue">
+<h2>¿Cuanto tiempo tarda en llenarse la cola de mensajes <cite>id_MsgQueue</cite>?<a class="headerlink" href="#cuanto-tiempo-tarda-en-llenarse-la-cola-de-mensajes-id-msgqueue" title="Link to this heading"></a></h2>
+<p>En la cola se introducen 32 mensajes en cada ciclo completo de los bucles anidados (8 mensajes por cada uno de los 4 valores de <cite>h</cite>) pero el Thread Consumer extrae mensajes cada 250ms en el caso de que existan. Por tanto la cola nunca llega a llenarse.
+Intente calcular cual sería el numero máximo de mensajes que se pueden acumular en la cola.</p>
+</section>
+<section id="cuanto-vale-la-variable-errors-or-timeouts-despues-de-1-minuto-de-ejecucion-del-codigo">
+<h2>¿cuanto vale la variable errors_or_timeouts despues de 1 minuto de ejecución del código?<a class="headerlink" href="#cuanto-vale-la-variable-errors-or-timeouts-despues-de-1-minuto-de-ejecucion-del-codigo" title="Link to this heading"></a></h2>
+<p>El valor vale 0 porque no se produce dicha condición.</p>
+<p>Challenge: Modifique el código del hilo <code class="docutils literal notranslate"><span class="pre">Producer</span></code> para que la variable errors_or_timeouts no valga cero.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright UPM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
