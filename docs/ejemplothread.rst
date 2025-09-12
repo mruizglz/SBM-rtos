@@ -8,7 +8,7 @@ Este documento describe el funcionamiento de un programa en C que utiliza CMSIS 
 Descripción General
 -------------------
 
-El programa crea dos hilos que controlan dos LEDs conectados a los pines PB0 y PB7 del microcontrolador STM32F4. Cada hilo alterna el estado de su LED con una frecuencia distinta, utilizando funciones del sistema operativo en tiempo real (RTOS) y la biblioteca HAL para la configuración y manipulación de los pines GPIO.
+El programa crea un hilo LEDs conectado al pin PB0  del microcontrolador STM32F4.El hilo alterna el estado de su LED con una frecuencia distinta, utilizando funciones del sistema operativo en tiempo real (RTOS) y la biblioteca HAL para la configuración y manipulación de los pines GPIO.
 
 -------------------
 Estructura de Datos
@@ -30,10 +30,10 @@ Inicialización de los Hilos
 La función ``Init_Thread`` realiza las siguientes tareas:
 
 1. Habilita el reloj del puerto GPIOB.
-2. Configura dos instancias de ``mygpio_pin`` para los pines PB0 y PB7.
-3. Crea dos hilos con ``osThreadNew``, cada uno ejecutando la función ``Thread`` con una instancia diferente de ``mygpio_pin``.
+2. Configura ``mygpio_pin`` para el pin PB0.
+3. Crea un hilo con ``osThreadNew``, que ejecuta la función ``Thread`` pasandole una estructura ``mygpio_pin`` para el pin PB0.
 
-Cada hilo se ejecuta de forma independiente y controla su propio LED.
+
 
 ----------------
 Función del Hilo
@@ -75,12 +75,7 @@ Código Fuente
         .Speed = GPIO_SPEED_FREQ_LOW
     };
 
-    GPIO_InitTypeDef led_ld2 = {
-        .Pin = GPIO_PIN_7,
-        .Mode = GPIO_MODE_OUTPUT_PP,
-        .Pull = GPIO_NOPULL,
-        .Speed = GPIO_SPEED_FREQ_LOW
-    };
+   
 
     typedef struct {
         GPIO_InitTypeDef pin;
@@ -90,7 +85,7 @@ Código Fuente
     } mygpio_pin;
 
     mygpio_pin pinB0;
-    mygpio_pin pinB7;
+  
 
     int Init_Thread(void) {
         __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -100,13 +95,6 @@ Código Fuente
         pinB0.delay = 15;
         pinB0.counter = 1;
         tid_Thread = osThreadNew(Thread, (void *)&pinB0, NULL);
-        if (tid_Thread == NULL) return -1;
-
-        pinB7.pin = led_ld2;
-        pinB7.port = GPIOB;
-        pinB7.delay = 10;
-        pinB7.counter = 0;
-        tid_Thread = osThreadNew(Thread, (void *)&pinB7, NULL);
         if (tid_Thread == NULL) return -1;
 
         return 0;
@@ -130,7 +118,7 @@ Dependencias
 - CMSIS RTOS v2.
 
 ----------------------------------------------
-Preguntas y respuetas sobre **ejemplothreads**
+Preguntas y respuetas sobre **ejemplothread**
 ----------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
@@ -143,9 +131,8 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
 ¿Qué hace este código?
 ----------------------
 
-Este código crea dos hilos (threads) que controlan dos LEDs conectados a los pines PB0 y PB7 de una placa STM32F4. Cada hilo alterna el estado del LED (encendido/apagado) con una frecuencia determinada utilizando funciones del sistema operativo en tiempo real CMSIS RTOS v2.
-Es importante entender que el mismo codigo (funcion Thread) es ejecutado por dos hilos diferentes, cada uno con sus propios parámetros, que se reciben en el argumento de la función.
-Es de tipo ``void`` para poder pasar cualquier tipo de estructura como argumento. Dentro del codigo del Thread se realiza un casting al tipo de estructura que se utiliza en el ejemplo
+Este código crea un hilo (threads) que controla un LED conectado al pin PB0 de una placa STM32F4. El hilo alterna el estado del LED (encendido/apagado) con una frecuencia determinada utilizando funciones del sistema operativo en tiempo real CMSIS RTOS v2.
+Dentro del codigo del Thread se realiza un casting al tipo de estructura que se utiliza en el ejemplo
 
 
 -----------------------------------
@@ -163,17 +150,17 @@ Es una estructura de datos que encapsula la información necesaria para controla
 ¿Cómo se inicializan los hilos?
 -------------------------------
 
-La función ``Init_Thread()`` habilita el reloj del puerto GPIOB, configura los parámetros de cada LED y crea dos hilos con ``osThreadNew()``, pasando como argumento la estructura ``mygpio_pin`` correspondiente a cada LED.
+La función ``Init_Thread()`` habilita el reloj del puerto GPIOB, configura los parámetros de cada LED y crea un hilo con ``osThreadNew()``, pasando como argumento la estructura ``mygpio_pin`` correspondiente a cada LED.
 
 --------------------------------
 ¿Qué hace la función `Thread()`?
 --------------------------------
 
-La función ``Thread(void *argument)`` es ejecutada por cada hilo. Dentro de ella:
+La función ``Thread(void *argument)`` es ejecutada el hilo. Dentro de ella:
 
 1. Se inicializa el pin GPIO usando ``HAL_GPIO_Init``.
 2. Se entra en un bucle infinito donde:
-   - Se incrementa el valor de ``counter``.
+   - Se incermenta el valor de  ``counter``.
    - Se cambia el estado del LED con ``HAL_GPIO_TogglePin``.
    - Se espera el tiempo definido en ``delay`` usando ``osDelay``.
 
@@ -204,25 +191,3 @@ Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()
 - ``cmsis_os2.h``: para funciones del sistema operativo en tiempo real.
 - ``stm32f4xx_hal.h``: para funciones de acceso a hardware (HAL).
 - ``stdlib.h``: para funciones estándar de C.
-
----------------------------------------------------------------------
-¿Cuál es el propósito de la función ``__HAL_RCC_GPIOB_CLK_ENABLE()``?
----------------------------------------------------------------------
-
-La función ``__HAL_RCC_GPIOB_CLK_ENABLE()`` se utiliza para habilitar el reloj del puerto GPIOB. Esto es necesario antes de poder configurar o utilizar cualquier pin de ese puerto, ya que sin el reloj activo, el hardware no responde a las configuraciones.
-
------------------------------------------------------------------------------------------------------------------
-¿Cuál es el efecto de la instrucción ``HAL_GPIO_TogglePin(gpio->port, gpio->pin.Pin)`` dentro del bucle infinito?
------------------------------------------------------------------------------------------------------------------
-
-La instrucción alterna el estado del pin entre alto y bajo. Esto provoca que el LED conectado parpadee, ya que cambia su estado en cada iteración del bucle.
-
--------------------------------------------------------------------------------
-¿Qué función tiene el campo ``counter`` dentro de la estructura ``mygpio_pin``?
--------------------------------------------------------------------------------
-  
-El campo ``counter`` se incrementa en cada iteración del bucle infinito. Sirve para llevar un conteo de cuántas veces se ha alternado el estado del pin, lo cual puede ser útil para depuración o estadísticas.
-
-
-
-

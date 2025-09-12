@@ -3,5 +3,7 @@
    :caption: Contents:
 
    cmsis-rtos.rst
+   ejemplothread.rst
    ejemplothreads.rst
+   ejemplothreads-queues.rst
    
