@@ -1,3 +1,4 @@
+
 **********************************************************
 **ejemplothreads**: Uso básico de threads en CMSIS RTOS v2
 **********************************************************
@@ -173,7 +174,7 @@ La función ``Thread(void *argument)`` es ejecutada por cada hilo. Dentro de ell
 
 1. Se inicializa el pin GPIO usando ``HAL_GPIO_Init``.
 2. Se entra en un bucle infinito donde:
-   - Se incrementa el valor de ``counter``.
+   - Se alterna el valor de ``counter``.
    - Se cambia el estado del LED con ``HAL_GPIO_TogglePin``.
    - Se espera el tiempo definido en ``delay`` usando ``osDelay``.
 
@@ -204,25 +205,3 @@ Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()
 - ``cmsis_os2.h``: para funciones del sistema operativo en tiempo real.
 - ``stm32f4xx_hal.h``: para funciones de acceso a hardware (HAL).
 - ``stdlib.h``: para funciones estándar de C.
-
----------------------------------------------------------------------
-¿Cuál es el propósito de la función ``__HAL_RCC_GPIOB_CLK_ENABLE()``?
----------------------------------------------------------------------
-
-La función ``__HAL_RCC_GPIOB_CLK_ENABLE()`` se utiliza para habilitar el reloj del puerto GPIOB. Esto es necesario antes de poder configurar o utilizar cualquier pin de ese puerto, ya que sin el reloj activo, el hardware no responde a las configuraciones.
-
------------------------------------------------------------------------------------------------------------------
-¿Cuál es el efecto de la instrucción ``HAL_GPIO_TogglePin(gpio->port, gpio->pin.Pin)`` dentro del bucle infinito?
------------------------------------------------------------------------------------------------------------------
-
-La instrucción alterna el estado del pin entre alto y bajo. Esto provoca que el LED conectado parpadee, ya que cambia su estado en cada iteración del bucle.
-
--------------------------------------------------------------------------------
-¿Qué función tiene el campo ``counter`` dentro de la estructura ``mygpio_pin``?
--------------------------------------------------------------------------------
-  
-El campo ``counter`` se incrementa en cada iteración del bucle infinito. Sirve para llevar un conteo de cuántas veces se ha alternado el estado del pin, lo cual puede ser útil para depuración o estadísticas.
-
-
-
-
