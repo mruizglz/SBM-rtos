@@ -6,6 +6,7 @@
    ejemplothread.rst
    ejemplothreads.rst
    ejemplothreads-queues.rst
+   ejemplothreads-flags.rst
 
    
    
