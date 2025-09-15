@@ -169,7 +169,7 @@ Dependencias
 - CMSIS RTOS v2.
 
 -----------------------------------------------------
-Preguntas y respuetas sobre **ejemplothreads-flags**
+Preguntas y respuestas sobre **ejemplothreads-flags**
 ----------------------------------------------------- 
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
@@ -179,10 +179,10 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
    :local:
 
 
-.. question::
-:number: 1
-
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Se modifica el código del Producer para que envíe ambas señales (0x0001 y 0x0002) de forma casi simultánea, seguido de un delay de 1 segundo:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 .. code-block:: c
 	:linenos:
@@ -202,9 +202,7 @@ Analice el comportamiento resultante del sistema y responda:
 1. ¿Qué valor tendría la variable status en el Consumer después de osThreadFlagsWait?
 2. ¿Cómo afecta esta modificación al parpadeo de los LEDs?
 
-.. answer::
+1. Valor de status: La variable status en el Consumer tendría el valor 0x0003 (0x0001 | 0x0002), ya que los flags se acumulan en el sistema CMSIS-RTOS cuando se envían antes de que el thread destino los procese.
 
-	1. Valor de status: La variable status en el Consumer tendría el valor 0x0003 (0x0001 | 0x0002), ya que los flags se acumulan en el sistema CMSIS-RTOS cuando se envían antes de que el thread destino los procese.
-
-	2. Efecto en los LEDs: Los LEDs dejarían de parpadear por completo. El switch statement en el Consumer solo maneja explícitamente los casos 1 (0x0001) y 2 (0x0002). Al recibir el valor combinado 3, la ejecución cae en el caso default, donde solo se incrementa la variable errors sin ejecutar ninguna operación de toggle en los GPIOs.
+2. Efecto en los LEDs: Los LEDs dejarían de parpadear por completo. El switch statement en el Consumer solo maneja explícitamente los casos 1 (0x0001) y 2 (0x0002). Al recibir el valor combinado 3, la ejecución cae en el caso default, donde solo se incrementa la variable errors sin ejecutar ninguna operación de toggle en los GPIOs.
 

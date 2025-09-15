@@ -44,6 +44,7 @@ int Init_Thread (void) {
 void Producer (void *argument) {
 	uint8_t index=0;
 	osStatus_t status;
+	
   while (1) {
 		for( h=1; h<5; h++){
 			for( i=0; i< 8; i++){
@@ -88,7 +89,7 @@ void Consumer (void *argument) {
 		else {
 			errors_or_timeouts++;
 		}
-		osDelay(250); //This delay is to simulate an operation that needs 101ms to complete
+		osDelay(250);
 		
   }
 }

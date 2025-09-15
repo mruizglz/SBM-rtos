@@ -179,8 +179,6 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
    :local:
 
 
-.. question::
-:number: 1
 
 Se modifica el código del Producer para que envíe ambas señales (0x0001 y 0x0002) de forma casi simultánea, seguido de un delay de 1 segundo:
 

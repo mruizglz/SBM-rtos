@@ -166,7 +166,7 @@ Dependencias
 - CMSIS RTOS v2.
 
 -----------------------------------------------------
-Preguntas y respuetas sobre **ejemplothreads-queues**
+Preguntas y respuestas sobre **ejemplothreads-queues**
 ----------------------------------------------------- 
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
@@ -175,30 +175,34 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
    :depth: 1
    :local:
 
-------------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ¿Cuál es el propósito de la cola de mensajes `id_MsgQueue` en esta aplicación?
-------------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 La cola de mensajes `id_MsgQueue` actúa como un canal de comunicación y sincronización entre los hilos `Producer` y `Consumer`. Permite que el hilo productor envíe datos (índices) al consumidor de forma segura y sincronizada. Al definir una cola con capacidad para 16 elementos de tipo `uint8_t`, se establece un buffer temporal que desacopla la producción y el consumo de datos.
 
------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ¿Qué función cumple el bucle anidado en el hilo `Producer`?
------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 El bucle anidado en `Producer` genera una secuencia de valores que se colocan en la cola de mensajes. El bucle externo recorre `h` de 1 a 4, y el interno recorre `i` de 0 a 7. En cada iteración, se coloca un valor en la cola (`index`) y se incrementa. El retardo `osDelay(h*100)` introduce una variabilidad en el tiempo entre envíos, oscilando entre 100 ms y 400 ms. Esto simula diferentes tasas de producción de datos. 
 
--------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ¿Cuanto tiempo tarda en llenarse la cola de mensajes `id_MsgQueue`?
--------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 En la cola se introducen 32 mensajes en cada ciclo completo de los bucles anidados (8 mensajes por cada uno de los 4 valores de `h`) pero el Thread Consumer extrae mensajes cada 250ms en el caso de que existan. Por tanto la cola nunca llega a llenarse.
 Intente calcular cual sería el numero máximo de mensajes que se pueden acumular en la cola.
 
-----------------------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ¿cuanto vale la variable errors_or_timeouts despues de 1 minuto de ejecución del código?
-----------------------------------------------------------------------------------------
-El valor vale 0 porque no se produce dicha condición. 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Challenge: Modifique el código del hilo ``Producer`` para que la variable errors_or_timeouts no valga cero.
+l valor vale 0 porque no se produce dicha condición. 
+
+.. note:: 
+   Challenge: Modifique el código del hilo ``Producer`` para que la variable errors_or_timeouts no valga cero.
 
 
