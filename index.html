@@ -1,0 +1,195 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; SBM CMIS RTOS Examples Documentation 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Ejemplos de uso de CMSIS RTOS V2" href="cmsis-rtos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            SBM CMIS RTOS Examples Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cmsis-rtos.html">Ejemplos de uso de CMSIS RTOS V2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothread.html"><strong>ejemplothread</strong>: Uso básico de un thread en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads.html"><strong>ejemplothreads</strong>: Uso básico de threads en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-queues.html"><strong>ejemplothreads-queues</strong>: Uso básico de threads y colas en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-flags.html"><strong>ejemplothreads-flags</strong>: Uso básico de threads y flags en CMSIS RTOS v2</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">SBM CMIS RTOS Examples Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cmsis-rtos.html">Ejemplos de uso de CMSIS RTOS V2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmsis-rtos.html#descarga-del-codigo">Descarga del código</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmsis-rtos.html#listado-de-ejemplos-incluidos">Listado de ejemplos incluidos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmsis-rtos.html#configuracion-del-proyecto-de-keil">Configuración del Proyecto de Keil</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cmsis-rtos.html#uso-del-simulador">Uso del simulador</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmsis-rtos.html#uso-del-hardware">Uso del hardware</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothread.html"><strong>ejemplothread</strong>: Uso básico de un thread en CMSIS RTOS v2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothread.html#descripcion-general">Descripción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothread.html#estructura-de-datos">Estructura de Datos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothread.html#inicializacion-de-los-hilos">Inicialización de los Hilos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothread.html#funcion-del-hilo">Función del Hilo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothread.html#uso-de-hal-y-cmsis-rtos">Uso de HAL y CMSIS RTOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothread.html#codigo-fuente">Código Fuente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothread.html#dependencias">Dependencias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothread.html#preguntas-y-respuestas-sobre-ejemplothread">Preguntas y respuestas sobre <strong>ejemplothread</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothread.html#que-hace-este-codigo">¿Qué hace este código?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothread.html#que-es-la-estructura-mygpio-pin">¿Qué es la estructura <cite>mygpio_pin</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothread.html#como-se-inicializan-los-hilos">¿Cómo se inicializan los hilos?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothread.html#que-hace-la-funcion-thread">¿Qué hace la función <cite>Thread()</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothread.html#se-ejecutan-los-hilos-al-mismo-tiempo">¿Se ejecutan los hilos al mismo tiempo?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothread.html#que-significa-osdelay">¿Qué significa <cite>osDelay()</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothread.html#que-pasa-si-osthreadnew-devuelve-null">¿Qué pasa si <cite>osThreadNew()</cite> devuelve NULL?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothread.html#que-ficheros-de-cabecera-se-utilizan">¿Qué ficheros de cabecera se utilizan?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads.html"><strong>ejemplothreads</strong>: Uso básico de threads en CMSIS RTOS v2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads.html#descripcion-general">Descripción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads.html#estructura-de-datos">Estructura de Datos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads.html#inicializacion-de-los-hilos">Inicialización de los Hilos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads.html#funcion-del-hilo">Función del Hilo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads.html#uso-de-hal-y-cmsis-rtos">Uso de HAL y CMSIS RTOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads.html#codigo-fuente">Código Fuente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads.html#dependencias">Dependencias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads.html#preguntas-y-respuestas-sobre-ejemplothreads">Preguntas y respuestas sobre <strong>ejemplothreads</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads.html#que-hace-este-codigo">¿Qué hace este código?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads.html#que-hace-la-funcion-thread">¿Qué hace la función <cite>Thread()</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads.html#se-ejecutan-los-hilos-al-mismo-tiempo">¿Se ejecutan los hilos al mismo tiempo?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads.html#que-pasa-si-osthreadnew-devuelve-null">¿Qué pasa si <cite>osThreadNew()</cite> devuelve NULL?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads.html#que-ficheros-de-cabecera-se-utilizan">¿Qué ficheros de cabecera se utilizan?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-queues.html"><strong>ejemplothreads-queues</strong>: Uso básico de threads y colas en CMSIS RTOS v2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#descripcion-general">Descripción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#estructura-de-datos">Estructura de Datos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#inicializacion-de-los-hilos">Inicialización de los Hilos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#funcion-del-hilo-producer">Función del Hilo Producer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#funcion-del-hilo-consumer">Función del Hilo Consumer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#uso-de-hal-y-cmsis-rtos">Uso de HAL y CMSIS RTOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#codigo-fuente">Código Fuente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#dependencias">Dependencias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-queues.html#preguntas-y-respuestas-sobre-ejemplothreads-queues">Preguntas y respuestas sobre <strong>ejemplothreads-queues</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads-queues.html#cual-es-el-proposito-de-la-cola-de-mensajes-id-msgqueue-en-esta-aplicacion">¿Cuál es el propósito de la cola de mensajes <cite>id_MsgQueue</cite> en esta aplicación?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads-queues.html#que-funcion-cumple-el-bucle-anidado-en-el-hilo-producer">¿Qué función cumple el bucle anidado en el hilo <cite>Producer</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads-queues.html#cuanto-tiempo-tarda-en-llenarse-la-cola-de-mensajes-id-msgqueue">¿Cuanto tiempo tarda en llenarse la cola de mensajes <cite>id_MsgQueue</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads-queues.html#cuanto-vale-la-variable-errors-or-timeouts-despues-de-1-minuto-de-ejecucion-del-codigo">¿cuanto vale la variable errors_or_timeouts despues de 1 minuto de ejecución del código?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-flags.html"><strong>ejemplothreads-flags</strong>: Uso básico de threads y flags en CMSIS RTOS v2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#descripcion-general">Descripción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#estructura-de-datos">Estructura de Datos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#inicializacion-de-los-hilos">Inicialización de los Hilos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#funcion-del-hilo-producer">Función del Hilo Producer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#funcion-del-hilo-consumer">Función del Hilo Consumer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#uso-de-hal-y-cmsis-rtos">Uso de HAL y CMSIS RTOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#codigo-fuente">Código Fuente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#dependencias">Dependencias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ejemplothreads-flags.html#preguntas-y-respuestas-sobre-ejemplothreads-flags">Preguntas y respuestas sobre <strong>ejemplothreads-flags</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ejemplothreads-flags.html#se-modifica-el-codigo-del-producer-para-que-envie-ambas-senales-0x0001-y-0x0002-de-forma-casi-simultanea-seguido-de-un-delay-de-1-segundo">Se modifica el código del Producer para que envíe ambas señales (0x0001 y 0x0002) de forma casi simultánea, seguido de un delay de 1 segundo:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cmsis-rtos.html" class="btn btn-neutral float-right" title="Ejemplos de uso de CMSIS RTOS V2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright UPM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
