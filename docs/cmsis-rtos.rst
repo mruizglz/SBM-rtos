@@ -21,8 +21,6 @@ Para descargar el código puede utilizar un cliente de git en su ordenador o bie
 
 
 
-
-
 *****************************
 Listado de ejemplos incluidos
 *****************************
@@ -77,3 +75,39 @@ Si dispone de una placa con el microcontrolador STM32F429 puede ejecutar el cód
 
 **No defina la variable** ``SIMULATOR`` en las opciones de compilación para que el circutio de RCC se configure adecadamente. 
 
+
+-----------------------------------------------
+Depuración de aplicaciones usando CMSIS-RTOS V2
+-----------------------------------------------
+
+La depuración de las aplicaciones se debe realizar combinando el uso de puntos de ruptura y de la aplicación RTX RTOS view disponible en el menu ``View->Watch Windows->RTX RTOS``. 
+Esta permite ver el estado en el que se encuentran los diferentes objetos del sistema operativo cuando el procesador pausa su ejecución. Herramientas complementarias para entender
+el funcionamiento de una aplicación son ``Logyc Analyzer``, ``Performance Analyzer``, ``System Analyzer``, ``Event Recorder``. ``Event Statistics`` y ``Symbols Window``
+
+^^^^^^^^^^^^^^
+Symbols Window
+^^^^^^^^^^^^^^
+
+La **Symbols Window** permite visualizar y explorar todos los símbolos definidos en el proyecto, incluyendo variables globales, variables estáticas, funciones y direcciones de registros . Esta ventana es útil para depuración y análisis en tiempo real.
+
+- Muestra una lista jerárquica de todos los símbolos disponibles en el programa cargado.
+- Permite buscar y filtrar símbolos por nombre.
+- Muestra la dirección y el valor actual de cada símbolo durante la sesión de depuración.
+- Facilita el arrastre de variables a otras ventanas de análisis, como el Watch Window o el Logic Analyzer.
+- Permite examinar variables optimizadas si están disponibles en la tabla de símbolos.
+- Si un símbolo no aparece, verifique la configuración de optimización del compilador y el ámbito de la variable.
+
+Para utilizarlo:
+
+1. Iniciar una sesión de depuración.
+2. Abrir la ventana desde el menú: :menuselection:`View --> Symbol Window`.
+3. Buscar el símbolo deseado utilizando el campo de filtro.
+4. Arrastrar el símbolo a la ventana de Watch o ``Logic Analyzer`` para su monitoreo.
+
+
+
+^^^^^^^^^^^^^^
+Logic Analyzer
+^^^^^^^^^^^^^^
+
+Permite visualizar la evolución temporal de variables que sean globales a la aplicación, el contenido de posiciones de memoria, etc.
