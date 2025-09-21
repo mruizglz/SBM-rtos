@@ -130,9 +130,9 @@ Dependencias
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
-----------------------------------------------
+-----------------------------------------------
 Preguntas y respuestas sobre **ejemplothreads**
-----------------------------------------------
+-----------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
