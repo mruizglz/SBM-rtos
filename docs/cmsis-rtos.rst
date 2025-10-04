@@ -118,4 +118,4 @@ Para agregar señales al ``Logic Analyzer`` puede arrastrarlas de la ventana de 
    :align: center
    :figwidth: 400px
 
-   Figura 1. Analizador lógico de ARM Keil Microvision.
+   Analizador lógico de ARM Keil Microvision.
