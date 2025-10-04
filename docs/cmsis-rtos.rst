@@ -112,7 +112,7 @@ Logic Analyzer
 Permite visualizar la evolución temporal de variables que sean globales a la aplicación, el contenido de posiciones de memoria, etc. Se puede configurar el rango de valores y es muy apropiado para comparar visualmente la evolución de la aplicacón software a través del seguimiento de variables.
 Para agregar señales al ``Logic Analyzer`` puede arrastrarlas de la ventana de símbolos o escribir el nombre de la misma.
 
-.. figure:: ./presentation/logicanalizer.png
+.. figure:: ./presentation/logicanalyzer.png
    :alt: Analizador Lógico
    :scale: 50 %
    :align: center
