@@ -3,15 +3,15 @@ Ejemplos de uso de CMSIS RTOS V2
 ================================
 
 El repositorio contiene los ejemplos básicos para entender el funcionamiento de la API CMSIS-RTOS V2 utilizando el sistema operativo RTX version 5.
-Los ejemplos estan implementados para utilizar minimamente los periféricos del microcontrolador y hacer hincapie en los conceptos de manejo del Sistema Operativo.
+Los ejemplos están implementados para utilizar mínimamente los periféricos del microcontrolador y hacer hincapié en los conceptos de manejo del Sistema Operativo.
 
-Los ejemplos se han implementado para el STM32F429 utilizado en la asignatura **Sistemas Basados en microprocesador** y se pueden ejecutar utilizando el simulador del microprocesador includido en el entorno de keil Microvision o bien el hardware.
+Los ejemplos se han implementado para el STM32F429 utilizado en la asignatura **Sistemas Basados en Microprocesador** de la **(ETSI Sistemas de Telecomunicación) Universidad Politécnica de Madrid** y se pueden ejecutar utilizando el simulador del microprocesador incluido en el entorno de ARM keil Microvision o bien el hardware.
 
 *******************
 Descarga del código
 *******************
 
-Para descargar el código puede utilizar un cliente de git en su ordenador o bien descargar el repositorio completo (formato **zip**). Las instruciones para clonar el repositorio son:
+Para descargar el código puede utilizar un cliente de git en su ordenador o bien descargar el repositorio completo (formato **zip**). Las instrucciones para clonar el repositorio son:
 
 .. note:: Descarga del código
 
@@ -48,23 +48,23 @@ Configuración del Proyecto de Keil
 Uso del simulador
 -----------------
 
-Keil Microvision dispone de opciones para configurar donde se ejecutará la aplicación (Icono *Options for Target*). Seleccione **Debug** y active el uso del simulador (**Use Simulator**). 
-Es necesario que configure el fichero de inicialización (**Initialization File**) para que cargue el script de configuración del microcontrolador. En este caso, seleccione el fichero ``simulator.ini`` que se encuentra en cada una de las carpetas de ejmplo. Por ejemplo en la carpeta ``.\ejemplothreads`` del repositorio encontrará el fichero **simulador.ini** con este contenido:
+ARM Keil Microvision dispone de opciones para configurar donde se ejecutará la aplicación (Icono *Options for Target*). Seleccione **Debug** y active el uso del simulador (**Use Simulator**). 
+Es necesario que configure el fichero de inicialización (**Initialization File**) para que cargue un script de configuración del microcontrolador. En este caso, seleccione el fichero ``simulator.ini`` que se encuentra en cada una de las carpetas de ejmplo. Por ejemplo en la carpeta ``.\ejemplothreads`` del repositorio encontrará el fichero **simulador.ini** con este contenido:
 
 .. literalinclude:: ../ejemplothreads/simulator.ini
   :language: ini
   :linenos:
   
 
-El significado de estas instrucciones es habilitar para el simulador las operaciones de lectura  escritura en las zonas de memoria donde se encuentran los periféricos.
+El significado de estas instrucciones es habilitar para el simulador las operaciones de lectura/escritura en las zonas de memoria donde se encuentran los periféricos.
 
 .. tip:: 
 
    Cuando se usa el simulador de Keil las operaciones de escritura y lectura de los periféricos no tienen ningún efecto y por tanto no podrá simular el comportamiento hardware de los mismos
-   Todas las operaciones de la capa HAL que actuan sobre periféricos no tendrán ningún efecto. Por ejemplo, si en el código se configura un pin como salida y luego se escribe un valor alto en el mismo, no podrá ver ningún cambio en el estado del pin.
+   Todas las operaciones de la capa HAL que actúan sobre periféricos no tendrán ningún efecto. Por ejemplo, si en el código se configura un pin como salida y luego se escribe un valor alto en el mismo, no podrá ver ningún cambio en el estado del pin.
 
 
-Como podrá ver en el codigo del programa ``main.c`` existe compilación condicional para incluir o no el código de configuración del RCC para usar un reloj externo (HSE). 
+Como podrá ver en el código del programa ``main.c`` existe compilación condicional para incluir o no el código de configuración del RCC para usar un reloj externo (HSE). 
 Si utiliza el simulador debe desactivar esta opción y usar el reloj interno (HSI) que es el que utiliza el simulador. La pestaña **C/C++(AC6)** permite añadir en ``define`` etiquetas. Incluya ``SIMULATOR`` si quiere utilizar el simulator.
 
 ----------------
@@ -73,7 +73,7 @@ Uso del hardware
 
 Si dispone de una placa con el microcontrolador STM32F429 puede ejecutar el código directamente en el hardware. En este caso debe configurar las opciones del proyecto para que utilice el ST-Link en lugar del simulador. 
 
-**No defina la variable** ``SIMULATOR`` en las opciones de compilación para que el circutio de RCC se configure adecadamente. 
+**No defina la variable** ``SIMULATOR`` en las opciones de compilación para que el circuito de RCC se configure adecuadamente. 
 
 
 -----------------------------------------------
@@ -88,7 +88,7 @@ el funcionamiento de una aplicación son ``Logyc Analyzer``, ``Performance Analy
 Symbols Window
 ^^^^^^^^^^^^^^
 
-La **Symbols Window** permite visualizar y explorar todos los símbolos definidos en el proyecto, incluyendo variables globales, variables estáticas, funciones y direcciones de registros . Esta ventana es útil para depuración y análisis en tiempo real.
+La opción **Symbols Window** permite visualizar y explorar todos los símbolos definidos en el proyecto, incluyendo variables globales, variables estáticas, funciones y direcciones de registros . Esta ventana es útil para depuración y análisis en tiempo real.
 
 - Muestra una lista jerárquica de todos los símbolos disponibles en el programa cargado.
 - Permite buscar y filtrar símbolos por nombre.
@@ -102,12 +102,20 @@ Para utilizarlo:
 1. Iniciar una sesión de depuración.
 2. Abrir la ventana desde el menú: :menuselection:`View --> Symbol Window`.
 3. Buscar el símbolo deseado utilizando el campo de filtro.
-4. Arrastrar el símbolo a la ventana de Watch o ``Logic Analyzer`` para su monitoreo.
-
+4. Arrastrar el símbolo a la ventana de Watch o ``Logic Analyzer`` para su monitorización.
 
 
 ^^^^^^^^^^^^^^
 Logic Analyzer
 ^^^^^^^^^^^^^^
 
-Permite visualizar la evolución temporal de variables que sean globales a la aplicación, el contenido de posiciones de memoria, etc.
+Permite visualizar la evolución temporal de variables que sean globales a la aplicación, el contenido de posiciones de memoria, etc. Se puede configurar el rango de valores y es muy apropiado para comparar visualmente la evolución de la aplicacón software a través del seguimiento de variables.
+Para agregar señales al ``Logic Analyzer`` puede arrastrarlas de la ventana de símbolos o escribir el nombre de la misma.
+
+.. figure:: ./presentation/logicanalizer.png
+   :alt: Analizador Lógico
+   :scale: 50 %
+   :align: center
+   :figwidth: 400px
+
+   Figura 1. Analizador lógico de ARM Keil Microvision.
