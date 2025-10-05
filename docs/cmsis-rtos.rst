@@ -119,3 +119,28 @@ Para agregar señales al ``Logic Analyzer`` puede arrastrarlas de la ventana de 
    :figwidth: 400px
 
    Analizador lógico de ARM Keil Microvision.
+
+
+^^^^^^^^^^^^^^^^^^^^
+Performance Analyzer
+^^^^^^^^^^^^^^^^^^^^
+
+.. warning::
+
+  Solo esta disponible en Simulación porque el ST-LINK no lo soporta
+
+
+Permite conocer el porcentaje de tiempo utilizado por cada porción del código de nuestra aplicación.
+Para utilizarlo:
+
+1. Iniciar una sesión de depuración.
+2. Abrir la ventana desde el menú: :menuselection:`View --> Analysis Windows --> Performnace analyzer`.
+3. Se muestra una lista de las diferentes secciones de código.
+
+.. figure:: ../presentation/performanceanalyzer.png
+   :alt: Performance Analyzer
+   :scale: 50 %
+   :align: center
+   :figwidth: 400px
+
+   Performance Analyzer (Solo disponible en Modo Simulación). No soportado en ST-LINK.
