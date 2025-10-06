@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejemplos de uso de CMSIS RTOS V2 &mdash; SBM CMIS RTOS Examples Documentation 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Uso básico de un thread en CMSIS RTOS v2" href="ejemplothread.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SBM CMIS RTOS Examples Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ejemplos de uso de CMSIS RTOS V2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#descarga-del-codigo">Descarga del código</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listado-de-ejemplos-incluidos">Listado de ejemplos incluidos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuracion-del-proyecto-de-keil">Configuración del Proyecto de Keil</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uso-del-simulador">Uso del simulador</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uso-del-hardware">Uso del hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#depuracion-de-aplicaciones-usando-cmsis-rtos-v2">Depuración de aplicaciones usando CMSIS-RTOS V2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#symbols-window">Symbols Window</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logic-analyzer">Logic Analyzer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#performance-analyzer">Performance Analyzer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothread.html">Uso básico de un thread en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads.html"><strong>ejemplothreads</strong>: Uso básico de threads en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-queues.html"><strong>ejemplothreads-queues</strong>: Uso básico de threads y colas en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-flags.html"><strong>ejemplothreads-flags</strong>: Uso básico de threads y flags en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmsis-rtos-en.html">CMSIS RTOS V2 Usage Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SBM CMIS RTOS Examples Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Ejemplos de uso de CMSIS RTOS V2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cmsis-rtos.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ejemplos-de-uso-de-cmsis-rtos-v2">
+<h1>Ejemplos de uso de CMSIS RTOS V2<a class="headerlink" href="#ejemplos-de-uso-de-cmsis-rtos-v2" title="Link to this heading"></a></h1>
+<p>El repositorio contiene los ejemplos básicos para entender el funcionamiento de la API CMSIS-RTOS V2 utilizando el sistema operativo RTX version 5.
+Los ejemplos están implementados para utilizar mínimamente los periféricos del microcontrolador y hacer hincapié en los conceptos de manejo del Sistema Operativo.</p>
+<p>Los ejemplos se han implementado para el STM32F429 utilizado en la asignatura <strong>Sistemas Basados en Microprocesador</strong> de la <strong>(ETSI Sistemas de Telecomunicación) Universidad Politécnica de Madrid</strong> y se pueden ejecutar utilizando el simulador del microprocesador incluido en el entorno de ARM keil Microvision o bien el hardware.</p>
+<section id="descarga-del-codigo">
+<h2>Descarga del código<a class="headerlink" href="#descarga-del-codigo" title="Link to this heading"></a></h2>
+<p>Para descargar el código puede utilizar un cliente de git en su ordenador o bien descargar el repositorio completo (formato <strong>zip</strong>). Las instrucciones para clonar el repositorio son:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Descarga del código</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mruizglz/SBM-rtos.git
+</pre></div>
+</div>
+</div>
+</section>
+<section id="listado-de-ejemplos-incluidos">
+<h2>Listado de ejemplos incluidos<a class="headerlink" href="#listado-de-ejemplos-incluidos" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Ejemplos incluidos</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Carpeta</p></th>
+<th class="head"><p>Objetivos</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>ejemplothreads</strong></p></td>
+<td><p>Aprender el manejo básico de creación de threads. Uso de la misma función con parámetros parea crear multiples threads</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ejemplothreads-flags</strong></p></td>
+<td><p>Sincronización de threads usando flags</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>ejemplothreads-queues</strong></p></td>
+<td><p>Intercambio de datos entre threads usando colas</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ejemplothreads-timers</strong></p></td>
+<td><p>Gestion de timers “software”</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="configuracion-del-proyecto-de-keil">
+<h2>Configuración del Proyecto de Keil<a class="headerlink" href="#configuracion-del-proyecto-de-keil" title="Link to this heading"></a></h2>
+<section id="uso-del-simulador">
+<h3>Uso del simulador<a class="headerlink" href="#uso-del-simulador" title="Link to this heading"></a></h3>
+<p>ARM Keil Microvision dispone de opciones para configurar donde se ejecutará la aplicación (Icono <em>Options for Target</em>). Seleccione <strong>Debug</strong> y active el uso del simulador (<strong>Use Simulator</strong>).
+Es necesario que configure el fichero de inicialización (<strong>Initialization File</strong>) para que cargue un script de configuración del microcontrolador. En este caso, seleccione el fichero <code class="docutils literal notranslate"><span class="pre">simulator.ini</span></code> que se encuentra en cada una de las carpetas de ejmplo. Por ejemplo en la carpeta <code class="docutils literal notranslate"><span class="pre">.\ejemplothreads</span></code> del repositorio encontrará el fichero <strong>simulador.ini</strong> con este contenido:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="na">MAP 0x40000000,0x400FFFFF read write</span>
+<span class="linenos">2</span><span class="na">MAP 0xE0000000,0xE00FFFFF read write</span>
+</pre></div>
+</div>
+<p>El significado de estas instrucciones es habilitar para el simulador las operaciones de lectura/escritura en las zonas de memoria donde se encuentran los periféricos.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cuando se usa el simulador de Keil las operaciones de escritura y lectura de los periféricos no tienen ningún efecto y por tanto no podrá simular el comportamiento hardware de los mismos
+Todas las operaciones de la capa HAL que actúan sobre periféricos no tendrán ningún efecto. Por ejemplo, si en el código se configura un pin como salida y luego se escribe un valor alto en el mismo, no podrá ver ningún cambio en el estado del pin.</p>
+</div>
+<p>Como podrá ver en el código del programa <code class="docutils literal notranslate"><span class="pre">main.c</span></code> existe compilación condicional para incluir o no el código de configuración del RCC para usar un reloj externo (HSE).
+Si utiliza el simulador debe desactivar esta opción y usar el reloj interno (HSI) que es el que utiliza el simulador. La pestaña <strong>C/C++(AC6)</strong> permite añadir en <code class="docutils literal notranslate"><span class="pre">define</span></code> etiquetas. Incluya <code class="docutils literal notranslate"><span class="pre">SIMULATOR</span></code> si quiere utilizar el simulator.</p>
+</section>
+<section id="uso-del-hardware">
+<h3>Uso del hardware<a class="headerlink" href="#uso-del-hardware" title="Link to this heading"></a></h3>
+<p>Si dispone de una placa con el microcontrolador STM32F429 puede ejecutar el código directamente en el hardware. En este caso debe configurar las opciones del proyecto para que utilice el ST-Link en lugar del simulador.</p>
+<p><strong>No defina la variable</strong> <code class="docutils literal notranslate"><span class="pre">SIMULATOR</span></code> en las opciones de compilación para que el circuito de RCC se configure adecuadamente.</p>
+</section>
+<section id="depuracion-de-aplicaciones-usando-cmsis-rtos-v2">
+<h3>Depuración de aplicaciones usando CMSIS-RTOS V2<a class="headerlink" href="#depuracion-de-aplicaciones-usando-cmsis-rtos-v2" title="Link to this heading"></a></h3>
+<p>La depuración de las aplicaciones se debe realizar combinando el uso de puntos de ruptura y de la aplicación RTX RTOS view disponible en el menu <code class="docutils literal notranslate"><span class="pre">View-&gt;Watch</span> <span class="pre">Windows-&gt;RTX</span> <span class="pre">RTOS</span></code>.
+Esta permite ver el estado en el que se encuentran los diferentes objetos del sistema operativo cuando el procesador pausa su ejecución. Herramientas complementarias para entender
+el funcionamiento de una aplicación son <code class="docutils literal notranslate"><span class="pre">Logyc</span> <span class="pre">Analyzer</span></code>, <code class="docutils literal notranslate"><span class="pre">Performance</span> <span class="pre">Analyzer</span></code>, <code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">Analyzer</span></code>, <code class="docutils literal notranslate"><span class="pre">Event</span> <span class="pre">Recorder</span></code>. <code class="docutils literal notranslate"><span class="pre">Event</span> <span class="pre">Statistics</span></code> y <code class="docutils literal notranslate"><span class="pre">Symbols</span> <span class="pre">Window</span></code></p>
+<section id="symbols-window">
+<h4>Symbols Window<a class="headerlink" href="#symbols-window" title="Link to this heading"></a></h4>
+<p>La opción <strong>Symbols Window</strong> permite visualizar y explorar todos los símbolos definidos en el proyecto, incluyendo variables globales, variables estáticas, funciones y direcciones de registros . Esta ventana es útil para depuración y análisis en tiempo real.</p>
+<ul class="simple">
+<li><p>Muestra una lista jerárquica de todos los símbolos disponibles en el programa cargado.</p></li>
+<li><p>Permite buscar y filtrar símbolos por nombre.</p></li>
+<li><p>Muestra la dirección y el valor actual de cada símbolo durante la sesión de depuración.</p></li>
+<li><p>Facilita el arrastre de variables a otras ventanas de análisis, como el Watch Window o el Logic Analyzer.</p></li>
+<li><p>Permite examinar variables optimizadas si están disponibles en la tabla de símbolos.</p></li>
+<li><p>Si un símbolo no aparece, verifique la configuración de optimización del compilador y el ámbito de la variable.</p></li>
+</ul>
+<p>Para utilizarlo:</p>
+<ol class="arabic simple">
+<li><p>Iniciar una sesión de depuración.</p></li>
+<li><p>Abrir la ventana desde el menú: <span class="menuselection">View ‣ Symbol Window</span>.</p></li>
+<li><p>Buscar el símbolo deseado utilizando el campo de filtro.</p></li>
+<li><p>Arrastrar el símbolo a la ventana de Watch o <code class="docutils literal notranslate"><span class="pre">Logic</span> <span class="pre">Analyzer</span></code> para su monitorización.</p></li>
+</ol>
+</section>
+<section id="logic-analyzer">
+<h4>Logic Analyzer<a class="headerlink" href="#logic-analyzer" title="Link to this heading"></a></h4>
+<p>Permite visualizar la evolución temporal de variables que sean globales a la aplicación, el contenido de posiciones de memoria, etc. Se puede configurar el rango de valores y es muy apropiado para comparar visualmente la evolución de la aplicacón software a través del seguimiento de variables.
+Para agregar señales al <code class="docutils literal notranslate"><span class="pre">Logic</span> <span class="pre">Analyzer</span></code> puede arrastrarlas de la ventana de símbolos o escribir el nombre de la misma.</p>
+<figure class="align-center" id="id2" style="width: 400px">
+<a class="reference internal image-reference" href="_images/logicanalyzer.png"><img alt="Analizador Lógico" src="_images/logicanalyzer.png" style="width: 454.0px; height: 279.0px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Analizador lógico de ARM Keil Microvision.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="performance-analyzer">
+<h4>Performance Analyzer<a class="headerlink" href="#performance-analyzer" title="Link to this heading"></a></h4>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Solo esta disponible en Simulación porque el ST-LINK no lo soporta</p>
+</div>
+<p>Permite conocer el porcentaje de tiempo utilizado por cada porción del código de nuestra aplicación.
+Para utilizarlo:</p>
+<ol class="arabic simple">
+<li><p>Iniciar una sesión de depuración.</p></li>
+<li><p>Abrir la ventana desde el menú: <span class="menuselection">View ‣ Analysis Windows ‣ Performnace analyzer</span>.</p></li>
+<li><p>Se muestra una lista de las diferentes secciones de código.</p></li>
+</ol>
+<figure class="align-center" id="id3" style="width: 400px">
+<a class="reference internal image-reference" href="_images/performanceanalyzer.png"><img alt="Performance Analyzer" src="_images/performanceanalyzer.png" style="width: 423.0px; height: 192.0px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Performance Analyzer (Solo disponible en Modo Simulación). No soportado en ST-LINK.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ejemplothread.html" class="btn btn-neutral float-right" title="Uso básico de un thread en CMSIS RTOS v2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright UPM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
