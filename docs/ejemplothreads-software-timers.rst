@@ -141,15 +141,16 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
    :depth: 1
    :local:
 
---------------------------------------------------------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Los ficheros RTX_config.h y RTX_config.c son generados automáticamente por el entorno de desarrollo. ¿Se pueden modificar?
---------------------------------------------------------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sí, se pueden modificar. Estos ficheros contienen configuraciones específicas del sistema operativo en tiempo real (RTOS) RTX, como el número máximo de hilos, la prioridad de los hilos, el tamaño de la pila, entre otros parámetros. 
 Modificar estos archivos permite ajustar el comportamiento del RTOS según las necesidades específicas de la aplicación.
-----------------------------------------------------------------------------------------------------
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Si se fija un punto de ruptura en la línea 49, ¿qué se espera ver en el ``Watch Windows->RTX RTOS``?
-----------------------------------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 1. El hilo en estado running. Además no es el único hilo porque aparece el hilo ``osRtxIdleThread`` y ``osRtxTimerThread``.
@@ -157,6 +158,9 @@ Si se fija un punto de ruptura en la línea 49, ¿qué se espera ver en el ``Wat
 
 
 .. note:: 
-   Challenge: Investigue el mecanismo para pode poner su código en el thread ``osRtxIdleThread``.
+   Challenge: Investigue el mecanismo para podre poner su código propio en el thread ``osRtxIdleThread``.
 
+
+.. note:: 
+   Challenge: Investigue el mecanismo para podre poner su código propio en el thread ``osRtxIdleThread``.
 

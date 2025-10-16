@@ -7,7 +7,7 @@
    ejemplothreads.rst
    ejemplothreads-queues.rst
    ejemplothreads-flags.rst
-   cmsis-rtos-en.rst
+   ejemplothreads-software-timers.rst
 
    
    

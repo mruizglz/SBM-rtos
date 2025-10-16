@@ -3,13 +3,13 @@
 **ejemplothreads**: Uso básico de threads en CMSIS RTOS v2
 **********************************************************
 
-Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes.
+Esta sección describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes.
 
 -------------------
 Descripción General
 -------------------
 
-El programa crea dos hilos que controlan dos LEDs conectados a los pines PB0 y PB7 del microcontrolador STM32F4. Cada hilo alterna el estado de su LED con una frecuencia distinta, utilizando funciones del sistema operativo en tiempo real (RTOS) y la biblioteca HAL para la configuración y manipulación de los pines GPIO.
+El programa crea dos hilos que controlan dos LEDs conectados a los pines PB0 y PB7 del microcontrolador STM32F429. Cada hilo alterna el estado de su LED con una frecuencia distinta, utilizando funciones del sistema operativo en tiempo real (RTOS) y la biblioteca HAL para la configuración y manipulación de los pines GPIO.
 
 -------------------
 Estructura de Datos
@@ -19,8 +19,8 @@ Se define una estructura llamada ``mygpio_pin`` que encapsula toda la informaci�
 
 - ``GPIO_InitTypeDef pin``: configuración del pin (modo, velocidad, tipo de salida).
 - ``GPIO_TypeDef *port``: puerto GPIO al que pertenece el pin.
-- ``int delay``: retardo en milisegundos entre cada cambio de estado del LED.
-- ``uint8_t counter``: contador que se alterna en cada iteración del hilo.
+- ``int delay``: retardo en ms entre cada cambio de estado del LED.
+- ``uint8_t counter``: contador que se incrementa en cada iteración del hilo.
 
 Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.
 
@@ -145,8 +145,8 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Este código crea dos hilos (threads) que controlan dos LEDs conectados a los pines PB0 y PB7 de una placa STM32F4. Cada hilo alterna el estado del LED (encendido/apagado) con una frecuencia determinada utilizando funciones del sistema operativo en tiempo real CMSIS RTOS v2.
-Es importante entender que el mismo codigo (funcion Thread) es ejecutado por dos hilos diferentes, cada uno con sus propios parámetros, que se reciben en el argumento de la función.
-Es de tipo ``void`` para poder pasar cualquier tipo de estructura como argumento. Dentro del codigo del Thread se realiza un casting al tipo de estructura que se utiliza en el ejemplo
+Es importante entender que el mismo código (funcion Thread) es ejecutado por dos hilos diferentes, cada uno con sus propios parámetros, que se reciben en el argumento de la función.
+Es de tipo ``void`` para poder pasar cualquier tipo de estructura como argumento. Dentro del código del Thread se realiza un casting al tipo de estructura que se utiliza en el ejemplo
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -157,7 +157,7 @@ Es una estructura de datos que encapsula la información necesaria para controla
 
 - ``pin``: configuración del pin (tipo, velocidad, modo).
 - ``port``: puerto GPIO al que pertenece el pin (por ejemplo, GPIOB).
-- ``delay``: retardo en milisegundos entre cada cambio de estado (toggle).
+- ``delay``: retardo en ms entre cada cambio de estado (toggle).
 - ``counter``: variable auxiliar que cuenta la cantidad de veces que se ha realizado el toggle.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -189,7 +189,7 @@ CMSIS RTOS v2 permite la ejecución concurrente, que no simultanea, de múltiple
 ¿Qué significa `osDelay()`?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Es una función del RTOS que suspende la ejecución del hilo actual durante un número determinado de milisegundos. Esto permite que otros hilos se ejecuten mientras tanto. ``osDelay`` tiene como parametro el número de ticks que la tarea estará bloqueada. El número de ticks por segundo se define en el archivo ``RTX_Config.h`` (parámetro ``Kernel Tick Frequency [Hz]``). En este ejemplo se ha configurado a 1000, por lo que un tick equivale a 1 ms.
+Es una función del RTOS que suspende la ejecución del hilo actual durante un número determinado de ticks. Esto permite que otros hilos se ejecuten mientras tanto. ``osDelay`` tiene como parametro el número de ticks que la tarea estará bloqueada. El número de ticks por segundo se define en el archivo ``RTX_Config.h`` (parámetro ``Kernel Tick Frequency [Hz]``). En este ejemplo se ha configurado a 1000, por lo que un tick equivale a 1 ms.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -203,9 +203,26 @@ Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()
 ¿Qué ficheros de cabecera se utilizan?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
-
 - ``cmsis_os2.h``: para funciones del sistema operativo en tiempo real.
 - ``stm32f4xx_hal.h``: para funciones de acceso a hardware (HAL).
 - ``stdlib.h``: para funciones estándar de C.
   
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+¿Cuanto vale el valor del tick es esta aplicación?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+El fichero de configuración del sistema operativo tal y como indica la figura tiene configurado un tick de 1ms. 
+
+.. figure:: ../presentation/RTXConfig.png
+   :scale: 50 %
+   :align: center
+   :figwidth: 400px
+
+   COnfiguración del sistema operativo.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+¿Que es el thread Idle? ¿Qué tamaño de stack tiene? ¿Y otro thread? ¿Que tamaño de stack usa?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EL thread idle esta definido en el fichero RTX_Config.c y es un thread que se ejecuta cuando el sistema operativo no tiene ninguna otro thread que ejecutar. Tiene un tamaño de ``stack`` de 512 bytes.
+Cualquier otro thread se configura para tener un tamaño de stack de 3072 bytes (3KBytes). Una reflexión interesante es cuantos threads se pueden crear en una aplicación.
