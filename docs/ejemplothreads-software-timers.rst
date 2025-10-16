@@ -1,5 +1,5 @@
 ***********************************************************************************
-**ejemplothreads-timers**: Uso básico de threads y software timers en CMSIS RTOS v2
+Uso básico de threads y software timers en CMSIS RTOS v2
 ***********************************************************************************
 
 Esta sección describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante un hilo y timers software.
@@ -141,6 +141,17 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
    :depth: 1
    :local:
 
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+¿Cual es la diferencia fundamental entre un timer periódico otro one-shot?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+El timer one-shot dispara la función de callback una sola vez. Es importante indicar que el tiempo empieza a contar desde que el timer es arrancado.
+Un timer periódico por contra ejecuta la función de callback multiples veces. 
+Es importante hacer notar que la función de arrancar un timer no se puede llamar desde una rutina de atención a la interrupción. 
+La función de arrancar un timer se puede llamar de manera reiterada reiniciando la cuenta de tiempo del mismo.
+
+
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Los ficheros RTX_config.h y RTX_config.c son generados automáticamente por el entorno de desarrollo. ¿Se pueden modificar?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -149,7 +160,7 @@ Sí, se pueden modificar. Estos ficheros contienen configuraciones específicas 
 Modificar estos archivos permite ajustar el comportamiento del RTOS según las necesidades específicas de la aplicación.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Si se fija un punto de ruptura en la línea 49, ¿qué se espera ver en el ``Watch Windows->RTX RTOS``?
+Si se fija un punto de ruptura en la línea 47, ¿qué se espera ver en el ``Watch Windows->RTX RTOS``?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -158,9 +169,9 @@ Si se fija un punto de ruptura en la línea 49, ¿qué se espera ver en el ``Wat
 
 
 .. note:: 
-   Challenge: Investigue el mecanismo para podre poner su código propio en el thread ``osRtxIdleThread``.
+   Challenge: Investigue el mecanismo para poder poner su propio código en el thread ``osRtxIdleThread``.
 
 
-.. note:: 
-   Challenge: Investigue el mecanismo para podre poner su código propio en el thread ``osRtxIdleThread``.
+.. warning:: 
+   No utilice las funciones de manejo de timers software desde rutinas de atención a la interrupción.
 

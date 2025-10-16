@@ -1,5 +1,5 @@
 *************************************************************************
-**ejemplothreads-queues**: Uso básico de threads y colas en CMSIS RTOS v2
+Uso básico de threads y colas en CMSIS RTOS v2
 *************************************************************************
 
 Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes que se comunican con colas.
