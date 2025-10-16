@@ -21,6 +21,7 @@ project = 'SBM CMIS RTOS Examples Documentation'
 copyright = 'UPM'
 author = 'Mariano Ruiz'
 release = '1.0'
+version = '1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -44,13 +45,13 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 simplepdf_vars = {
-#    'primary': '#a023fa',
-#    'secondary': '#379683',
-#    'cover': '#ffffff',
-#    'white': '#ffffff',
-#    'links': 'FA2323',
-#    'cover-bg': 'url(cover-bg.jpg) no-repeat center',
-#    'cover-overlay': 'rgba(250, 35, 35, 0.5)',
+    'primary': '#a023fa',
+    'secondary': '#379683',
+    'cover': '#ffffff',
+    'white': '#ffffff',
+    'links': 'FA2323',
+    'cover-bg': 'url(cover-bg.jpg) no-repeat center',
+    'cover-overlay': 'rgba(250, 35, 35, 0.5)',
     'top-left-content': 'counter(page)',
     'bottom-center-content': 'string(heading)',
 }
