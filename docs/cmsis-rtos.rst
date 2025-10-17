@@ -146,9 +146,9 @@ Para utilizarlo:
    :figwidth: 400px
 
 
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- Código del main.c de los ejemplos
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Código del main.c de los ejemplos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 El código del programa principal está detallado a continuación y es el mismo o muy similar para todos los ejemplos:
 
