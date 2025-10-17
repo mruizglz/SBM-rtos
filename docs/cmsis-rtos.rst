@@ -13,7 +13,10 @@ El repositorio contiene ejemplos básicos para entender el funcionamiento de la 
 Documentación en otros idiomas
 ==============================
 
-`Traducción a ingles-English translation <https://translate.google.com/translate?hl=en&sl=es&u=https://mruizglz.github.io/SBM-rtos`_
+`Traducción a inglés - English translation <https://translate.google.com/translate?hl=en&sl=es&u=https://mruizglz.github.io/SBM-rtos>`_
+
+
+
 
 *******************
 Descarga del código
@@ -160,7 +163,7 @@ Código en main.c de los ejemplos
 El código del programa principal está detallado a continuación y es el mismo o muy similar para todos los ejemplos:
 
  .. code-block:: c
-    :linenos:
+  :linenos:
 
   #include "main.h"
 
