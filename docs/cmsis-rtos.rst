@@ -2,10 +2,12 @@
 Ejemplos de uso de CMSIS RTOS V2
 ================================
 
-El repositorio contiene los ejemplos básicos para entender el funcionamiento de la API CMSIS-RTOS V2 utilizando el sistema operativo RTX version 5.
-Los ejemplos están implementados para utilizar mínimamente los periféricos del microcontrolador y hacer hincapié en los conceptos de manejo del Sistema Operativo.
+El repositorio contiene ejemplos básicos para entender el funcionamiento de la API CMSIS-RTOS V2 utilizando el sistema operativo RTX version 5. Los ejemplos están implementados para el STM32F429 y utilizan mínimamente los periféricos del microcontrolador y hacer hincapié en los conceptos de manejo del Sistema Operativo.
 
-Los ejemplos se han implementado para el STM32F429 utilizado en la asignatura **Sistemas Basados en Microprocesador** de la **(ETSI Sistemas de Telecomunicación) Universidad Politécnica de Madrid** y se pueden ejecutar utilizando el simulador del microprocesador incluido en el entorno de ARM keil Microvision o bien el hardware.
+.. note:: Uso de los ejemplos
+   
+   Los ejemplos se han implementado para la asignatura **Sistemas Basados en Microprocesador** de la **(ETSI Sistemas de Telecomunicación) Universidad Politécnica de Madrid** y se pueden ejecutar utilizando el simulador del microprocesador incluido en el entorno de ARM keil Microvision o bien el hardware.
+
 
 *******************
 Descarga del código
@@ -18,7 +20,6 @@ Para descargar el código puede utilizar un cliente de git en su ordenador o bie
     .. code-block:: shell 
     
       $ git clone https://github.com/mruizglz/SBM-rtos.git
-
 
 
 *****************************
@@ -80,7 +81,7 @@ Si dispone de una placa con el microcontrolador STM32F429 puede ejecutar el cód
 Depuración de aplicaciones usando CMSIS-RTOS V2
 -----------------------------------------------
 
-La depuración de las aplicaciones se debe realizar combinando el uso de puntos de ruptura y de la aplicación RTX RTOS view disponible en el menu ``View->Watch Windows->RTX RTOS``. 
+La depuración de las aplicaciones se debe realizar combinando el uso de puntos de ruptura y de la aplicación ``RTX RTOS view`` disponible en el menu ``View->Watch Windows->RTX RTOS``. 
 Esta permite ver el estado en el que se encuentran los diferentes objetos del sistema operativo cuando el procesador pausa su ejecución. Herramientas complementarias para entender
 el funcionamiento de una aplicación son ``Logyc Analyzer``, ``Performance Analyzer``, ``System Analyzer``, ``Event Recorder``. ``Event Statistics`` y ``Symbols Window``
 
