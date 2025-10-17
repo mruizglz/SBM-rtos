@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uso básico de threads y colas en CMSIS RTOS v2 &mdash; SBM CMIS RTOS Examples Documentation 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Uso básico de threads y flags en CMSIS RTOS v2" href="ejemplothreads-flags.html" />
+    <link rel="prev" title="Uso básico de threads en CMSIS RTOS v2" href="ejemplothreads.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SBM CMIS RTOS Examples Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cmsis-rtos.html">Ejemplos básicos CMSIS RTOS V2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmsis-rtos.html#documentacion-en-otros-idiomas">Documentación en otros idiomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothread.html">Uso básico de un thread en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads.html">Uso básico de threads en CMSIS RTOS v2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Uso básico de threads y colas en CMSIS RTOS v2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#descripcion-general">Descripción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estructura-de-datos">Estructura de Datos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inicializacion-de-los-hilos">Inicialización de los Hilos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funcion-del-hilo-producer">Función del Hilo Producer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funcion-del-hilo-consumer">Función del Hilo Consumer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uso-de-hal-y-cmsis-rtos">Uso de HAL y CMSIS RTOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#codigo-fuente">Código Fuente</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencias">Dependencias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preguntas-y-respuestas-sobre-ejemplothreads-queues">Preguntas y respuestas sobre <strong>ejemplothreads-queues</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cual-es-el-proposito-de-la-cola-de-mensajes-id-msgqueue-en-esta-aplicacion">¿Cuál es el propósito de la cola de mensajes <cite>id_MsgQueue</cite> en esta aplicación?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#que-funcion-cumple-el-bucle-anidado-en-el-hilo-producer">¿Qué función cumple el bucle anidado en el hilo <cite>Producer</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cuanto-tiempo-tarda-en-llenarse-la-cola-de-mensajes-id-msgqueue">¿Cuanto tiempo tarda en llenarse la cola de mensajes <cite>id_MsgQueue</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cuanto-vale-la-variable-errors-or-timeouts-despues-de-1-minuto-de-ejecucion-del-codigo">¿cuanto vale la variable errors_or_timeouts despues de 1 minuto de ejecución del código?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-flags.html">Uso básico de threads y flags en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-software-timers.html">Uso básico de threads y software timers en CMSIS RTOS v2</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SBM CMIS RTOS Examples Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Uso básico de threads y colas en CMSIS RTOS v2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ejemplothreads-queues.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="uso-basico-de-threads-y-colas-en-cmsis-rtos-v2">
+<h1>Uso básico de threads y colas en CMSIS RTOS v2<a class="headerlink" href="#uso-basico-de-threads-y-colas-en-cmsis-rtos-v2" title="Link to this heading"></a></h1>
+<p>Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes que se comunican con colas.</p>
+<section id="descripcion-general">
+<h2>Descripción General<a class="headerlink" href="#descripcion-general" title="Link to this heading"></a></h2>
+<p>El programa crea dos hilos, denominados <code class="docutils literal notranslate"><span class="pre">Producer</span></code> y <code class="docutils literal notranslate"><span class="pre">Consumer</span></code>. El hilo <code class="docutils literal notranslate"><span class="pre">Producer</span></code> se encarga de introducir datos en la una cola que tiene el identificador <code class="docutils literal notranslate"><span class="pre">id_MsgQueue</span></code>.
+El numero total de mensajes que se introducen en la cola en cada iteración del bucle <code class="docutils literal notranslate"><span class="pre">while</span></code> es 32 con un tiempo de retardo entre operaciones de escritura que es variable
+El <code class="docutils literal notranslate"><span class="pre">Consumer</span></code> se encarga de extraer los datos de cola y de actuar sobre los leds en función del valor leido de la cola.</p>
+</section>
+<section id="estructura-de-datos">
+<h2>Estructura de Datos<a class="headerlink" href="#estructura-de-datos" title="Link to this heading"></a></h2>
+<p>Se define una estructura llamada <code class="docutils literal notranslate"><span class="pre">mygpio_pin</span></code> que encapsula toda la información necesaria para controlar un LED:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GPIO_InitTypeDef</span> <span class="pre">pin</span></code>: configuración del pin (modo, velocidad, tipo de salida).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GPIO_TypeDef</span> <span class="pre">*port</span></code>: puerto GPIO al que pertenece el pin.</p></li>
+</ul>
+<p>Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.</p>
+</section>
+<section id="inicializacion-de-los-hilos">
+<h2>Inicialización de los Hilos<a class="headerlink" href="#inicializacion-de-los-hilos" title="Link to this heading"></a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Init_Thread</span></code> realiza las siguientes operaciones:</p>
+<ol class="arabic simple">
+<li><p>Crea una cola con <code class="docutils literal notranslate"><span class="pre">osMessageQueueNew</span></code> para almacenar hasta 16 mensajes cada uno de tamaño un <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code>, es decir, un solo byte.</p></li>
+<li><p>Crea un hilo <code class="docutils literal notranslate"><span class="pre">Consumer</span></code> con <code class="docutils literal notranslate"><span class="pre">osThreadNew</span></code>, ejecutando la función <code class="docutils literal notranslate"><span class="pre">Consumer</span></code>.</p></li>
+<li><p>Crea un hilo <code class="docutils literal notranslate"><span class="pre">Producer</span></code> con <code class="docutils literal notranslate"><span class="pre">osThreadNew</span></code>, ejecutando la función <code class="docutils literal notranslate"><span class="pre">Producer</span></code>.</p></li>
+</ol>
+</section>
+<section id="funcion-del-hilo-producer">
+<h2>Función del Hilo Producer<a class="headerlink" href="#funcion-del-hilo-producer" title="Link to this heading"></a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Producer(void</span> <span class="pre">*argument)</span></code> realiza las siguientes operaciones:
+1. De manera continua en un bucle infinito inserta en cola en cada iteración del bucle while 32 mensajes de 1 byte con el valor de la variable index.
+2. Los mensajes se introducen con un retardo que varia desde 100ms hasta 400ms
+3. La función osMessageQueuePut introduce los mensajes con timeout 0, lo cúal implica que si no hay sitio en la cola el mensaje no se podrá guardar.</p>
+</section>
+<section id="funcion-del-hilo-consumer">
+<h2>Función del Hilo Consumer<a class="headerlink" href="#funcion-del-hilo-consumer" title="Link to this heading"></a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Consumer(void</span> <span class="pre">*argument)</span></code> realiza las siguientes operaciones:
+1. De manera continua en un bucle infinito extrae de la cola los mensajes introducidos por el hilo <code class="docutils literal notranslate"><span class="pre">Producer</span></code>.
+2. Si se saca un valor de la cola se procede a encender o apagar los leds en función del valor leido.
+3. La variable errors_or_timeout cuenta el número de veces que no se ha podido leer un mensaje de la cola, ya sea por timeout o porque la cola está vacía.</p>
+</section>
+<section id="uso-de-hal-y-cmsis-rtos">
+<h2>Uso de HAL y CMSIS RTOS<a class="headerlink" href="#uso-de-hal-y-cmsis-rtos" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>HAL (Hardware Abstraction Layer)</strong>: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.</p></li>
+<li><p><strong>CMSIS RTOS v2</strong>: proporciona las funciones para crear y gestionar hilos, como <code class="docutils literal notranslate"><span class="pre">osThreadNew</span></code> y <code class="docutils literal notranslate"><span class="pre">osDelay</span></code>.</p></li>
+</ul>
+</section>
+<section id="codigo-fuente">
+<h2>Código Fuente<a class="headerlink" href="#codigo-fuente" title="Link to this heading"></a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;cmsis_os2.h&quot;</span><span class="c1">                          // CMSIS RTOS header file</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;stm32f4xx_hal.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+
+
+<span class="n">osThreadId_t</span><span class="w"> </span><span class="n">tid_Thread</span><span class="p">;</span><span class="w">                        </span><span class="c1">// thread id</span>
+<span class="n">osMessageQueueId_t</span><span class="w"> </span><span class="n">id_MsgQueue</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">Init_Thread</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">Producer</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">argument</span><span class="p">);</span><span class="w">                   </span><span class="c1">// thread function producing data</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">Consumer</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">argument</span><span class="p">);</span><span class="w">                   </span><span class="c1">// thread function consuming data</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">qsize</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w">  </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">pin</span><span class="p">;</span>
+<span class="w">                </span><span class="n">GPIO_TypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">port</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">mygpio_pin</span><span class="p">;</span>
+
+<span class="n">mygpio_pin</span><span class="w"> </span><span class="n">pinB0</span><span class="p">;</span>
+<span class="n">mygpio_pin</span><span class="w"> </span><span class="n">pinB7</span><span class="p">;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">Init_Thread</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="n">id_MsgQueue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">osMessageQueueNew</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">),</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+
+
+<span class="n">tid_Thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">osThreadNew</span><span class="p">(</span><span class="n">Producer</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tid_Thread</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="p">(</span><span class="mi">-1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="w">        </span><span class="n">tid_Thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">osThreadNew</span><span class="p">(</span><span class="n">Consumer</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tid_Thread</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="p">(</span><span class="mi">-1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Producer</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">argument</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">osStatus_t</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">h</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="n">h</span><span class="o">++</span><span class="p">){</span>
+<span class="w">                        </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">                                </span><span class="n">status</span><span class="o">=</span><span class="n">osMessageQueuePut</span><span class="p">(</span><span class="n">id_MsgQueue</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="mi">0U</span><span class="p">,</span><span class="w"> </span><span class="mi">0U</span><span class="p">);</span>
+<span class="w">                                </span><span class="n">index</span><span class="o">++</span><span class="p">;</span>
+<span class="w">                                </span><span class="n">osDelay</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="mi">100</span><span class="p">);</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">Consumer</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">argument</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">val</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">osStatus_t</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">errors_or_timeouts</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">led_ld1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_0</span><span class="p">,</span>
+<span class="w">                </span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_OUTPUT_PP</span><span class="p">,</span>
+<span class="w">                </span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">,</span>
+<span class="w">                </span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">led_ld2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_7</span><span class="p">,</span>
+<span class="w">                </span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_OUTPUT_PP</span><span class="p">,</span>
+<span class="w">                </span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">,</span>
+<span class="w">                </span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="n">__HAL_RCC_GPIOB_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">led_ld1</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">led_ld2</span><span class="p">);</span>
+
+
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">qsize</span><span class="o">=</span><span class="n">osMessageQueueGetCount</span><span class="w"> </span><span class="p">(</span><span class="n">id_MsgQueue</span><span class="p">);</span>
+<span class="w">                </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">osMessageQueueGet</span><span class="p">(</span><span class="n">id_MsgQueue</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">10U</span><span class="p">);</span><span class="w">   </span><span class="c1">// wait for message</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">osOK</span><span class="p">){</span>
+<span class="w">                        </span><span class="n">HAL_GPIO_WritePin</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span><span class="n">led_ld1</span><span class="p">.</span><span class="n">Pin</span><span class="p">,(</span><span class="n">GPIO_PinState</span><span class="p">)</span><span class="w"> </span><span class="n">val</span><span class="o">&amp;</span><span class="mh">0x01</span><span class="p">);</span>
+<span class="w">                        </span><span class="n">HAL_GPIO_WritePin</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span><span class="n">led_ld2</span><span class="p">.</span><span class="n">Pin</span><span class="p">,(</span><span class="n">GPIO_PinState</span><span class="p">)(</span><span class="n">val</span><span class="o">&amp;</span><span class="mh">0x02</span><span class="p">)</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">errors_or_timeouts</span><span class="o">++</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="n">osDelay</span><span class="p">(</span><span class="mi">250</span><span class="p">);</span><span class="w"> </span><span class="c1">//This delay is to simulate an operation that needs 101ms to complete</span>
+
+<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="dependencias">
+<h2>Dependencias<a class="headerlink" href="#dependencias" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Librería HAL de STM32.</p></li>
+<li><p>CMSIS RTOS v2.</p></li>
+</ul>
+</section>
+<section id="preguntas-y-respuestas-sobre-ejemplothreads-queues">
+<h2>Preguntas y respuestas sobre <strong>ejemplothreads-queues</strong><a class="headerlink" href="#preguntas-y-respuestas-sobre-ejemplothreads-queues" title="Link to this heading"></a></h2>
+<p>Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.</p>
+<nav class="contents local" id="tabla-de-contenido">
+<p class="topic-title">Tabla de contenido</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#cual-es-el-proposito-de-la-cola-de-mensajes-id-msgqueue-en-esta-aplicacion" id="id1">¿Cuál es el propósito de la cola de mensajes <cite>id_MsgQueue</cite> en esta aplicación?</a></p></li>
+<li><p><a class="reference internal" href="#que-funcion-cumple-el-bucle-anidado-en-el-hilo-producer" id="id2">¿Qué función cumple el bucle anidado en el hilo <cite>Producer</cite>?</a></p></li>
+<li><p><a class="reference internal" href="#cuanto-tiempo-tarda-en-llenarse-la-cola-de-mensajes-id-msgqueue" id="id3">¿Cuanto tiempo tarda en llenarse la cola de mensajes <cite>id_MsgQueue</cite>?</a></p></li>
+<li><p><a class="reference internal" href="#cuanto-vale-la-variable-errors-or-timeouts-despues-de-1-minuto-de-ejecucion-del-codigo" id="id4">¿cuanto vale la variable errors_or_timeouts despues de 1 minuto de ejecución del código?</a></p></li>
+</ul>
+</nav>
+<section id="cual-es-el-proposito-de-la-cola-de-mensajes-id-msgqueue-en-esta-aplicacion">
+<h3><a class="toc-backref" href="#id1" role="doc-backlink">¿Cuál es el propósito de la cola de mensajes <cite>id_MsgQueue</cite> en esta aplicación?</a><a class="headerlink" href="#cual-es-el-proposito-de-la-cola-de-mensajes-id-msgqueue-en-esta-aplicacion" title="Link to this heading"></a></h3>
+<p>La cola de mensajes <cite>id_MsgQueue</cite> actúa como un canal de comunicación y sincronización entre los hilos <cite>Producer</cite> y <cite>Consumer</cite>. Permite que el hilo productor envíe datos (índices) al consumidor de forma segura y sincronizada. Al definir una cola con capacidad para 16 elementos de tipo <cite>uint8_t</cite>, se establece un buffer temporal que desacopla la producción y el consumo de datos.</p>
+</section>
+<section id="que-funcion-cumple-el-bucle-anidado-en-el-hilo-producer">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">¿Qué función cumple el bucle anidado en el hilo <cite>Producer</cite>?</a><a class="headerlink" href="#que-funcion-cumple-el-bucle-anidado-en-el-hilo-producer" title="Link to this heading"></a></h3>
+<p>El bucle anidado en <cite>Producer</cite> genera una secuencia de valores que se colocan en la cola de mensajes. El bucle externo recorre <cite>h</cite> de 1 a 4, y el interno recorre <cite>i</cite> de 0 a 7. En cada iteración, se coloca un valor en la cola (<cite>index</cite>) y se incrementa. El retardo <cite>osDelay(h*100)</cite> introduce una variabilidad en el tiempo entre envíos, oscilando entre 100 ms y 400 ms. Esto simula diferentes tasas de producción de datos.</p>
+</section>
+<section id="cuanto-tiempo-tarda-en-llenarse-la-cola-de-mensajes-id-msgqueue">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">¿Cuanto tiempo tarda en llenarse la cola de mensajes <cite>id_MsgQueue</cite>?</a><a class="headerlink" href="#cuanto-tiempo-tarda-en-llenarse-la-cola-de-mensajes-id-msgqueue" title="Link to this heading"></a></h3>
+<p>En la cola se introducen 32 mensajes en cada ciclo completo de los bucles anidados (8 mensajes por cada uno de los 4 valores de <cite>h</cite>) pero el Thread Consumer extrae mensajes cada 250ms en el caso de que existan. Por tanto la cola nunca llega a llenarse.
+Intente calcular cual sería el numero máximo de mensajes que se pueden acumular en la cola.</p>
+</section>
+<section id="cuanto-vale-la-variable-errors-or-timeouts-despues-de-1-minuto-de-ejecucion-del-codigo">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">¿cuanto vale la variable errors_or_timeouts despues de 1 minuto de ejecución del código?</a><a class="headerlink" href="#cuanto-vale-la-variable-errors-or-timeouts-despues-de-1-minuto-de-ejecucion-del-codigo" title="Link to this heading"></a></h3>
+<p>l valor vale 0 porque no se produce dicha condición.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Challenge: Modifique el código del hilo <code class="docutils literal notranslate"><span class="pre">Producer</span></code> para que la variable errors_or_timeouts no valga cero.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ejemplothreads.html" class="btn btn-neutral float-left" title="Uso básico de threads en CMSIS RTOS v2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ejemplothreads-flags.html" class="btn btn-neutral float-right" title="Uso básico de threads y flags en CMSIS RTOS v2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright UPM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
