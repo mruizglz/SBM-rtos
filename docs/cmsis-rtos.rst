@@ -1,6 +1,6 @@
-================================
-Ejemplos de uso de CMSIS RTOS V2
-================================
+==============================
+Ejemplos básicos CMSIS RTOS V2
+==============================
 
 El repositorio contiene ejemplos básicos para entender el funcionamiento de la API CMSIS-RTOS V2 utilizando el sistema operativo RTX version 5. Los ejemplos están implementados para el STM32F429 y utilizan mínimamente los periféricos del microcontrolador y hacer hincapié en los conceptos de manejo del Sistema Operativo.
 
@@ -8,6 +8,12 @@ El repositorio contiene ejemplos básicos para entender el funcionamiento de la 
    
    Los ejemplos se han implementado para la asignatura **Sistemas Basados en Microprocesador** de la **(ETSI Sistemas de Telecomunicación) Universidad Politécnica de Madrid** y se pueden ejecutar utilizando el simulador del microprocesador incluido en el entorno de ARM keil Microvision o bien el hardware.
 
+
+==============================
+Documentación en otros idiomas
+==============================
+
+`Traducción a ingles-English translation <https://translate.google.com/translate?hl=en&sl=es&u=https://mruizglz.github.io/SBM-rtos`_
 
 *******************
 Descarga del código
@@ -146,14 +152,15 @@ Para utilizarlo:
    :figwidth: 400px
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Código del main.c de los ejemplos
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Código en main.c de los ejemplos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 El código del programa principal está detallado a continuación y es el mismo o muy similar para todos los ejemplos:
 
  .. code-block:: c
-
+    :linenos:
 
   #include "main.h"
 
@@ -345,17 +352,18 @@ Algunos detalles importantes
   
   1. Al utilizar el sistema operativo CMSIS-RTOS V2 se ha definido RTE_CMSIS_RTOS2_RTX5. Esto supone incluir dos funciones que anulan las definidas anteriormente.
   Estas funciones son ``HAL_GetTick``   y ``HAL_InitTick``. La primera tiene dos comportamientos diferentes: 
-    * Si el sistema operativo esta en ejecución devuelve el valor retornado por ``osKernelGetTicCount()`` que indica el número de ticks que han pasado desde que se arranco el SO.
-    * Si **no** se ha arrancado el SO la función produce un retardo de aproximadamente un 1ms e incrementa la variable estática ticks.
-  ``Hal_GetTick`` se utiliza for las librerías HAL de STM para controlar timeouts en la gestión de los periféricos.
+    * Si el sistema operativo esta en ejecución devuelve el valor retornado por ``osKernelGetTickCount`` que indica el número de ticks que han pasado desde que se arranco el SO.
+    * Si **no** se ha arrancado el SO la función produce un retardo de aproximadamente 1ms e incrementa la variable estática *ticks*.
+  ``Hal_GetTick`` se utiliza por las librerías HAL de STM para controlar timeouts en la gestión de los periféricos.
+  
   La segunda función, ``HAL_InitTick``, es usada por la capa HAL para programar un timer HW que proporcione una interrupción cada 1ms. Por defecto este timer es el SysTick timer. 
-  Cuando no se usa el sistema operativo esta función realiza las operaciones del código descrito en stm32f4xx_hal.c Al usar el SO esta función se substituye por la definida en el ``main.c``, que no realiza ninguna operación. 
+  Cuando no se usa el sistema operativo esta función realiza las operaciones del código descrito en *stm32f4xx_hal.c* Al usar el SO esta función se substituye por la definida en el ``main.c``, que no realiza ninguna operación. 
   Es el código del sistema operativo quien se encarga de inicializar el SysTick (os_systick.c).
 
   2. Despues del código de inicialización de la libraría HAL y de la configuración del RCC del micro (que por cierto utiliza la función HAL_GetTick) se procede a ejecutar la siguiente porción de código:
   
   .. code-block:: C
-
+    :linenos:
     #ifdef RTE_CMSIS_RTOS2
       /* Initialize CMSIS-RTOS2 */
       osKernelInitialize ();
@@ -373,8 +381,9 @@ Algunos detalles importantes
       }
 
     
-    La función ``osKernelInitialize`` inicializa el Sistema Operativo. La función ``init_Threads`` contiene el código de creación de los recursos necesarios en este ejemplo, y ``osKernelStart`` comienza la ejecución de los diferentes objetos del SO sin retornar.
-    eso quiere decir que la porción del código while es código muerto.
+
+  La función ``osKernelInitialize`` inicializa el Sistema Operativo. La función ``init_Threads`` contiene el código de creación de los recursos necesarios en este ejemplo, y ``osKernelStart`` comienza la ejecución de los diferentes objetos del SO sin retornar.
+  Eso quiere decir que la porción del código while es código muerto.
 
   3. Toda la inicialización del hardware se debe hacer antes de lanzar la ejecución del SO. 
      Puede incluirse en el código específico de cada thread, en funciones que se ejecuten entre osKernelInitialize y osKernelStart, o en funciones que se incluyan antes de llamar a osKernelInitialize. En cualquier caso debe tener cuidado con el mecanismo de retardo que utiliza en cada parte de la aplicación.
