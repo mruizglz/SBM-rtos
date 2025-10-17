@@ -138,6 +138,7 @@ Para utilizarlo:
 2. Abrir la ventana desde el menú: :menuselection:`View --> Analysis Windows --> Performnace analyzer`.
 3. Se muestra una lista de las diferentes secciones de código.
 
+
 .. figure:: ../presentation/performanceanalyzer.png
    :alt: Performance Analyzer
    :scale: 50 %
