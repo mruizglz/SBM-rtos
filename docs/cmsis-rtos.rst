@@ -339,8 +339,9 @@ El código del programa principal está detallado a continuación y es el mismo 
     }
   }
 
-
-Algunos detalles importantes:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Algunos detalles importantes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
   1. Al utilizar el sistema operativo CMSIS-RTOS V2 se ha definido RTE_CMSIS_RTOS2_RTX5. Esto supone incluir dos funciones que anulan las definidas anteriormente.
   Estas funciones son ``HAL_GetTick``   y ``HAL_InitTick``. La primera tiene dos comportamientos diferentes: 
@@ -371,6 +372,7 @@ Algunos detalles importantes:
       {
       }
 
+    
     La función ``osKernelInitialize`` inicializa el Sistema Operativo. La función ``init_Threads`` contiene el código de creación de los recursos necesarios en este ejemplo, y ``osKernelStart`` comienza la ejecución de los diferentes objetos del SO sin retornar.
     eso quiere decir que la porción del código while es código muerto.
 
