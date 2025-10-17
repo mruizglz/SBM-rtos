@@ -143,7 +143,6 @@ Para utilizarlo:
    :align: center
    :figwidth: 400px
 
-   Performance Analyzer (Solo disponible en Modo Simulación). No soportado en ST-LINK.
 
 
  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
