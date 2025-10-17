@@ -147,7 +147,6 @@ Para utilizarlo:
 
    Performance Analyzer (Solo disponible en Modo Simulación). No soportado en ST-LINK.
 
-
  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  Código del main.c de los ejemplos
  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
