@@ -2,7 +2,7 @@
 
 \begin{frame}{Desarrollo de aplicaciones con Microprocesadores}
     \begin{itemize}
-        \item Aplicaciones sencillas (fácil implementarlas mediante un bucle while, algunos timers y algunas interrupciones)
+        \item Aplicaciones sencillas (fácil implementarlas mediante un bucle while, algunos timers y algunas interrupciones).
 Si la complejidad de la aplicación crece, el número de temporizaciones aumenta frente al número de timers disponibles en el microprocesador y la lógica de la misma es compleja, la gestión, desarrollo y depuración de la aplicación se complican enormemente.
         \item Para simplificar esta situación se han desarrollado Sistemas Operativos “ligeros” para ser implementados en arquitecturas basadas en microprocesadores. Su utilización permite que el desarrollo de software sea más sencillo, seguro, y eficiente, redundando en un mantenimiento más sencillo del software.      
     \end{itemize}
@@ -55,7 +55,7 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
     \begin{itemize}
       \item \textbf{Pre-emptive}
           \begin{itemize}
-            \item Desalojo de hilos “ menos prioritarios” por hilos “ mas prioritarios”.
+            \item Desalojo de hilos “menos prioritarios” por hilos “mas prioritarios”.
           \end{itemize}
       \item \textbf{Round-Robin}
           \begin{itemize}
@@ -123,7 +123,8 @@ Si la complejidad de la aplicación crece, el número de temporizaciones aumenta
     \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
     #include "cmsis_os2.h"
     
-    osThreadId_t tid_thread; // tid_thread identifica al thread.Se usará en funciones específicas del RTOS
+    osThreadId_t tid_thread; 
+    // tid_thread identifica al thread.Se usará en funciones específicas del RTOS
     ...
     
     tid_Thread = osThreadNew(Thread, NULL, NULL);
@@ -196,14 +197,12 @@ void ThDisplay (void *argument){
         \end{minted}
         \begin{minted}[fontsize=\scriptsize, bgcolor=blue!5]{c}
         // Fichero de cabecera  ThDisplay.h    
-        #include "stm32f4xx_hal.h"
-        
+        #include "stm32f4xx_hal.h"     
         #ifndef __THDISPLAY__H
         #define __THDISPLAY__H
             #define S_PINTA  0x0001U
             int Init_ThDisplay(void);
         #endif
-        
         \end{minted}
     \end{column}
     \end{columns}
