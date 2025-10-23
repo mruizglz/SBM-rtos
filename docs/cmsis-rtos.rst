@@ -92,7 +92,7 @@ Depuración de aplicaciones usando CMSIS-RTOS V2
 
 La depuración de las aplicaciones se debe realizar combinando el uso de puntos de ruptura y de la aplicación ``RTX RTOS view`` disponible en el menu ``View->Watch Windows->RTX RTOS``. 
 Esta permite ver el estado en el que se encuentran los diferentes objetos del sistema operativo cuando el procesador pausa su ejecución. Herramientas complementarias para entender
-el funcionamiento de una aplicación son ``Logyc Analyzer``, ``Performance Analyzer``, ``System Analyzer``, ``Event Recorder``. ``Event Statistics`` y ``Symbols Window``
+el funcionamiento de una aplicación son: ``Logyc Analyzer``, ``Performance Analyzer``, ``System Analyzer``, ``Event Recorder``. ``Event Statistics`` y ``Symbols Window``
 
 ^^^^^^^^^^^^^^
 Symbols Window
@@ -119,7 +119,7 @@ Para utilizarlo:
 Logic Analyzer
 ^^^^^^^^^^^^^^
 
-Permite visualizar la evolución temporal de variables que sean globales a la aplicación, el contenido de posiciones de memoria, etc. Se puede configurar el rango de valores y es muy apropiado para comparar visualmente la evolución de la aplicacón software a través del seguimiento de variables.
+Permite visualizar la evolución temporal de variables que sean globales a la aplicación, el contenido de posiciones de memoria, etc. Se puede configurar el rango de valores y es muy apropiado para comparar visualmente la evolución de la aplicación software a través del seguimiento de variables.
 Para agregar señales al ``Logic Analyzer`` puede arrastrarlas de la ventana de símbolos o escribir el nombre de la misma.
 
 .. figure:: ../presentation/logicanalyzer.png
@@ -144,7 +144,7 @@ Permite conocer el porcentaje de tiempo utilizado por cada porción del código 
 Para utilizarlo:
 
 1. Iniciar una sesión de depuración.
-2. Abrir la ventana desde el menú: :menuselection:`View --> Analysis Windows --> Performnace analyzer`.
+2. Abrir la ventana desde el menú: :menuselection:`View --> Analysis Windows --> Performance analyzer`.
 3. Se muestra una lista de las diferentes secciones de código.
 
 

@@ -136,9 +136,6 @@ Preguntas y respuestas sobre **ejemplothreads**
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
-.. contents:: Tabla de contenido
-   :depth: 1
-   :local:
 
 ^^^^^^^^^^^^^^^^^^^^^^
 ¿Qué hace este código?
@@ -218,7 +215,7 @@ El fichero de configuración del sistema operativo tal y como indica la figura t
    :align: center
    :figwidth: 400px
 
-   COnfiguración del sistema operativo.
+   Configuración del sistema operativo.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ¿Que es el thread Idle? ¿Qué tamaño de stack tiene? ¿Y otro thread? ¿Que tamaño de stack usa?

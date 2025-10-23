@@ -44,7 +44,7 @@ Uso de HAL y CMSIS RTOS
 -----------------------
 
 - **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
-- **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``.
+- **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``, y funciones específicas para gestionar timers.
 
 -------------
 Código Fuente
@@ -131,15 +131,12 @@ Dependencias
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
-------------------------------------------------------
-Preguntas y respuestas sobre **ejemplothreads-timers**
-------------------------------------------------------
+-------------------------------------------------------
+Preguntas y respuestas sobre **ejemplothreads-timers** 
+-------------------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
-.. contents:: Tabla de contenido
-   :depth: 1
-   :local:
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

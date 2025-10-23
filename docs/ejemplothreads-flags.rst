@@ -2,7 +2,7 @@
 Uso básico de threads y flags en CMSIS RTOS v2
 *************************************************************************
 
-Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes que se comunican con colas.
+Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes que se sincronizan con flags.
 
 -------------------
 Descripción General
@@ -28,8 +28,7 @@ Inicialización de los Hilos
 
 La función ``Init_Thread`` realiza las siguientes operaciones:
 
-1. Crea una cola con ``osMessageQueueNew`` para almacenar hasta 16 mensajes cada uno de tamaño un ``uint8_t``, es decir, un solo byte.
-2. Crea un hilo ``Consumer`` con ``osThreadNew``, ejecutando la función ``Consumer``.
+1. Crea un hilo ``Consumer`` con ``osThreadNew``, ejecutando la función ``Consumer``.
 3. Crea un hilo ``Producer`` con ``osThreadNew``, ejecutando la función ``Producer``.
 
 
@@ -56,7 +55,7 @@ Uso de HAL y CMSIS RTOS
 -----------------------
 
 - **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
-- **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``.
+- **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``, y la funciones de gestion de los flags.
 
 -------------
 Código Fuente
@@ -111,10 +110,10 @@ Código Fuente
 	while (1) {
 			
 				
-					status= osThreadFlagsSet(tid_Thread_consumer,0x0001);
-					osDelay(1000);
-					status= osThreadFlagsSet(tid_Thread_consumer,0x0002);
-					osDelay(1000);
+		status= osThreadFlagsSet(tid_Thread_consumer,0x0001);
+		osDelay(1000);
+		status= osThreadFlagsSet(tid_Thread_consumer,0x0002);
+		osDelay(1000);
 			
 		}
 	}
@@ -168,15 +167,12 @@ Dependencias
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
------------------------------------------------------
-Preguntas y respuestas sobre **ejemplothreads-flags**
------------------------------------------------------ 
+
+------------------------------------------------------
+Preguntas y respuestas sobre **ejemplothreads-flags** 
+------------------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
-
-.. contents:: Tabla de contenido
-   :depth: 1
-   :local:
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

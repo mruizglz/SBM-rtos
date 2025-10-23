@@ -8,7 +8,7 @@ Este documento describe el funcionamiento de un programa en C que utiliza CMSIS 
 Descripción General
 -------------------
 
-El programa crea dos hilos, denominados ``Producer`` y ``Consumer``. El hilo ``Producer`` se encarga de introducir datos en la una cola que tiene el identificador ``id_MsgQueue``.
+El programa crea dos hilos, denominados ``Producer`` y ``Consumer``. El hilo ``Producer`` se encarga de introducir datos en la cola que tiene el identificador ``id_MsgQueue``.
 El numero total de mensajes que se introducen en la cola en cada iteración del bucle ``while`` es 32 con un tiempo de retardo entre operaciones de escritura que es variable
 El ``Consumer`` se encarga de extraer los datos de cola y de actuar sobre los leds en función del valor leido de la cola.
 
@@ -57,7 +57,7 @@ Uso de HAL y CMSIS RTOS
 -----------------------
 
 - **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
-- **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``.
+- **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``, y las funciones para gestionar las colas.
 
 -------------
 Código Fuente
@@ -171,9 +171,6 @@ Preguntas y respuestas sobre **ejemplothreads-queues**
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
-.. contents:: Tabla de contenido
-   :depth: 1
-   :local:
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ¿Cuál es el propósito de la cola de mensajes `id_MsgQueue` en esta aplicación?
@@ -200,7 +197,7 @@ Intente calcular cual sería el numero máximo de mensajes que se pueden acumula
 ¿cuanto vale la variable errors_or_timeouts despues de 1 minuto de ejecución del código?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-l valor vale 0 porque no se produce dicha condición. 
+Vale 0 porque no se produce dicha condición nunca.
 
 .. note:: 
    Challenge: Modifique el código del hilo ``Producer`` para que la variable errors_or_timeouts no valga cero.
