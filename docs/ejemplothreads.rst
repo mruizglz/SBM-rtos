@@ -137,18 +137,18 @@ Preguntas y respuestas sobre **ejemplothreads**
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
 
-^^^^^^^^^^^^^^^^^^^^^^
-¿Qué hace este código?
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+¿Qué función hace este código?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Este código crea dos hilos (threads) que controlan dos LEDs conectados a los pines PB0 y PB7 de una placa STM32F4. Cada hilo alterna el estado del LED (encendido/apagado) con una frecuencia determinada utilizando funciones del sistema operativo en tiempo real CMSIS RTOS v2.
 Es importante entender que el mismo código (funcion Thread) es ejecutado por dos hilos diferentes, cada uno con sus propios parámetros, que se reciben en el argumento de la función.
 Es de tipo ``void`` para poder pasar cualquier tipo de estructura como argumento. Dentro del código del Thread se realiza un casting al tipo de estructura que se utiliza en el ejemplo
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-¿Qué es la estructura `mygpio_pin`?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+¿Qué  función tiene `mygpio_pin`?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Es una estructura de datos que encapsula la información necesaria para controlar un pin GPIO en este ejemplo:
 
@@ -157,15 +157,16 @@ Es una estructura de datos que encapsula la información necesaria para controla
 - ``delay``: retardo en ms entre cada cambio de estado (toggle).
 - ``counter``: variable auxiliar que cuenta la cantidad de veces que se ha realizado el toggle.
 
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ¿Cómo se inicializan los hilos?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La función ``Init_Thread()`` habilita el reloj del puerto GPIOB, configura los parámetros de cada LED y crea dos hilos con ``osThreadNew()``, pasando como argumento la estructura ``mygpio_pin`` correspondiente a cada LED.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-¿Qué hace la función `Thread()`?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+¿Qué hace `Thread()`?
+^^^^^^^^^^^^^^^^^^^^^
 
 La función ``Thread(void *argument)`` es ejecutada por cada hilo. Dentro de ella:
 
@@ -196,9 +197,9 @@ Es una función del RTOS que suspende la ejecución del hilo actual durante un n
 
 Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()`` devuelve -1 como señal de error.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-¿Qué ficheros de cabecera se utilizan?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+¿Qué includes se utilizan?
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - ``cmsis_os2.h``: para funciones del sistema operativo en tiempo real.
 - ``stm32f4xx_hal.h``: para funciones de acceso a hardware (HAL).
