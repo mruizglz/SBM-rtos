@@ -17,8 +17,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'SBM CMIS RTOS Examples Documentation'
-copyright = 'UPM'
+project = 'CMSIS-RTOS V2 Ejemplos'
+copyright = 'Universidad Politécnica de Madrid'
 author = 'Mariano Ruiz'
 release = '1.0'
 version = '1.0'

@@ -12,18 +12,18 @@ El repositorio contiene ejemplos básicos para entender el funcionamiento de la 
    Los ejemplos se han implementado para la asignatura **Sistemas Basados en Microprocesador** de la **(ETSI Sistemas de Telecomunicación) Universidad Politécnica de Madrid** y se pueden ejecutar utilizando el simulador del microprocesador incluido en el entorno de ARM keil Microvision o bien el hardware.
 
 
-==============================
+
 Documentación en otros idiomas
-==============================
+------------------------------
 
 `Traducción a inglés - English translation <https://translate.google.com/translate?hl=en&sl=es&u=https://mruizglz.github.io/SBM-rtos>`_
 
 
 
 
-*******************
+
 Descarga del código
-*******************
+-------------------
 
 Para descargar el código puede utilizar un cliente de git en su ordenador o bien descargar el repositorio completo (formato **zip**). Las instrucciones para clonar el repositorio son:
 
@@ -34,9 +34,9 @@ Para descargar el código puede utilizar un cliente de git en su ordenador o bie
       $ git clone https://github.com/mruizglz/SBM-rtos.git
 
 
-*****************************
+
 Listado de ejemplos incluidos
-*****************************
+-----------------------------
 
 .. list-table:: Ejemplos incluidos
    :header-rows: 1
@@ -53,13 +53,13 @@ Listado de ejemplos incluidos
      - Gestion de timers "software"
 
 
-**********************************
-Configuración del Proyecto de Keil
-**********************************
 
------------------
+Configuración del Proyecto de Keil
+----------------------------------
+
+
 Uso del simulador
------------------
+^^^^^^^^^^^^^^^^^^
 
 ARM Keil Microvision dispone de opciones para configurar donde se ejecutará la aplicación (Icono *Options for Target*). Seleccione **Debug** y active el uso del simulador (**Use Simulator**). 
 Es necesario que configure el fichero de inicialización (**Initialization File**) para que cargue un script de configuración del microcontrolador. En este caso, seleccione el fichero ``simulator.ini`` que se encuentra en cada una de las carpetas de ejmplo. Por ejemplo en la carpeta ``.\ejemplothreads`` del repositorio encontrará el fichero **simulador.ini** con este contenido:
@@ -80,9 +80,9 @@ El significado de estas instrucciones es habilitar para el simulador las operaci
 Como podrá ver en el código del programa ``main.c`` existe compilación condicional para incluir o no el código de configuración del RCC para usar un reloj externo (HSE). 
 Si utiliza el simulador debe desactivar esta opción y usar el reloj interno (HSI) que es el que utiliza el simulador. La pestaña **C/C++(AC6)** permite añadir en ``define`` etiquetas. Incluya ``SIMULATOR`` si quiere utilizar el simulator.
 
-----------------
+
 Uso del hardware
-----------------
+^^^^^^^^^^^^^^^^
 
 Si dispone de una placa con el microcontrolador STM32F429 puede ejecutar el código directamente en el hardware. En este caso debe configurar las opciones del proyecto para que utilice el ST-Link en lugar del simulador. 
 
@@ -97,7 +97,7 @@ La depuración de las aplicaciones se debe realizar combinando el uso de puntos 
 Esta permite ver el estado en el que se encuentran los diferentes objetos del sistema operativo cuando el procesador pausa su ejecución. Herramientas complementarias para entender
 el funcionamiento de una aplicación son: ``Logyc Analyzer``, ``Performance Analyzer``, ``System Analyzer``, ``Event Recorder``. ``Event Statistics`` y ``Symbols Window``
 
-^^^^^^^^^^^^^^
+
 Symbols Window
 ^^^^^^^^^^^^^^
 
@@ -118,7 +118,7 @@ Para utilizarlo:
 4. Arrastrar el símbolo a la ventana de Watch o ``Logic Analyzer`` para su monitorización.
 
 
-^^^^^^^^^^^^^^
+
 Logic Analyzer
 ^^^^^^^^^^^^^^
 
@@ -134,7 +134,7 @@ Para agregar señales al ``Logic Analyzer`` puede arrastrarlas de la ventana de 
    Analizador lógico de ARM Keil Microvision.
 
 
-^^^^^^^^^^^^^^^^^^^^
+
 Performance Analyzer
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -159,9 +159,9 @@ Para utilizarlo:
 
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Código en main.c de los ejemplos
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 
 El código del programa principal está detallado a continuación y es el mismo o muy similar para todos los ejemplos:
 
@@ -352,7 +352,7 @@ El código del programa principal está detallado a continuación y es el mismo 
     }
   }
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Algunos detalles importantes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
@@ -360,9 +360,7 @@ Algunos detalles importantes
   Estas funciones son ``HAL_GetTick``   y ``HAL_InitTick``. La primera tiene dos comportamientos diferentes: 
     * Si el sistema operativo esta en ejecución devuelve el valor retornado por ``osKernelGetTickCount`` que indica el número de ticks que han pasado desde que se arranco el SO.
     * Si **no** se ha arrancado el SO la función produce un retardo de aproximadamente 1ms e incrementa la variable estática *ticks*.
-  ``Hal_GetTick`` se utiliza por las librerías HAL de STM para controlar timeouts en la gestión de los periféricos.
-  
-  La segunda función, ``HAL_InitTick``, es usada por la capa HAL para programar un timer HW que proporcione una interrupción cada 1ms. Por defecto este timer es el SysTick timer. 
+  ``Hal_GetTick`` se utiliza por las librerías HAL de STM para controlar timeouts en la gestión de los periféricos. La segunda función, ``HAL_InitTick``, es usada por la capa HAL para programar un timer HW que proporcione una interrupción cada 1ms. Por defecto este timer es el SysTick timer. 
   Cuando no se usa el sistema operativo esta función realiza las operaciones del código descrito en *stm32f4xx_hal.c* Al usar el SO esta función se substituye por la definida en el ``main.c``, que no realiza ninguna operación. 
   Es el código del sistema operativo quien se encarga de inicializar el SysTick (os_systick.c).
 
@@ -370,6 +368,7 @@ Algunos detalles importantes
   
   .. code-block:: C
     :linenos:
+
     #ifdef RTE_CMSIS_RTOS2
       /* Initialize CMSIS-RTOS2 */
       osKernelInitialize ();
