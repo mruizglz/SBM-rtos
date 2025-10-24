@@ -125,15 +125,15 @@ Código
     }
 
 
-Dependencias
-------------
+Dependencias software    
+---------------------    
 
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
 
-Preguntas y respuestas sobre **ejemplothreads** 
-------------------------------------------------
+Preguntas y respuestas sobre ejemplothreads 
+-------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
@@ -183,18 +183,17 @@ CMSIS RTOS v2 permite la ejecución concurrente, que no simultanea, de múltiple
 
 
 
-¿Qué significa ``osDelay()``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+¿Qué función tiene ``osDelay()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Es una función del RTOS que suspende la ejecución del hilo actual durante un número determinado de ticks. Esto permite que otros hilos se ejecuten mientras tanto. ``osDelay`` tiene como parametro el número de ticks que la tarea estará bloqueada. El número de ticks por segundo se define en el archivo ``RTX_Config.h`` (parámetro ``Kernel Tick Frequency [Hz]``). En este ejemplo se ha configurado a 1000, por lo que un tick equivale a 1 ms.
 
 
-
-¿Qué pasa si `osThreadNew()` devuelve NULL?
+¿Qué pasa si `osThreadNew()` retorna NULL?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()`` devuelve -1 como señal de error.
+Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()`` devuelve *-1* como señal de error.
 
 
 ¿Qué includes se utilizan?

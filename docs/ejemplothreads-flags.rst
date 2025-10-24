@@ -13,8 +13,6 @@ Descripción
 El programa crea dos hilos, denominados ``Producer`` y ``Consumer``.  El hilo ``Producer`` es un bucle infinito que se encarga de activar flags para el thread ``Consumer``. Este en función de los flags activados ejecuta unas acciones u otras. 
 
 
-Estructura de Datos
--------------------
 
 Se define una estructura llamada ``mygpio_pin`` que encapsula toda la información necesaria para controlar un LED:
 
@@ -24,9 +22,6 @@ Se define una estructura llamada ``mygpio_pin`` que encapsula toda la informaci�
 
 Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.
 
-
-Inicialización de los threads
------------------------------
 
 La función ``Init_Thread`` realiza las siguientes operaciones:
 
@@ -60,8 +55,8 @@ HAL y CMSIS RTOS
 - **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``, y la funciones de gestion de los flags.
 
 
-Código Fuente
--------------
+Código aplicación
+-----------------
 
 .. code-block:: c
 
@@ -163,16 +158,16 @@ Código Fuente
 
 
 
-Dependencias
-------------
+Dependencias de software del ejemplo
+------------------------------------
 
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
 
 
-Preguntas y respuestas sobre **ejemplothreads-flags** 
-------------------------------------------------------
+Preguntas y respuestas sobre ejemplothreads-flags
+-------------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 

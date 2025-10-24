@@ -15,8 +15,8 @@ El numero total de mensajes que se introducen en la cola en cada iteración del 
 El ``Consumer`` se encarga de extraer los datos de cola y de actuar sobre los leds en función del valor leido de la cola.
 
 
-Estructura de Datos
--------------------
+Estructuras de Datos
+--------------------
 
 Se define una estructura llamada ``mygpio_pin`` que encapsula toda la información necesaria para controlar un LED:
 
@@ -162,15 +162,15 @@ Fuente
 	}
 
 
-Dependencias
-------------
+Dependencias de software
+------------------------
 
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
 
-Preguntas y respuestas sobre **ejemplothreads-queues**
-------------------------------------------------------
+Preguntas y respuestas sobre ejemplothreads-queues
+--------------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 

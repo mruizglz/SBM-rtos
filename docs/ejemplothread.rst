@@ -8,8 +8,8 @@ Uso básico de un thread en CMSIS RTOS v2
 Esta sección describe el funcionamiento de un programa (**ejemplothread**) en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar un LED mediante un hilo.
 
 
-Descripción General de **ejemplothread** 
------------------------------------------
+Descripción General de ejemplothread 
+------------------------------------
 
 El programa crea un hilo que maneja un LED conectado al pin PB0  del microcontrolador STM32F4.El hilo alterna el estado del LED con una frecuencia configurable, utilizando funciones del sistema operativo en tiempo real (RTOS) y la biblioteca HAL para la configuración y manipulación de los pines GPIO.
 
@@ -119,8 +119,8 @@ Dependencias
 - CMSIS RTOS v2.
 
 
-Preguntas y respuestas sobre **ejemplothread**
-----------------------------------------------
+Preguntas y respuestas sobre ejemplothread
+------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 

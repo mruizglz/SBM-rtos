@@ -15,18 +15,12 @@ El programa crea un único hilo denominado ``Timers``. Este hilo se encarga de c
 El timer one-shot se inicia para que al cabo de 10 segundos se active y en su callback se encienda el led LD1 y se inicie el timer periódico. El timer periódico hace que el led LD2 parpadee cada 500ms.
 
 
-Estructura de Datos
--------------------
-
 Se define una estructura llamada ``mygpio_pin`` que encapsula toda la información necesaria para controlar un LED:
 
 - ``GPIO_InitTypeDef pin``: configuración del pin (modo, velocidad, tipo de salida).
 - ``GPIO_TypeDef *port``: puerto GPIO al que pertenece el pin.
 
 
-
-Inicialización de los Hilos
----------------------------
 
 La función ``Init_Thread`` realiza las siguientes operaciones:
 
@@ -50,8 +44,8 @@ Uso de HAL y CMSIS RTOS
 - **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``, y funciones específicas para gestionar timers.
 
 
-Código Fuente
--------------
+Código específico
+-----------------
 
 .. code-block:: c
 	:linenos:
@@ -128,15 +122,15 @@ Código Fuente
 
 
 
-Dependencias
-------------
+Dependencia
+-----------
 
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
 
-Preguntas y respuestas sobre **ejemplothreads-timers** 
--------------------------------------------------------
+Preguntas y respuestas sobre ejemplothreads-timers 
+--------------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
