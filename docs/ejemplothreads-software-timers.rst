@@ -1,20 +1,20 @@
 .. :ejemplothreads-software-timers:
 
 
-***********************************************************************************
+
 Uso básico de threads y software timers en CMSIS RTOS v2
-***********************************************************************************
+========================================================
 
 Esta sección describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante un hilo y timers software.
 
--------------------
+
 Descripción General
 -------------------
 
 El programa crea un único hilo denominado ``Timers``. Este hilo se encarga de configurar los pines B0 y B7 como salida para excitar los LEDs LD1 y LD2. Ademas crea un timer one-shot y otro periodico. 
 El timer one-shot se inicia para que al cabo de 10 segundos se active y en su callback se encienda el led LD1 y se inicie el timer periódico. El timer periódico hace que el led LD2 parpadee cada 500ms.
 
--------------------
+
 Estructura de Datos
 -------------------
 
@@ -24,7 +24,7 @@ Se define una estructura llamada ``mygpio_pin`` que encapsula toda la informaci�
 - ``GPIO_TypeDef *port``: puerto GPIO al que pertenece el pin.
 
 
----------------------------
+
 Inicialización de los Hilos
 ---------------------------
 
@@ -33,7 +33,7 @@ La función ``Init_Thread`` realiza las siguientes operaciones:
 1. Crea un hilo ``Timers`` con ``osThreadNew``.
 
 
----------------------------
+
 Función del Hilo ``Timers``
 ---------------------------
 
@@ -42,14 +42,14 @@ La función ``Timers(void *arg)`` realiza las siguientes operaciones:
    2. Ejecuta un bucle infinito que en cada iteración expera 1 segundo.
    
 
------------------------
+
 Uso de HAL y CMSIS RTOS
 -----------------------
 
 - **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
 - **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``, y funciones específicas para gestionar timers.
 
--------------
+
 Código Fuente
 -------------
 
@@ -127,14 +127,14 @@ Código Fuente
 	}
 
 
-------------
+
 Dependencias
 ------------
 
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
--------------------------------------------------------
+
 Preguntas y respuestas sobre **ejemplothreads-timers** 
 -------------------------------------------------------
 
@@ -142,7 +142,7 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
 
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Cual es la diferencia fundamental entre un timer periódico otro one-shot?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 El timer one-shot dispara la función de callback una sola vez. Es importante indicar que el tiempo empieza a contar desde que el timer es arrancado.
@@ -152,14 +152,14 @@ La función de arrancar un timer se puede llamar de manera reiterada reiniciando
 
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Los ficheros RTX_config.h y RTX_config.c son generados automáticamente por el entorno de desarrollo. ¿Se pueden modificar?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sí, se pueden modificar. Estos ficheros contienen configuraciones específicas del sistema operativo en tiempo real (RTOS) RTX, como el número máximo de hilos, la prioridad de los hilos, el tamaño de la pila, entre otros parámetros. 
 Modificar estos archivos permite ajustar el comportamiento del RTOS según las necesidades específicas de la aplicación.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Si se fija un punto de ruptura en la línea 47, ¿qué se espera ver en el ``Watch Windows->RTX RTOS``?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

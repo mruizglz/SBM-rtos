@@ -89,9 +89,9 @@ Si dispone de una placa con el microcontrolador STM32F429 puede ejecutar el cód
 **No defina la variable** ``SIMULATOR`` en las opciones de compilación para que el circuito de RCC se configure adecuadamente. 
 
 
------------------------------------------------
+
 Depuración de aplicaciones usando CMSIS-RTOS V2
------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La depuración de las aplicaciones se debe realizar combinando el uso de puntos de ruptura y de la aplicación ``RTX RTOS view`` disponible en el menu ``View->Watch Windows->RTX RTOS``. 
 Esta permite ver el estado en el que se encuentran los diferentes objetos del sistema operativo cuando el procesador pausa su ejecución. Herramientas complementarias para entender

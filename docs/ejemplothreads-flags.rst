@@ -1,18 +1,18 @@
 .. :ejemplothreads-flags:
 
-*************************************************************************
+
 Uso básico de threads y flags en CMSIS RTOS v2
-*************************************************************************
+==============================================
 
 Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes que se sincronizan con flags.
 
--------------------
-Descripción General
--------------------
+
+Descripción
+-----------
 
 El programa crea dos hilos, denominados ``Producer`` y ``Consumer``.  El hilo ``Producer`` es un bucle infinito que se encarga de activar flags para el thread ``Consumer``. Este en función de los flags activados ejecuta unas acciones u otras. 
 
--------------------
+
 Estructura de Datos
 -------------------
 
@@ -24,9 +24,9 @@ Se define una estructura llamada ``mygpio_pin`` que encapsula toda la informaci�
 
 Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.
 
----------------------------
-Inicialización de los Hilos
----------------------------
+
+Inicialización de los threads
+-----------------------------
 
 La función ``Init_Thread`` realiza las siguientes operaciones:
 
@@ -34,8 +34,8 @@ La función ``Init_Thread`` realiza las siguientes operaciones:
 3. Crea un hilo ``Producer`` con ``osThreadNew``, ejecutando la función ``Producer``.
 
 
--------------------------
-Función del Hilo Producer
+
+Función del hilo Producer
 -------------------------
 
 La función ``Producer(void *argument)`` realiza las siguientes operaciones:
@@ -43,8 +43,8 @@ La función ``Producer(void *argument)`` realiza las siguientes operaciones:
 2. Los flags activados son el 0x0001 y en 0x0002.
 
    
--------------------------
-Función del Hilo Consumer
+
+Función del hilo Consumer
 -------------------------
 La función ``Consumer(void *argument)`` realiza las siguientes operaciones:
 1. Inticializa  dos pines del GPIO en el puerto B.
@@ -52,14 +52,14 @@ La función ``Consumer(void *argument)`` realiza las siguientes operaciones:
 3. Si el flag activado es el ``0`` se hace un toggle en el pin 0 del GPIOB. Si el activado es el ``1`` se hace el toggle en el pin 7 del GPIOB.
 4. Si se produce otra condición se incrementa la variable ``errors``.
 
------------------------
-Uso de HAL y CMSIS RTOS
------------------------
+
+HAL y CMSIS RTOS
+----------------
 
 - **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
 - **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``, y la funciones de gestion de los flags.
 
--------------
+
 Código Fuente
 -------------
 
@@ -162,7 +162,7 @@ Código Fuente
 	}
 
 
-------------
+
 Dependencias
 ------------
 
@@ -170,14 +170,14 @@ Dependencias
 - CMSIS RTOS v2.
 
 
-------------------------------------------------------
+
 Preguntas y respuestas sobre **ejemplothreads-flags** 
 ------------------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Se modifica el código del Producer para que envíe ambas señales (0x0001 y 0x0002) de forma casi simultánea, seguido de un delay de 1 segundo:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

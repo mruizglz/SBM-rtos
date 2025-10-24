@@ -1,12 +1,12 @@
 .. :ejemplothreads-queues:
 
-*************************************************************************
+
 Uso básico de threads y colas en CMSIS RTOS v2
-*************************************************************************
+==============================================
 
 Este documento describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes que se comunican con colas.
 
--------------------
+
 Descripción General
 -------------------
 
@@ -14,7 +14,7 @@ El programa crea dos hilos, denominados ``Producer`` y ``Consumer``. El hilo ``P
 El numero total de mensajes que se introducen en la cola en cada iteración del bucle ``while`` es 32 con un tiempo de retardo entre operaciones de escritura que es variable
 El ``Consumer`` se encarga de extraer los datos de cola y de actuar sobre los leds en función del valor leido de la cola.
 
--------------------
+
 Estructura de Datos
 -------------------
 
@@ -26,9 +26,9 @@ Se define una estructura llamada ``mygpio_pin`` que encapsula toda la informaci�
 
 Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.
 
----------------------------
-Inicialización de los Hilos
----------------------------
+
+Creación Hilos
+--------------
 
 La función ``Init_Thread`` realiza las siguientes operaciones:
 
@@ -37,33 +37,34 @@ La función ``Init_Thread`` realiza las siguientes operaciones:
 3. Crea un hilo ``Producer`` con ``osThreadNew``, ejecutando la función ``Producer``.
 
 
--------------------------
-Función del Hilo Producer
--------------------------
+
+Producer
+--------
 
 La función ``Producer(void *argument)`` realiza las siguientes operaciones:
 1. De manera continua en un bucle infinito inserta en cola en cada iteración del bucle while 32 mensajes de 1 byte con el valor de la variable index. 
 2. Los mensajes se introducen con un retardo que varia desde 100ms hasta 400ms
 3. La función osMessageQueuePut introduce los mensajes con timeout 0, lo cúal implica que si no hay sitio en la cola el mensaje no se podrá guardar.
    
--------------------------
-Función del Hilo Consumer
--------------------------
+
+Consumer
+--------
+
 La función ``Consumer(void *argument)`` realiza las siguientes operaciones:
 1. De manera continua en un bucle infinito extrae de la cola los mensajes introducidos por el hilo ``Producer``.
 2. Si se saca un valor de la cola se procede a encender o apagar los leds en función del valor leido.
 3. La variable errors_or_timeout cuenta el número de veces que no se ha podido leer un mensaje de la cola, ya sea por timeout o porque la cola está vacía.
 
------------------------
-Uso de HAL y CMSIS RTOS
------------------------
+
+HAL-CMSIS RTOS
+--------------
 
 - **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
 - **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``, y las funciones para gestionar las colas.
 
--------------
-Código Fuente
--------------
+
+Fuente
+------
 
 .. code-block:: c
 
@@ -160,34 +161,34 @@ Código Fuente
 	}
 	}
 
-------------
+
 Dependencias
 ------------
 
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
-------------------------------------------------------
+
 Preguntas y respuestas sobre **ejemplothreads-queues**
 ------------------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Cuál es el propósito de la cola de mensajes `id_MsgQueue` en esta aplicación?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 La cola de mensajes `id_MsgQueue` actúa como un canal de comunicación y sincronización entre los hilos `Producer` y `Consumer`. Permite que el hilo productor envíe datos (índices) al consumidor de forma segura y sincronizada. Al definir una cola con capacidad para 16 elementos de tipo `uint8_t`, se establece un buffer temporal que desacopla la producción y el consumo de datos.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Qué función cumple el bucle anidado en el hilo `Producer`?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 El bucle anidado en `Producer` genera una secuencia de valores que se colocan en la cola de mensajes. El bucle externo recorre `h` de 1 a 4, y el interno recorre `i` de 0 a 7. En cada iteración, se coloca un valor en la cola (`index`) y se incrementa. El retardo `osDelay(h*100)` introduce una variabilidad en el tiempo entre envíos, oscilando entre 100 ms y 400 ms. Esto simula diferentes tasas de producción de datos. 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Cuanto tiempo tarda en llenarse la cola de mensajes `id_MsgQueue`?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -195,7 +196,7 @@ El bucle anidado en `Producer` genera una secuencia de valores que se colocan en
 En la cola se introducen 32 mensajes en cada ciclo completo de los bucles anidados (8 mensajes por cada uno de los 4 valores de `h`) pero el Thread Consumer extrae mensajes cada 250ms en el caso de que existan. Por tanto la cola nunca llega a llenarse.
 Intente calcular cual sería el numero máximo de mensajes que se pueden acumular en la cola.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿cuanto vale la variable errors_or_timeouts despues de 1 minuto de ejecución del código?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

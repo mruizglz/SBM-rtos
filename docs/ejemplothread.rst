@@ -1,18 +1,18 @@
 .. _ejemplothread:
 
-***********************************************************
+
  Uso básico de un thread en CMSIS RTOS v2
-***********************************************************
+=========================================
 
 Esta sección describe el funcionamiento de un programa (**ejemplothread**) en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar un LED mediante un hilo.
 
------------------------------------------
+
 Descripción General de **ejemplothread** 
 -----------------------------------------
 
 El programa crea un hilo que maneja un LED conectado al pin PB0  del microcontrolador STM32F4.El hilo alterna el estado del LED con una frecuencia configurable, utilizando funciones del sistema operativo en tiempo real (RTOS) y la biblioteca HAL para la configuración y manipulación de los pines GPIO.
 
--------------------
+
 Estructura de Datos
 -------------------
 
@@ -25,8 +25,8 @@ Se define una estructura llamada ``mygpio_pin`` que encapsula toda la informaci�
 
 Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.
 
----------------------------
-Inicialización de los Hilos
+
+Inicialización de los hilos
 ---------------------------
 
 La función ``Init_Thread`` realiza las siguientes tareas:
@@ -35,8 +35,8 @@ La función ``Init_Thread`` realiza las siguientes tareas:
 2. Configura ``mygpio_pin`` para el pin PB0.
 3. Crea un hilo con ``osThreadNew``, que ejecuta la función ``Thread`` pasándole una estructura ``mygpio_pin`` para el pin PB0.
 
-----------------
-Función del Hilo
+
+Función del hilo
 ----------------
 
 La función ``Thread`` realiza lo siguiente:
@@ -49,14 +49,14 @@ La función ``Thread`` realiza lo siguiente:
 
 Esto provoca que el LED conectado al pin correspondiente parpadee con una frecuencia que es configurable.
 
------------------------
+
 Uso de HAL y CMSIS RTOS
 -----------------------
 
 - **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
 - **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``.
 
--------------
+
 Código Fuente
 -------------
 
@@ -110,21 +110,21 @@ Código Fuente
         }
     }
 
-------------
+
 Dependencias
 ------------
 
 - Librería HAL de STM32.
 - CMSIS RTOS v2.
 
-----------------------------------------------
+
 Preguntas y respuestas sobre **ejemplothread**
 ----------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
 
 
-^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Qué hace este código?
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -132,7 +132,7 @@ Este código crea un hilo (thread) que controla un LED conectado al pin PB0 de u
 Dentro del código del Thread se realiza un casting al tipo de estructura que se utiliza en el ejemplo
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Qué es la estructura `mygpio_pin`?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -143,13 +143,13 @@ Es una estructura de datos que encapsula la información necesaria para controla
 - ``delay``: retardo en ms entre cada cambio de estado (toggle).
 - ``counter``: variable auxiliar que cuenta la cantidad de veces que se ha realizado el toggle.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-¿Cómo se inicializan el hilo?
+
+¿Cómo se inicializa el hilo?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La función ``Init_Thread()`` habilita el reloj del puerto GPIOB, rellena los parámetros de la estructura y crea un hilo con la función ``osThreadNew()``, pasando como argumento la estructura ``mygpio_pin`` correspondiente a cada LED.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Qué hace la función `Thread()`?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -162,7 +162,7 @@ La función ``Thread(void *argument)`` se encarga de:
    - Se espera el tiempo definido en ``delay`` usando ``osDelay``.
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Qué significa `osDelay()`?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -171,13 +171,13 @@ Esto permite que otros hilos se ejecuten mientras tanto. ``osDelay`` tiene como 
 El número de ticks por segundo se define en el archivo ``RTX_Config.h`` (parámetro ``Kernel Tick Frequency [Hz]``). En este ejemplo se ha configurado a 1000, por lo que un tick equivale a 1 ms.
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Qué pasa si `osThreadNew()` devuelve NULL?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()`` devuelve -1 como señal de error. Si el programa principal que llama a esta función no comprueba el retorno no hay ningún control de errores.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ¿Qué ficheros de cabecera se utilizan?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -185,7 +185,7 @@ Significa que no se pudo crear el hilo. En ese caso, la función ``Init_Thread()
 - ``stm32f4xx_hal.h``: para funciones de acceso a hardware (HAL).
 - ``stdlib.h``: para funciones estándar de C que en este caso no se están incluyendo en el código.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Determine la carga de la CPU en esta aplicación
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
