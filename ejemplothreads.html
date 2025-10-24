@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. Uso básico de threads en CMSIS RTOS v2 &mdash; CMSIS-RTOS V2 Ejemplos 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Uso básico de threads y colas en CMSIS RTOS v2" href="ejemplothreads-queues.html" />
+    <link rel="prev" title="2. Uso básico de un thread en CMSIS RTOS v2" href="ejemplothread.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            CMSIS-RTOS V2 Ejemplos
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cmsis-rtos.html">1. Ejemplos básicos CMSIS RTOS V2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothread.html">2. Uso básico de un thread en CMSIS RTOS v2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Uso básico de threads en CMSIS RTOS v2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#descripcion-general">3.1. Descripción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estructura-mygpio-pin">3.2. Estructura mygpio_pin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inicializacion-de-los-threads">3.3. Inicialización de los threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thread">3.4. <code class="docutils literal notranslate"><span class="pre">Thread()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hal-y-cmsis-rtos">3.5. HAL y CMSIS RTOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#codigo">3.6. Código</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencias-software">3.7. Dependencias software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preguntas-y-respuestas-sobre-ejemplothreads">3.8. Preguntas y respuestas sobre ejemplothreads</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#que-funcion-hace-este-codigo">3.8.1. ¿Qué función hace este código?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#que-funcion-tiene-mygpio-pin">3.8.2. ¿Qué  función tiene <cite>mygpio_pin</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#como-se-inicializan-los-hilos">3.8.3. ¿Cómo se inicializan los hilos?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#que-funcion-tieneo-thread">3.8.4. ¿Qué función tieneº <cite>Thread()</cite>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#se-ejecutan-los-hilos-al-mismo-tiempo">3.8.5. ¿Se ejecutan los hilos al mismo tiempo?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#que-funcion-tiene-osdelay">3.8.6. ¿Qué función tiene <code class="docutils literal notranslate"><span class="pre">osDelay()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#que-pasa-si-osthreadnew-retorna-null">3.8.7. ¿Qué pasa si <cite>osThreadNew()</cite> retorna NULL?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#que-includes-se-utilizan">3.8.8. ¿Qué includes se utilizan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cuanto-vale-el-valor-del-tick-es-esta-aplicacion">3.8.9. ¿Cuanto vale el valor del tick es esta aplicación?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#que-es-el-thread-idle-que-tamano-de-stack-tiene-y-otro-thread-que-tamano-de-stack-usa">3.8.10. ¿Que es el thread Idle? ¿Qué tamaño de stack tiene? ¿Y otro thread? ¿Que tamaño de stack usa?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-queues.html">4. Uso básico de threads y colas en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-flags.html">5. Uso básico de threads y flags en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-software-timers.html">6. Uso básico de threads y software timers en CMSIS RTOS v2</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CMSIS-RTOS V2 Ejemplos</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>Uso básico de threads en CMSIS RTOS v2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ejemplothreads.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="uso-basico-de-threads-en-cmsis-rtos-v2">
+<span id="ejemplothreads"></span><h1><span class="section-number">3. </span>Uso básico de threads en CMSIS RTOS v2<a class="headerlink" href="#uso-basico-de-threads-en-cmsis-rtos-v2" title="Link to this heading"></a></h1>
+<p>Esta sección describe el funcionamiento de un programa en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar dos LEDs mediante hilos concurrentes.</p>
+<section id="descripcion-general">
+<h2><span class="section-number">3.1. </span>Descripción General<a class="headerlink" href="#descripcion-general" title="Link to this heading"></a></h2>
+<p>El programa crea dos hilos que controlan dos LEDs conectados a los pines PB0 y PB7 del microcontrolador STM32F429. Cada hilo alterna el estado de su LED con una frecuencia distinta, utilizando funciones del sistema operativo en tiempo real (RTOS) y la biblioteca HAL para la configuración y manipulación de los pines GPIO.</p>
+</section>
+<section id="estructura-mygpio-pin">
+<h2><span class="section-number">3.2. </span>Estructura mygpio_pin<a class="headerlink" href="#estructura-mygpio-pin" title="Link to this heading"></a></h2>
+<p>Se define una estructura llamada <code class="docutils literal notranslate"><span class="pre">mygpio_pin</span></code> que encapsula toda la información necesaria para controlar un LED:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GPIO_InitTypeDef</span> <span class="pre">pin</span></code>: configuración del pin (modo, velocidad, tipo de salida).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GPIO_TypeDef</span> <span class="pre">*port</span></code>: puerto GPIO al que pertenece el pin.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">delay</span></code>: retardo en ms entre cada cambio de estado del LED.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8_t</span> <span class="pre">counter</span></code>: contador que se incrementa en cada iteración del hilo.</p></li>
+</ul>
+<p>Esta estructura permite pasar todos los parámetros necesarios a la función del hilo de forma organizada.</p>
+</section>
+<section id="inicializacion-de-los-threads">
+<h2><span class="section-number">3.3. </span>Inicialización de los threads<a class="headerlink" href="#inicializacion-de-los-threads" title="Link to this heading"></a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Init_Thread</span></code> realiza las siguientes tareas:</p>
+<ol class="arabic simple">
+<li><p>Habilita el reloj del puerto GPIOB.</p></li>
+<li><p>Configura dos instancias de <code class="docutils literal notranslate"><span class="pre">mygpio_pin</span></code> para los pines PB0 y PB7.</p></li>
+<li><p>Crea dos hilos con <code class="docutils literal notranslate"><span class="pre">osThreadNew</span></code>, cada uno ejecutando la función <code class="docutils literal notranslate"><span class="pre">Thread</span></code> con una instancia diferente de <code class="docutils literal notranslate"><span class="pre">mygpio_pin</span></code>.</p></li>
+</ol>
+<p>Cada hilo se ejecuta de forma independiente y controla su propio LED.</p>
+</section>
+<section id="thread">
+<h2><span class="section-number">3.4. </span><code class="docutils literal notranslate"><span class="pre">Thread()</span></code><a class="headerlink" href="#thread" title="Link to this heading"></a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Thread</span></code> realiza lo siguiente:</p>
+<ol class="arabic simple">
+<li><p>Inicializa el pin GPIO usando <code class="docutils literal notranslate"><span class="pre">HAL_GPIO_Init</span></code>.</p></li>
+<li><p>Entra en un bucle infinito donde:
+- Alterna el valor del contador con <code class="docutils literal notranslate"><span class="pre">~counter</span></code>.
+- Cambia el estado del pin con <code class="docutils literal notranslate"><span class="pre">HAL_GPIO_TogglePin</span></code>.
+- Espera el tiempo definido en <code class="docutils literal notranslate"><span class="pre">delay</span></code> usando <code class="docutils literal notranslate"><span class="pre">osDelay</span></code>.</p></li>
+</ol>
+<p>Esto provoca que el LED conectado al pin correspondiente parpadee con una frecuencia determinada.</p>
+</section>
+<section id="hal-y-cmsis-rtos">
+<h2><span class="section-number">3.5. </span>HAL y CMSIS RTOS<a class="headerlink" href="#hal-y-cmsis-rtos" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>HAL (Hardware Abstraction Layer)</strong>: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.</p></li>
+<li><p><strong>CMSIS RTOS v2</strong>: proporciona las funciones para crear y gestionar hilos, como <code class="docutils literal notranslate"><span class="pre">osThreadNew</span></code> y <code class="docutils literal notranslate"><span class="pre">osDelay</span></code>.</p></li>
+</ul>
+</section>
+<section id="codigo">
+<h2><span class="section-number">3.6. </span>Código<a class="headerlink" href="#codigo" title="Link to this heading"></a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;cmsis_os2.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;stm32f4xx_hal.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+
+<span class="n">osThreadId_t</span><span class="w"> </span><span class="n">tid_Thread</span><span class="p">;</span>
+
+<span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">led_ld1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_OUTPUT_PP</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span>
+<span class="p">};</span>
+
+<span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">led_ld2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_7</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_OUTPUT_PP</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span>
+<span class="p">};</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">pin</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_TypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">port</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">delay</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">counter</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">mygpio_pin</span><span class="p">;</span>
+
+<span class="n">mygpio_pin</span><span class="w"> </span><span class="n">pinB0</span><span class="p">;</span>
+<span class="n">mygpio_pin</span><span class="w"> </span><span class="n">pinB7</span><span class="p">;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">Init_Thread</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">__HAL_RCC_GPIOB_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">pinB0</span><span class="p">.</span><span class="n">pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">led_ld1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">pinB0</span><span class="p">.</span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIOB</span><span class="p">;</span>
+<span class="w">    </span><span class="n">pinB0</span><span class="p">.</span><span class="n">delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span>
+<span class="w">    </span><span class="n">pinB0</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">tid_Thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">osThreadNew</span><span class="p">(</span><span class="n">Thread</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">pinB0</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tid_Thread</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">pinB7</span><span class="p">.</span><span class="n">pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">led_ld2</span><span class="p">;</span>
+<span class="w">    </span><span class="n">pinB7</span><span class="p">.</span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIOB</span><span class="p">;</span>
+<span class="w">    </span><span class="n">pinB7</span><span class="p">.</span><span class="n">delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">    </span><span class="n">pinB7</span><span class="p">.</span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">tid_Thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">osThreadNew</span><span class="p">(</span><span class="n">Thread</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">pinB7</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tid_Thread</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Thread</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">argument</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">mygpio_pin</span><span class="w"> </span><span class="o">*</span><span class="n">gpio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">mygpio_pin</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">argument</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">gpio</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="p">(</span><span class="n">gpio</span><span class="o">-&gt;</span><span class="n">pin</span><span class="p">));</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">gpio</span><span class="o">-&gt;</span><span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="n">HAL_GPIO_TogglePin</span><span class="p">(</span><span class="n">gpio</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="n">gpio</span><span class="o">-&gt;</span><span class="n">pin</span><span class="p">.</span><span class="n">Pin</span><span class="p">);</span>
+<span class="w">        </span><span class="n">osDelay</span><span class="p">(</span><span class="n">gpio</span><span class="o">-&gt;</span><span class="n">delay</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="dependencias-software">
+<h2><span class="section-number">3.7. </span>Dependencias software<a class="headerlink" href="#dependencias-software" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Librería HAL de STM32.</p></li>
+<li><p>CMSIS RTOS v2.</p></li>
+</ul>
+</section>
+<section id="preguntas-y-respuestas-sobre-ejemplothreads">
+<h2><span class="section-number">3.8. </span>Preguntas y respuestas sobre ejemplothreads<a class="headerlink" href="#preguntas-y-respuestas-sobre-ejemplothreads" title="Link to this heading"></a></h2>
+<p>Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.</p>
+<section id="que-funcion-hace-este-codigo">
+<h3><span class="section-number">3.8.1. </span>¿Qué función hace este código?<a class="headerlink" href="#que-funcion-hace-este-codigo" title="Link to this heading"></a></h3>
+<p>Este código crea dos hilos (threads) que controlan dos LEDs conectados a los pines PB0 y PB7 de una placa STM32F4. Cada hilo alterna el estado del LED (encendido/apagado) con una frecuencia determinada utilizando funciones del sistema operativo en tiempo real CMSIS RTOS v2.
+Es importante entender que el mismo código (funcion Thread) es ejecutado por dos hilos diferentes, cada uno con sus propios parámetros, que se reciben en el argumento de la función.
+Es de tipo <code class="docutils literal notranslate"><span class="pre">void</span></code> para poder pasar cualquier tipo de estructura como argumento. Dentro del código del Thread se realiza un casting al tipo de estructura que se utiliza en el ejemplo</p>
+</section>
+<section id="que-funcion-tiene-mygpio-pin">
+<h3><span class="section-number">3.8.2. </span>¿Qué  función tiene <cite>mygpio_pin</cite>?<a class="headerlink" href="#que-funcion-tiene-mygpio-pin" title="Link to this heading"></a></h3>
+<p>Es una estructura de datos que encapsula la información necesaria para controlar un pin GPIO en este ejemplo:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pin</span></code>: configuración del pin (tipo, velocidad, modo).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">port</span></code>: puerto GPIO al que pertenece el pin (por ejemplo, GPIOB).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delay</span></code>: retardo en ms entre cada cambio de estado (toggle).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">counter</span></code>: variable auxiliar que cuenta la cantidad de veces que se ha realizado el toggle.</p></li>
+</ul>
+</section>
+<section id="como-se-inicializan-los-hilos">
+<h3><span class="section-number">3.8.3. </span>¿Cómo se inicializan los hilos?<a class="headerlink" href="#como-se-inicializan-los-hilos" title="Link to this heading"></a></h3>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Init_Thread()</span></code> habilita el reloj del puerto GPIOB, configura los parámetros de cada LED y crea dos hilos con <code class="docutils literal notranslate"><span class="pre">osThreadNew()</span></code>, pasando como argumento la estructura <code class="docutils literal notranslate"><span class="pre">mygpio_pin</span></code> correspondiente a cada LED.</p>
+</section>
+<section id="que-funcion-tieneo-thread">
+<h3><span class="section-number">3.8.4. </span>¿Qué función tieneº <cite>Thread()</cite>?<a class="headerlink" href="#que-funcion-tieneo-thread" title="Link to this heading"></a></h3>
+<p>La función <code class="docutils literal notranslate"><span class="pre">Thread(void</span> <span class="pre">*argument)</span></code> es ejecutada por cada hilo. Dentro de ella:</p>
+<ol class="arabic simple">
+<li><p>Se inicializa el pin GPIO usando <code class="docutils literal notranslate"><span class="pre">HAL_GPIO_Init</span></code>.</p></li>
+<li><p>Se entra en un bucle infinito donde:
+- Se alterna el valor de <code class="docutils literal notranslate"><span class="pre">counter</span></code>.
+- Se cambia el estado del LED con <code class="docutils literal notranslate"><span class="pre">HAL_GPIO_TogglePin</span></code>.
+- Se espera el tiempo definido en <code class="docutils literal notranslate"><span class="pre">delay</span></code> usando <code class="docutils literal notranslate"><span class="pre">osDelay</span></code>.</p></li>
+</ol>
+</section>
+<section id="se-ejecutan-los-hilos-al-mismo-tiempo">
+<h3><span class="section-number">3.8.5. </span>¿Se ejecutan los hilos al mismo tiempo?<a class="headerlink" href="#se-ejecutan-los-hilos-al-mismo-tiempo" title="Link to this heading"></a></h3>
+<p>CMSIS RTOS v2 permite la ejecución concurrente, que no simultanea, de múltiples hilos. El scheduler del sistema operativo se encarga de asignar tiempo de CPU a cada hilo según su estado y prioridad.</p>
+</section>
+<section id="que-funcion-tiene-osdelay">
+<h3><span class="section-number">3.8.6. </span>¿Qué función tiene <code class="docutils literal notranslate"><span class="pre">osDelay()</span></code><a class="headerlink" href="#que-funcion-tiene-osdelay" title="Link to this heading"></a></h3>
+<p>Es una función del RTOS que suspende la ejecución del hilo actual durante un número determinado de ticks. Esto permite que otros hilos se ejecuten mientras tanto. <code class="docutils literal notranslate"><span class="pre">osDelay</span></code> tiene como parametro el número de ticks que la tarea estará bloqueada. El número de ticks por segundo se define en el archivo <code class="docutils literal notranslate"><span class="pre">RTX_Config.h</span></code> (parámetro <code class="docutils literal notranslate"><span class="pre">Kernel</span> <span class="pre">Tick</span> <span class="pre">Frequency</span> <span class="pre">[Hz]</span></code>). En este ejemplo se ha configurado a 1000, por lo que un tick equivale a 1 ms.</p>
+</section>
+<section id="que-pasa-si-osthreadnew-retorna-null">
+<h3><span class="section-number">3.8.7. </span>¿Qué pasa si <cite>osThreadNew()</cite> retorna NULL?<a class="headerlink" href="#que-pasa-si-osthreadnew-retorna-null" title="Link to this heading"></a></h3>
+<p>Significa que no se pudo crear el hilo. En ese caso, la función <code class="docutils literal notranslate"><span class="pre">Init_Thread()</span></code> devuelve <em>-1</em> como señal de error.</p>
+</section>
+<section id="que-includes-se-utilizan">
+<h3><span class="section-number">3.8.8. </span>¿Qué includes se utilizan?<a class="headerlink" href="#que-includes-se-utilizan" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cmsis_os2.h</span></code>: para funciones del sistema operativo en tiempo real.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stm32f4xx_hal.h</span></code>: para funciones de acceso a hardware (HAL).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdlib.h</span></code>: para funciones estándar de C.</p></li>
+</ul>
+</section>
+<section id="cuanto-vale-el-valor-del-tick-es-esta-aplicacion">
+<h3><span class="section-number">3.8.9. </span>¿Cuanto vale el valor del tick es esta aplicación?<a class="headerlink" href="#cuanto-vale-el-valor-del-tick-es-esta-aplicacion" title="Link to this heading"></a></h3>
+<p>El fichero de configuración del sistema operativo tal y como indica la figura tiene configurado un tick de 1ms.</p>
+<figure class="align-center" id="id1" style="width: 400px">
+<a class="reference internal image-reference" href="_images/RTXConfig.png"><img alt="_images/RTXConfig.png" src="_images/RTXConfig.png" style="width: 401.5px; height: 216.0px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Configuración del sistema operativo.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="que-es-el-thread-idle-que-tamano-de-stack-tiene-y-otro-thread-que-tamano-de-stack-usa">
+<h3><span class="section-number">3.8.10. </span>¿Que es el thread Idle? ¿Qué tamaño de stack tiene? ¿Y otro thread? ¿Que tamaño de stack usa?<a class="headerlink" href="#que-es-el-thread-idle-que-tamano-de-stack-tiene-y-otro-thread-que-tamano-de-stack-usa" title="Link to this heading"></a></h3>
+<p>El thread idle esta definido en el fichero RTX_Config.c y es un thread que se ejecuta cuando el sistema operativo no tiene ninguna otro thread que ejecutar. Tiene un tamaño de <code class="docutils literal notranslate"><span class="pre">stack</span></code> de 512 bytes.
+Cualquier otro thread se configura para tener un tamaño de stack de 3072 bytes (3KBytes). Una reflexión interesante es cuantos threads se pueden crear en una aplicación.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ejemplothread.html" class="btn btn-neutral float-left" title="2. Uso básico de un thread en CMSIS RTOS v2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ejemplothreads-queues.html" class="btn btn-neutral float-right" title="4. Uso básico de threads y colas en CMSIS RTOS v2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Universidad Politécnica de Madrid.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

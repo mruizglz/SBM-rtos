@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. Ejemplos básicos CMSIS RTOS V2 &mdash; CMSIS-RTOS V2 Ejemplos 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Uso básico de un thread en CMSIS RTOS v2" href="ejemplothread.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            CMSIS-RTOS V2 Ejemplos
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Ejemplos básicos CMSIS RTOS V2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#documentacion-en-otros-idiomas">1.1. Documentación en otros idiomas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#descarga-del-codigo">1.2. Descarga del código</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listado-de-ejemplos-incluidos">1.3. Listado de ejemplos incluidos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuracion-del-proyecto-de-keil">1.4. Configuración del Proyecto de Keil</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uso-del-simulador">1.4.1. Uso del simulador</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uso-del-hardware">1.4.2. Uso del hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#depuracion-de-aplicaciones-usando-cmsis-rtos-v2">1.4.3. Depuración de aplicaciones usando CMSIS-RTOS V2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#symbols-window">1.4.4. Symbols Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logic-analyzer">1.4.5. Logic Analyzer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance-analyzer">1.4.6. Performance Analyzer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#codigo-en-main-c-de-los-ejemplos">1.5. Código en main.c de los ejemplos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#algunos-detalles-importantes">1.5.1. Algunos detalles importantes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothread.html">2. Uso básico de un thread en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads.html">3. Uso básico de threads en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-queues.html">4. Uso básico de threads y colas en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-flags.html">5. Uso básico de threads y flags en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-software-timers.html">6. Uso básico de threads y software timers en CMSIS RTOS v2</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CMSIS-RTOS V2 Ejemplos</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>Ejemplos básicos CMSIS RTOS V2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cmsis-rtos.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ejemplos-basicos-cmsis-rtos-v2">
+<span id="cmsis-rtos"></span><h1><span class="section-number">1. </span>Ejemplos básicos CMSIS RTOS V2<a class="headerlink" href="#ejemplos-basicos-cmsis-rtos-v2" title="Link to this heading"></a></h1>
+<p>El repositorio contiene ejemplos básicos para entender el funcionamiento de la API CMSIS-RTOS V2 utilizando el sistema operativo RTX version 5. Los ejemplos están implementados para el STM32F429 y utilizan mínimamente los periféricos del microcontrolador y hacer hincapié en los conceptos de manejo del Sistema Operativo.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Uso de los ejemplos</p>
+<p>Los ejemplos se han implementado para la asignatura <strong>Sistemas Basados en Microprocesador</strong> de la <strong>(ETSI Sistemas de Telecomunicación) Universidad Politécnica de Madrid</strong> y se pueden ejecutar utilizando el simulador del microprocesador incluido en el entorno de ARM keil Microvision o bien el hardware.</p>
+</div>
+<section id="documentacion-en-otros-idiomas">
+<h2><span class="section-number">1.1. </span>Documentación en otros idiomas<a class="headerlink" href="#documentacion-en-otros-idiomas" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://translate.google.com/translate?hl=en&amp;sl=es&amp;u=https://mruizglz.github.io/SBM-rtos">Traducción a inglés - English translation</a></p>
+</section>
+<section id="descarga-del-codigo">
+<h2><span class="section-number">1.2. </span>Descarga del código<a class="headerlink" href="#descarga-del-codigo" title="Link to this heading"></a></h2>
+<p>Para descargar el código puede utilizar un cliente de git en su ordenador o bien descargar el repositorio completo (formato <strong>zip</strong>). Las instrucciones para clonar el repositorio son:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Descarga del código</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mruizglz/SBM-rtos.git
+</pre></div>
+</div>
+</div>
+</section>
+<section id="listado-de-ejemplos-incluidos">
+<h2><span class="section-number">1.3. </span>Listado de ejemplos incluidos<a class="headerlink" href="#listado-de-ejemplos-incluidos" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">Ejemplos incluidos</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Carpeta</p></th>
+<th class="head"><p>Objetivos</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>ejemplothreads</strong></p></td>
+<td><p>Aprender el manejo básico de creación de threads. Uso de la misma función con parámetros parea crear multiples threads</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ejemplothreads-flags</strong></p></td>
+<td><p>Sincronización de threads usando flags</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>ejemplothreads-queues</strong></p></td>
+<td><p>Intercambio de datos entre threads usando colas</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ejemplothreads-timers</strong></p></td>
+<td><p>Gestion de timers “software”</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="configuracion-del-proyecto-de-keil">
+<h2><span class="section-number">1.4. </span>Configuración del Proyecto de Keil<a class="headerlink" href="#configuracion-del-proyecto-de-keil" title="Link to this heading"></a></h2>
+<section id="uso-del-simulador">
+<h3><span class="section-number">1.4.1. </span>Uso del simulador<a class="headerlink" href="#uso-del-simulador" title="Link to this heading"></a></h3>
+<p>ARM Keil Microvision dispone de opciones para configurar donde se ejecutará la aplicación (Icono <em>Options for Target</em>). Seleccione <strong>Debug</strong> y active el uso del simulador (<strong>Use Simulator</strong>).
+Es necesario que configure el fichero de inicialización (<strong>Initialization File</strong>) para que cargue un script de configuración del microcontrolador. En este caso, seleccione el fichero <code class="docutils literal notranslate"><span class="pre">simulator.ini</span></code> que se encuentra en cada una de las carpetas de ejmplo. Por ejemplo en la carpeta <code class="docutils literal notranslate"><span class="pre">.\ejemplothreads</span></code> del repositorio encontrará el fichero <strong>simulador.ini</strong> con este contenido:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="na">MAP 0x40000000,0x400FFFFF read write</span>
+<span class="linenos">2</span><span class="na">MAP 0xE0000000,0xE00FFFFF read write</span>
+</pre></div>
+</div>
+<p>El significado de estas instrucciones es habilitar para el simulador las operaciones de lectura/escritura en las zonas de memoria donde se encuentran los periféricos.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cuando se usa el simulador de Keil las operaciones de escritura y lectura de los periféricos no tienen ningún efecto y por tanto no podrá simular el comportamiento hardware de los mismos
+Todas las operaciones de la capa HAL que actúan sobre periféricos no tendrán ningún efecto. Por ejemplo, si en el código se configura un pin como salida y luego se escribe un valor alto en el mismo, no podrá ver ningún cambio en el estado del pin.</p>
+</div>
+<p>Como podrá ver en el código del programa <code class="docutils literal notranslate"><span class="pre">main.c</span></code> existe compilación condicional para incluir o no el código de configuración del RCC para usar un reloj externo (HSE).
+Si utiliza el simulador debe desactivar esta opción y usar el reloj interno (HSI) que es el que utiliza el simulador. La pestaña <strong>C/C++(AC6)</strong> permite añadir en <code class="docutils literal notranslate"><span class="pre">define</span></code> etiquetas. Incluya <code class="docutils literal notranslate"><span class="pre">SIMULATOR</span></code> si quiere utilizar el simulator.</p>
+</section>
+<section id="uso-del-hardware">
+<h3><span class="section-number">1.4.2. </span>Uso del hardware<a class="headerlink" href="#uso-del-hardware" title="Link to this heading"></a></h3>
+<p>Si dispone de una placa con el microcontrolador STM32F429 puede ejecutar el código directamente en el hardware. En este caso debe configurar las opciones del proyecto para que utilice el ST-Link en lugar del simulador.</p>
+<p><strong>No defina la variable</strong> <code class="docutils literal notranslate"><span class="pre">SIMULATOR</span></code> en las opciones de compilación para que el circuito de RCC se configure adecuadamente.</p>
+</section>
+<section id="depuracion-de-aplicaciones-usando-cmsis-rtos-v2">
+<h3><span class="section-number">1.4.3. </span>Depuración de aplicaciones usando CMSIS-RTOS V2<a class="headerlink" href="#depuracion-de-aplicaciones-usando-cmsis-rtos-v2" title="Link to this heading"></a></h3>
+<p>La depuración de las aplicaciones se debe realizar combinando el uso de puntos de ruptura y de la aplicación <code class="docutils literal notranslate"><span class="pre">RTX</span> <span class="pre">RTOS</span> <span class="pre">view</span></code> disponible en el menu <code class="docutils literal notranslate"><span class="pre">View-&gt;Watch</span> <span class="pre">Windows-&gt;RTX</span> <span class="pre">RTOS</span></code>.
+Esta permite ver el estado en el que se encuentran los diferentes objetos del sistema operativo cuando el procesador pausa su ejecución. Herramientas complementarias para entender
+el funcionamiento de una aplicación son: <code class="docutils literal notranslate"><span class="pre">Logyc</span> <span class="pre">Analyzer</span></code>, <code class="docutils literal notranslate"><span class="pre">Performance</span> <span class="pre">Analyzer</span></code>, <code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">Analyzer</span></code>, <code class="docutils literal notranslate"><span class="pre">Event</span> <span class="pre">Recorder</span></code>. <code class="docutils literal notranslate"><span class="pre">Event</span> <span class="pre">Statistics</span></code> y <code class="docutils literal notranslate"><span class="pre">Symbols</span> <span class="pre">Window</span></code></p>
+</section>
+<section id="symbols-window">
+<h3><span class="section-number">1.4.4. </span>Symbols Window<a class="headerlink" href="#symbols-window" title="Link to this heading"></a></h3>
+<p>La opción <strong>Symbols Window</strong> permite visualizar y explorar todos los símbolos definidos en el proyecto, incluyendo variables globales, variables estáticas, funciones y direcciones de registros . Esta ventana es útil para depuración y análisis en tiempo real.</p>
+<ul class="simple">
+<li><p>Muestra una lista jerárquica de todos los símbolos disponibles en el programa cargado.</p></li>
+<li><p>Permite buscar y filtrar símbolos por nombre.</p></li>
+<li><p>Muestra la dirección y el valor actual de cada símbolo durante la sesión de depuración.</p></li>
+<li><p>Facilita el arrastre de variables a otras ventanas de análisis, como el Watch Window o el Logic Analyzer.</p></li>
+<li><p>Permite examinar variables optimizadas si están disponibles en la tabla de símbolos.</p></li>
+<li><p>Si un símbolo no aparece, verifique la configuración de optimización del compilador y el ámbito de la variable.</p></li>
+</ul>
+<p>Para utilizarlo:</p>
+<ol class="arabic simple">
+<li><p>Iniciar una sesión de depuración.</p></li>
+<li><p>Abrir la ventana desde el menú: <span class="menuselection">View ‣ Symbol Window</span>.</p></li>
+<li><p>Buscar el símbolo deseado utilizando el campo de filtro.</p></li>
+<li><p>Arrastrar el símbolo a la ventana de Watch o <code class="docutils literal notranslate"><span class="pre">Logic</span> <span class="pre">Analyzer</span></code> para su monitorización.</p></li>
+</ol>
+</section>
+<section id="logic-analyzer">
+<h3><span class="section-number">1.4.5. </span>Logic Analyzer<a class="headerlink" href="#logic-analyzer" title="Link to this heading"></a></h3>
+<p>Permite visualizar la evolución temporal de variables que sean globales a la aplicación, el contenido de posiciones de memoria, etc. Se puede configurar el rango de valores y es muy apropiado para comparar visualmente la evolución de la aplicación software a través del seguimiento de variables.
+Para agregar señales al <code class="docutils literal notranslate"><span class="pre">Logic</span> <span class="pre">Analyzer</span></code> puede arrastrarlas de la ventana de símbolos o escribir el nombre de la misma.</p>
+<figure class="align-center" id="id2" style="width: 400px">
+<a class="reference internal image-reference" href="_images/logicanalyzer.png"><img alt="Analizador Lógico" src="_images/logicanalyzer.png" style="width: 454.0px; height: 279.0px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 1.1 </span><span class="caption-text">Analizador lógico de ARM Keil Microvision.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="performance-analyzer">
+<h3><span class="section-number">1.4.6. </span>Performance Analyzer<a class="headerlink" href="#performance-analyzer" title="Link to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Solo esta disponible en Simulación porque el ST-LINK no lo soporta</p>
+</div>
+<p>Permite conocer el porcentaje de tiempo utilizado por cada porción del código de nuestra aplicación.
+Para utilizarlo:</p>
+<ol class="arabic simple">
+<li><p>Iniciar una sesión de depuración.</p></li>
+<li><p>Abrir la ventana desde el menú: <span class="menuselection">View ‣ Analysis Windows ‣ Performance analyzer</span>.</p></li>
+<li><p>Se muestra una lista de las diferentes secciones de código.</p></li>
+</ol>
+<figure class="align-center" style="width: 400px">
+<a class="reference internal image-reference" href="_images/performanceanalyzer.png"><img alt="Performance Analyzer" src="_images/performanceanalyzer.png" style="width: 423.0px; height: 192.0px;" />
+</a>
+</figure>
+</section>
+</section>
+<section id="codigo-en-main-c-de-los-ejemplos">
+<h2><span class="section-number">1.5. </span>Código en main.c de los ejemplos<a class="headerlink" href="#codigo-en-main-c-de-los-ejemplos" title="Link to this heading"></a></h2>
+<p>El código del programa principal está detallado a continuación y es el mismo o muy similar para todos los ejemplos:</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;main.h&quot;</span>
+<span class="linenos">  2</span>
+<span class="linenos">  3</span><span class="cp">#ifdef _RTE_</span>
+<span class="linenos">  4</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;RTE_Components.h&quot;</span><span class="c1">             // Component selection</span>
+<span class="linenos">  5</span><span class="cp">#endif</span>
+<span class="linenos">  6</span><span class="cp">#ifdef RTE_CMSIS_RTOS2                  </span><span class="c1">// when RTE component CMSIS RTOS2 is used</span>
+<span class="linenos">  7</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;cmsis_os2.h&quot;</span><span class="c1">                  // ::CMSIS:RTOS2</span>
+<span class="linenos">  8</span><span class="cp">#endif</span>
+<span class="linenos">  9</span>
+<span class="linenos"> 10</span><span class="cp">#ifdef RTE_CMSIS_RTOS2_RTX5</span>
+<span class="linenos"> 11</span><span class="cm">/**</span>
+<span class="linenos"> 12</span><span class="cm">  * Override default HAL_GetTick function</span>
+<span class="linenos"> 13</span><span class="cm">  */</span>
+<span class="linenos"> 14</span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_GetTick</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 15</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ticks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0U</span><span class="p">;</span>
+<span class="linenos"> 16</span><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="linenos"> 17</span>
+<span class="linenos"> 18</span><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">osKernelGetState</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">osKernelRunning</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 19</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">osKernelGetTickCount</span><span class="w"> </span><span class="p">());</span>
+<span class="linenos"> 20</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 21</span>
+<span class="linenos"> 22</span><span class="w">  </span><span class="cm">/* If Kernel is not running wait approximately 1 ms then increment</span>
+<span class="linenos"> 23</span><span class="cm">    and return auxiliary tick counter value */</span>
+<span class="linenos"> 24</span><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">SystemCoreClock</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">14U</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0U</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 25</span><span class="w">    </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span>
+<span class="linenos"> 26</span><span class="w">    </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span><span class="w"> </span><span class="n">__NOP</span><span class="p">();</span>
+<span class="linenos"> 27</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 28</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">++</span><span class="n">ticks</span><span class="p">;</span>
+<span class="linenos"> 29</span><span class="p">}</span>
+<span class="linenos"> 30</span>
+<span class="linenos"> 31</span><span class="cm">/**</span>
+<span class="linenos"> 32</span><span class="cm">  * Override default HAL_InitTick function</span>
+<span class="linenos"> 33</span><span class="cm">  */</span>
+<span class="linenos"> 34</span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_InitTick</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">TickPriority</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 35</span>
+<span class="linenos"> 36</span><span class="w">  </span><span class="n">UNUSED</span><span class="p">(</span><span class="n">TickPriority</span><span class="p">);</span>
+<span class="linenos"> 37</span>
+<span class="linenos"> 38</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">;</span>
+<span class="linenos"> 39</span><span class="p">}</span>
+<span class="linenos"> 40</span><span class="cp">#endif</span>
+<span class="linenos"> 41</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Timer.h&quot;</span>
+<span class="linenos"> 42</span><span class="cm">/** @addtogroup STM32F4xx_HAL_Examples</span>
+<span class="linenos"> 43</span><span class="cm">  * @{</span>
+<span class="linenos"> 44</span><span class="cm">  */</span>
+<span class="linenos"> 45</span>
+<span class="linenos"> 46</span><span class="cm">/** @addtogroup Templates</span>
+<span class="linenos"> 47</span><span class="cm">  * @{</span>
+<span class="linenos"> 48</span><span class="cm">  */</span>
+<span class="linenos"> 49</span>
+<span class="linenos"> 50</span><span class="cm">/* Private typedef -----------------------------------------------------------*/</span>
+<span class="linenos"> 51</span><span class="cm">/* Private define ------------------------------------------------------------*/</span>
+<span class="linenos"> 52</span><span class="cm">/* Private macro -------------------------------------------------------------*/</span>
+<span class="linenos"> 53</span><span class="cm">/* Private variables ---------------------------------------------------------*/</span>
+<span class="linenos"> 54</span><span class="cm">/* Private function prototypes -----------------------------------------------*/</span>
+<span class="linenos"> 55</span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="linenos"> 56</span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">Error_Handler</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="linenos"> 57</span>
+<span class="linenos"> 58</span><span class="cm">/* Private functions ---------------------------------------------------------*/</span>
+<span class="linenos"> 59</span><span class="cm">/**</span>
+<span class="linenos"> 60</span><span class="cm">  * @brief  Main program</span>
+<span class="linenos"> 61</span><span class="cm">  * @param  None</span>
+<span class="linenos"> 62</span><span class="cm">  * @retval None</span>
+<span class="linenos"> 63</span><span class="cm">  */</span>
+<span class="linenos"> 64</span>
+<span class="linenos"> 65</span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="linenos"> 66</span><span class="p">{</span>
+<span class="linenos"> 67</span>
+<span class="linenos"> 68</span><span class="w">  </span><span class="cm">/* STM32F4xx HAL library initialization:</span>
+<span class="linenos"> 69</span><span class="cm">      - Configure the Flash prefetch, Flash preread and Buffer caches</span>
+<span class="linenos"> 70</span><span class="cm">      - Systick timer is configured by default as source of time base, but user</span>
+<span class="linenos"> 71</span><span class="cm">            can eventually implement his proper time base source (a general purpose</span>
+<span class="linenos"> 72</span><span class="cm">            timer for example or other time source), keeping in mind that Time base</span>
+<span class="linenos"> 73</span><span class="cm">            duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and</span>
+<span class="linenos"> 74</span><span class="cm">            handled in milliseconds basis.</span>
+<span class="linenos"> 75</span><span class="cm">      - Low Level Initialization</span>
+<span class="linenos"> 76</span><span class="cm">    */</span>
+<span class="linenos"> 77</span><span class="w">  </span><span class="n">HAL_Init</span><span class="p">();</span>
+<span class="linenos"> 78</span>
+<span class="linenos"> 79</span><span class="w">  </span><span class="cm">/* Configure the system clock to 168 MHz */</span>
+<span class="linenos"> 80</span><span class="w">  </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+<span class="linenos"> 81</span><span class="w">  </span><span class="n">SystemCoreClockUpdate</span><span class="p">();</span>
+<span class="linenos"> 82</span>
+<span class="linenos"> 83</span><span class="w">  </span><span class="cm">/* Add your application code here</span>
+<span class="linenos"> 84</span><span class="cm">    */</span>
+<span class="linenos"> 85</span>
+<span class="linenos"> 86</span><span class="cp">#ifdef RTE_CMSIS_RTOS2</span>
+<span class="linenos"> 87</span><span class="w">  </span><span class="cm">/* Initialize CMSIS-RTOS2 */</span>
+<span class="linenos"> 88</span><span class="w">  </span><span class="n">osKernelInitialize</span><span class="w"> </span><span class="p">();</span>
+<span class="linenos"> 89</span>
+<span class="linenos"> 90</span><span class="w">  </span><span class="cm">/* Create thread functions that start executing,</span>
+<span class="linenos"> 91</span><span class="cm">  Example: osThreadNew(app_main, NULL, NULL); */</span>
+<span class="linenos"> 92</span><span class="w">  </span><span class="n">Init_Threads</span><span class="p">();</span>
+<span class="linenos"> 93</span><span class="w">  </span><span class="cm">/* Start thread execution */</span>
+<span class="linenos"> 94</span><span class="w">  </span><span class="n">osKernelStart</span><span class="p">();</span>
+<span class="linenos"> 95</span><span class="cp">#endif</span>
+<span class="linenos"> 96</span>
+<span class="linenos"> 97</span><span class="w">  </span><span class="cm">/* Infinite loop */</span>
+<span class="linenos"> 98</span><span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 99</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos">100</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">101</span><span class="p">}</span>
+<span class="linenos">102</span>
+<span class="linenos">103</span><span class="cm">/**</span>
+<span class="linenos">104</span><span class="cm">  * @brief  System Clock Configuration</span>
+<span class="linenos">105</span><span class="cm">  *         The system Clock is configured as follow :</span>
+<span class="linenos">106</span><span class="cm">  *            System Clock source            = PLL (HSE)</span>
+<span class="linenos">107</span><span class="cm">  *            SYSCLK(Hz)                     = 168000000</span>
+<span class="linenos">108</span><span class="cm">  *            HCLK(Hz)                       = 168000000</span>
+<span class="linenos">109</span><span class="cm">  *            AHB Prescaler                  = 1</span>
+<span class="linenos">110</span><span class="cm">  *            APB1 Prescaler                 = 4</span>
+<span class="linenos">111</span><span class="cm">  *            APB2 Prescaler                 = 2</span>
+<span class="linenos">112</span><span class="cm">  *            HSE Frequency(Hz)              = 8000000</span>
+<span class="linenos">113</span><span class="cm">  *            PLL_M                          = 25</span>
+<span class="linenos">114</span><span class="cm">  *            PLL_N                          = 336</span>
+<span class="linenos">115</span><span class="cm">  *            PLL_P                          = 2</span>
+<span class="linenos">116</span><span class="cm">  *            PLL_Q                          = 7</span>
+<span class="linenos">117</span><span class="cm">  *            VDD(V)                         = 3.3</span>
+<span class="linenos">118</span><span class="cm">  *            Main regulator output voltage  = Scale1 mode</span>
+<span class="linenos">119</span><span class="cm">  *            Flash Latency(WS)              = 5</span>
+<span class="linenos">120</span><span class="cm">  * @param  None</span>
+<span class="linenos">121</span><span class="cm">  * @retval None</span>
+<span class="linenos">122</span><span class="cm">  */</span>
+<span class="linenos">123</span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="linenos">124</span><span class="p">{</span>
+<span class="linenos">125</span><span class="w">  </span><span class="n">RCC_ClkInitTypeDef</span><span class="w"> </span><span class="n">RCC_ClkInitStruct</span><span class="p">;</span>
+<span class="linenos">126</span><span class="w">  </span><span class="n">RCC_OscInitTypeDef</span><span class="w"> </span><span class="n">RCC_OscInitStruct</span><span class="p">;</span>
+<span class="linenos">127</span>
+<span class="linenos">128</span><span class="w">  </span><span class="cm">/* Enable Power Control clock */</span>
+<span class="linenos">129</span><span class="w">  </span><span class="n">__HAL_RCC_PWR_CLK_ENABLE</span><span class="p">();</span>
+<span class="linenos">130</span>
+<span class="linenos">131</span><span class="w">  </span><span class="cm">/* The voltage scaling allows optimizing the power consumption when the device is</span>
+<span class="linenos">132</span><span class="cm">    clocked below the maximum system frequency, to update the voltage scaling value</span>
+<span class="linenos">133</span><span class="cm">    regarding system frequency refer to product datasheet.  */</span>
+<span class="linenos">134</span><span class="w">  </span><span class="n">__HAL_PWR_VOLTAGESCALING_CONFIG</span><span class="p">(</span><span class="n">PWR_REGULATOR_VOLTAGE_SCALE1</span><span class="p">);</span>
+<span class="linenos">135</span>
+<span class="linenos">136</span><span class="w">  </span><span class="cm">/* Enable HSE Oscillator and activate PLL with HSE as source */</span>
+<span class="linenos">137</span><span class="w">  </span><span class="n">RCC_OscInitStruct</span><span class="p">.</span><span class="n">OscillatorType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_OSCILLATORTYPE_HSE</span><span class="p">;</span>
+<span class="linenos">138</span><span class="w">  </span><span class="n">RCC_OscInitStruct</span><span class="p">.</span><span class="n">HSEState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_HSE_ON</span><span class="p">;</span>
+<span class="linenos">139</span><span class="w">  </span><span class="n">RCC_OscInitStruct</span><span class="p">.</span><span class="n">PLL</span><span class="p">.</span><span class="n">PLLState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_PLL_ON</span><span class="p">;</span>
+<span class="linenos">140</span><span class="w">  </span><span class="n">RCC_OscInitStruct</span><span class="p">.</span><span class="n">PLL</span><span class="p">.</span><span class="n">PLLSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_PLLSOURCE_HSE</span><span class="p">;</span>
+<span class="linenos">141</span><span class="w">  </span><span class="n">RCC_OscInitStruct</span><span class="p">.</span><span class="n">PLL</span><span class="p">.</span><span class="n">PLLM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="linenos">142</span><span class="w">  </span><span class="n">RCC_OscInitStruct</span><span class="p">.</span><span class="n">PLL</span><span class="p">.</span><span class="n">PLLN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">168</span><span class="p">;</span>
+<span class="linenos">143</span><span class="w">  </span><span class="n">RCC_OscInitStruct</span><span class="p">.</span><span class="n">PLL</span><span class="p">.</span><span class="n">PLLP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_PLLP_DIV2</span><span class="p">;</span>
+<span class="linenos">144</span><span class="w">  </span><span class="n">RCC_OscInitStruct</span><span class="p">.</span><span class="n">PLL</span><span class="p">.</span><span class="n">PLLQ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+<span class="linenos">145</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">HAL_RCC_OscConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">RCC_OscInitStruct</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="linenos">146</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos">147</span><span class="w">    </span><span class="cm">/* Initialization Error */</span>
+<span class="linenos">148</span><span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="linenos">149</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">150</span>
+<span class="linenos">151</span><span class="w">  </span><span class="cm">/* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2</span>
+<span class="linenos">152</span><span class="cm">    clocks dividers */</span>
+<span class="linenos">153</span><span class="w">  </span><span class="n">RCC_ClkInitStruct</span><span class="p">.</span><span class="n">ClockType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">RCC_CLOCKTYPE_SYSCLK</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">RCC_CLOCKTYPE_HCLK</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">RCC_CLOCKTYPE_PCLK1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">RCC_CLOCKTYPE_PCLK2</span><span class="p">);</span>
+<span class="linenos">154</span><span class="w">  </span><span class="n">RCC_ClkInitStruct</span><span class="p">.</span><span class="n">SYSCLKSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_SYSCLKSOURCE_PLLCLK</span><span class="p">;</span>
+<span class="linenos">155</span><span class="w">  </span><span class="n">RCC_ClkInitStruct</span><span class="p">.</span><span class="n">AHBCLKDivider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_SYSCLK_DIV1</span><span class="p">;</span>
+<span class="linenos">156</span><span class="w">  </span><span class="n">RCC_ClkInitStruct</span><span class="p">.</span><span class="n">APB1CLKDivider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_HCLK_DIV4</span><span class="p">;</span>
+<span class="linenos">157</span><span class="w">  </span><span class="n">RCC_ClkInitStruct</span><span class="p">.</span><span class="n">APB2CLKDivider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_HCLK_DIV2</span><span class="p">;</span>
+<span class="linenos">158</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">HAL_RCC_ClockConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">RCC_ClkInitStruct</span><span class="p">,</span><span class="w"> </span><span class="n">FLASH_LATENCY_5</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="linenos">159</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos">160</span><span class="w">    </span><span class="cm">/* Initialization Error */</span>
+<span class="linenos">161</span><span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="linenos">162</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">163</span>
+<span class="linenos">164</span><span class="w">  </span><span class="cm">/* STM32F405x/407x/415x/417x Revision Z devices: prefetch is supported */</span>
+<span class="linenos">165</span><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_GetREVID</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">0x1001</span><span class="p">)</span>
+<span class="linenos">166</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos">167</span><span class="w">    </span><span class="cm">/* Enable the Flash prefetch */</span>
+<span class="linenos">168</span><span class="w">    </span><span class="n">__HAL_FLASH_PREFETCH_BUFFER_ENABLE</span><span class="p">();</span>
+<span class="linenos">169</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">170</span><span class="p">}</span>
+<span class="linenos">171</span>
+<span class="linenos">172</span><span class="cm">/**</span>
+<span class="linenos">173</span><span class="cm">  * @brief  This function is executed in case of error occurrence.</span>
+<span class="linenos">174</span><span class="cm">  * @param  None</span>
+<span class="linenos">175</span><span class="cm">  * @retval None</span>
+<span class="linenos">176</span><span class="cm">  */</span>
+<span class="linenos">177</span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">Error_Handler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="linenos">178</span><span class="p">{</span>
+<span class="linenos">179</span><span class="w">  </span><span class="cm">/* User may add here some code to deal with this error */</span>
+<span class="linenos">180</span><span class="w">  </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">181</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos">182</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">183</span><span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<section id="algunos-detalles-importantes">
+<h3><span class="section-number">1.5.1. </span>Algunos detalles importantes<a class="headerlink" href="#algunos-detalles-importantes" title="Link to this heading"></a></h3>
+<blockquote>
+<div><p>1. Al utilizar el sistema operativo CMSIS-RTOS V2 se ha definido RTE_CMSIS_RTOS2_RTX5. Esto supone incluir dos funciones que anulan las definidas anteriormente.
+Estas funciones son <code class="docutils literal notranslate"><span class="pre">HAL_GetTick</span></code>   y <code class="docutils literal notranslate"><span class="pre">HAL_InitTick</span></code>. La primera tiene dos comportamientos diferentes. Si el sistema operativo esta en ejecución devuelve el valor retornado por <code class="docutils literal notranslate"><span class="pre">osKernelGetTickCount</span></code> que indica el número de ticks que han pasado desde que se arranco el SO.     * Si <strong>no</strong> se ha arrancado el SO la función produce un retardo de aproximadamente 1ms e incrementa la variable estática <em>ticks</em>.
+<code class="docutils literal notranslate"><span class="pre">Hal_GetTick</span></code> se utiliza por las librerías HAL de STM para controlar timeouts en la gestión de los periféricos. La segunda función, <code class="docutils literal notranslate"><span class="pre">HAL_InitTick</span></code>, es usada por la capa HAL para programar un timer HW que proporcione una interrupción cada 1ms. Por defecto este timer es el SysTick timer.
+Cuando no se usa el sistema operativo esta función realiza las operaciones del código descrito en <em>stm32f4xx_hal.c</em> Al usar el SO esta función se substituye por la definida en el <code class="docutils literal notranslate"><span class="pre">main.c</span></code>, que no realiza ninguna operación.
+Es el código del sistema operativo quien se encarga de inicializar el SysTick (os_systick.c).</p>
+<ol class="arabic simple" start="2">
+<li><p>Despues del código de inicialización de la libraría HAL y de la configuración del RCC del micro (que por cierto utiliza la función HAL_GetTick) se procede a ejecutar la siguiente porción de código:</p></li>
+</ol>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#ifdef RTE_CMSIS_RTOS2</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="cm">/* Initialize CMSIS-RTOS2 */</span>
+<span class="linenos"> 3</span><span class="w">  </span><span class="n">osKernelInitialize</span><span class="w"> </span><span class="p">();</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="cm">/* Create thread functions that start executing,</span>
+<span class="linenos"> 6</span><span class="cm">  Example: osThreadNew(app_main, NULL, NULL); */</span>
+<span class="linenos"> 7</span><span class="w">  </span><span class="n">Init_Threads</span><span class="p">();</span>
+<span class="linenos"> 8</span><span class="w">  </span><span class="cm">/* Start thread execution */</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="n">osKernelStart</span><span class="p">();</span>
+<span class="linenos">10</span><span class="cp">#endif</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="w">  </span><span class="cm">/* Infinite loop */</span>
+<span class="linenos">13</span><span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">14</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos">15</span><span class="w">  </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">osKernelInitialize</span></code> inicializa el Sistema Operativo. La función <code class="docutils literal notranslate"><span class="pre">init_Threads</span></code> contiene el código de creación de los recursos necesarios en este ejemplo, y <code class="docutils literal notranslate"><span class="pre">osKernelStart</span></code> comienza la ejecución de los diferentes objetos del SO sin retornar.
+Eso quiere decir que la porción del código while es código muerto.</p>
+<ol class="arabic" start="3">
+<li><p>Toda la inicialización del hardware se debe hacer antes de lanzar la ejecución del SO.
+Puede incluirse en el código específico de cada thread, en funciones que se ejecuten entre osKernelInitialize y osKernelStart, o en funciones que se incluyan antes de llamar a osKernelInitialize. En cualquier caso debe tener cuidado con el mecanismo de retardo que utiliza en cada parte de la aplicación.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No se recomienda el uso de la función HAL_Delay cuando se esta ejecutando el SO porque la función se puede quedar bloqueada.</p>
+</div>
+</li>
+</ol>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ejemplothread.html" class="btn btn-neutral float-right" title="2. Uso básico de un thread en CMSIS RTOS v2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Universidad Politécnica de Madrid.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

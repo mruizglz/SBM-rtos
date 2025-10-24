@@ -1,0 +1,82 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Documentación en otros idiomas}{3}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Descarga del código}{5}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Listado de ejemplos incluidos}{7}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Configuración del Proyecto de Keil}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Uso del simulador}{9}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Uso del hardware}{9}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Depuración de aplicaciones usando CMSIS\sphinxhyphen {}RTOS V2}{9}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Symbols Window}{10}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Logic Analyzer}{10}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Performance Analyzer}{11}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Código en main.c de los ejemplos}{13}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Algunos detalles importantes}{17}{section.5.1}%
+\contentsline {chapter}{\numberline {6}Uso básico de un thread en CMSIS RTOS v2}{19}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Descripción General de ejemplothread}{19}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Estructura de Datos}{19}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Inicialización de los hilos}{19}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Función del hilo}{19}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Uso de HAL y CMSIS RTOS}{20}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Código Fuente}{20}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Dependencias}{21}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Preguntas y respuestas sobre ejemplothread}{21}{section.6.8}%
+\contentsline {subsection}{\numberline {6.8.1}¿Qué hace este código?}{21}{subsection.6.8.1}%
+\contentsline {subsection}{\numberline {6.8.2}¿Qué es la estructura \sphinxtitleref {mygpio\_pin}?}{21}{subsection.6.8.2}%
+\contentsline {subsection}{\numberline {6.8.3}¿Cómo se inicializa el hilo?}{21}{subsection.6.8.3}%
+\contentsline {subsection}{\numberline {6.8.4}¿Qué hace la función \sphinxtitleref {Thread()}?}{21}{subsection.6.8.4}%
+\contentsline {subsection}{\numberline {6.8.5}¿Qué significa \sphinxtitleref {osDelay()}?}{21}{subsection.6.8.5}%
+\contentsline {subsection}{\numberline {6.8.6}¿Qué pasa si \sphinxtitleref {osThreadNew()} devuelve NULL?}{22}{subsection.6.8.6}%
+\contentsline {subsection}{\numberline {6.8.7}¿Qué ficheros de cabecera se utilizan?}{22}{subsection.6.8.7}%
+\contentsline {subsection}{\numberline {6.8.8}Determine la carga de la CPU en esta aplicación}{22}{subsection.6.8.8}%
+\contentsline {chapter}{\numberline {7}Uso básico de threads en CMSIS RTOS v2}{23}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Descripción General}{23}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Estructura mygpio\_pin}{23}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Inicialización de los threads}{23}{section.7.3}%
+\contentsline {section}{\numberline {7.4}\sphinxstyleliteralintitle {\sphinxupquote {Thread()}}}{23}{section.7.4}%
+\contentsline {section}{\numberline {7.5}HAL y CMSIS RTOS}{24}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Código}{24}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Dependencias software}{25}{section.7.7}%
+\contentsline {section}{\numberline {7.8}Preguntas y respuestas sobre ejemplothreads}{25}{section.7.8}%
+\contentsline {subsection}{\numberline {7.8.1}¿Qué función hace este código?}{25}{subsection.7.8.1}%
+\contentsline {subsection}{\numberline {7.8.2}¿Qué función tiene \sphinxtitleref {mygpio\_pin}?}{25}{subsection.7.8.2}%
+\contentsline {subsection}{\numberline {7.8.3}¿Cómo se inicializan los hilos?}{26}{subsection.7.8.3}%
+\contentsline {subsection}{\numberline {7.8.4}¿Qué función tieneº \sphinxtitleref {Thread()}?}{26}{subsection.7.8.4}%
+\contentsline {subsection}{\numberline {7.8.5}¿Se ejecutan los hilos al mismo tiempo?}{26}{subsection.7.8.5}%
+\contentsline {subsection}{\numberline {7.8.6}¿Qué función tiene \sphinxstyleliteralintitle {\sphinxupquote {osDelay()}}}{26}{subsection.7.8.6}%
+\contentsline {subsection}{\numberline {7.8.7}¿Qué pasa si \sphinxtitleref {osThreadNew()} retorna NULL?}{26}{subsection.7.8.7}%
+\contentsline {subsection}{\numberline {7.8.8}¿Qué includes se utilizan?}{26}{subsection.7.8.8}%
+\contentsline {subsection}{\numberline {7.8.9}¿Cuanto vale el valor del tick es esta aplicación?}{26}{subsection.7.8.9}%
+\contentsline {subsection}{\numberline {7.8.10}¿Que es el thread Idle? ¿Qué tamaño de stack tiene? ¿Y otro thread? ¿Que tamaño de stack usa?}{26}{subsection.7.8.10}%
+\contentsline {chapter}{\numberline {8}Uso básico de threads y colas en CMSIS RTOS v2}{29}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Descripción General}{29}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Estructuras de Datos}{29}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Creación Hilos}{29}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Producer}{29}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Consumer}{30}{section.8.5}%
+\contentsline {section}{\numberline {8.6}HAL\sphinxhyphen {}CMSIS RTOS}{30}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Fuente}{30}{section.8.7}%
+\contentsline {section}{\numberline {8.8}Dependencias de software}{32}{section.8.8}%
+\contentsline {section}{\numberline {8.9}Preguntas y respuestas sobre ejemplothreads\sphinxhyphen {}queues}{32}{section.8.9}%
+\contentsline {subsection}{\numberline {8.9.1}¿Cuál es el propósito de la cola de mensajes \sphinxtitleref {id\_MsgQueue} en esta aplicación?}{32}{subsection.8.9.1}%
+\contentsline {subsection}{\numberline {8.9.2}¿Qué función cumple el bucle anidado en el hilo \sphinxtitleref {Producer}?}{32}{subsection.8.9.2}%
+\contentsline {subsection}{\numberline {8.9.3}¿Cuanto tiempo tarda en llenarse la cola de mensajes \sphinxtitleref {id\_MsgQueue}?}{32}{subsection.8.9.3}%
+\contentsline {subsection}{\numberline {8.9.4}¿cuanto vale la variable errors\_or\_timeouts despues de 1 minuto de ejecución del código?}{32}{subsection.8.9.4}%
+\contentsline {chapter}{\numberline {9}Uso básico de threads y flags en CMSIS RTOS v2}{33}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Descripción}{33}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Función del hilo Producer}{33}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Función del hilo Consumer}{33}{section.9.3}%
+\contentsline {section}{\numberline {9.4}HAL y CMSIS RTOS}{33}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Código aplicación}{34}{section.9.5}%
+\contentsline {section}{\numberline {9.6}Dependencias de software del ejemplo}{35}{section.9.6}%
+\contentsline {section}{\numberline {9.7}Preguntas y respuestas sobre ejemplothreads\sphinxhyphen {}flags}{36}{section.9.7}%
+\contentsline {subsection}{\numberline {9.7.1}Se modifica el código del Producer para que envíe ambas señales (0x0001 y 0x0002) de forma casi simultánea, seguido de un delay de 1 segundo:}{36}{subsection.9.7.1}%
+\contentsline {chapter}{\numberline {10}Uso básico de threads y software timers en CMSIS RTOS v2}{37}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Descripción General}{37}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Función del Hilo \sphinxstyleliteralintitle {\sphinxupquote {Timers}}}{37}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Uso de HAL y CMSIS RTOS}{37}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Código específico}{37}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Dependencia}{39}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Preguntas y respuestas sobre ejemplothreads\sphinxhyphen {}timers}{39}{section.10.6}%
+\contentsline {subsection}{\numberline {10.6.1}¿Cual es la diferencia fundamental entre un timer periódico otro one\sphinxhyphen {}shot?}{39}{subsection.10.6.1}%
+\contentsline {subsection}{\numberline {10.6.2}Los ficheros RTX\_config.h y RTX\_config.c son generados automáticamente por el entorno de desarrollo. ¿Se pueden modificar?}{39}{subsection.10.6.2}%
+\contentsline {subsection}{\numberline {10.6.3}Si se fija un punto de ruptura en la línea 47, ¿qué se espera ver en el \sphinxstyleliteralintitle {\sphinxupquote {Watch Windows\sphinxhyphen {}\textgreater {}RTX RTOS}}?}{39}{subsection.10.6.3}%
