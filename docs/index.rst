@@ -1,8 +1,7 @@
 .. toctree::
    :maxdepth: 3
    :numbered:
-   :caption: Contents:
-
+   
    cmsis-rtos.rst
    ejemplothread.rst
    ejemplothreads.rst

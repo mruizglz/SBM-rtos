@@ -1,3 +1,4 @@
+.. _ejemplothreads:
 
 **********************************************************
 Uso básico de threads en CMSIS RTOS v2
