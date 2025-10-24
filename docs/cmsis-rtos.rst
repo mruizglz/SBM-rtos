@@ -357,15 +357,14 @@ Algunos detalles importantes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
   1. Al utilizar el sistema operativo CMSIS-RTOS V2 se ha definido RTE_CMSIS_RTOS2_RTX5. Esto supone incluir dos funciones que anulan las definidas anteriormente.
-  Estas funciones son ``HAL_GetTick``   y ``HAL_InitTick``. La primera tiene dos comportamientos diferentes: 
-    * Si el sistema operativo esta en ejecución devuelve el valor retornado por ``osKernelGetTickCount`` que indica el número de ticks que han pasado desde que se arranco el SO.
-    * Si **no** se ha arrancado el SO la función produce un retardo de aproximadamente 1ms e incrementa la variable estática *ticks*.
+  Estas funciones son ``HAL_GetTick``   y ``HAL_InitTick``. La primera tiene dos comportamientos diferentes. Si el sistema operativo esta en ejecución devuelve el valor retornado por ``osKernelGetTickCount`` que indica el número de ticks que han pasado desde que se arranco el SO.     * Si **no** se ha arrancado el SO la función produce un retardo de aproximadamente 1ms e incrementa la variable estática *ticks*.
   ``Hal_GetTick`` se utiliza por las librerías HAL de STM para controlar timeouts en la gestión de los periféricos. La segunda función, ``HAL_InitTick``, es usada por la capa HAL para programar un timer HW que proporcione una interrupción cada 1ms. Por defecto este timer es el SysTick timer. 
   Cuando no se usa el sistema operativo esta función realiza las operaciones del código descrito en *stm32f4xx_hal.c* Al usar el SO esta función se substituye por la definida en el ``main.c``, que no realiza ninguna operación. 
   Es el código del sistema operativo quien se encarga de inicializar el SysTick (os_systick.c).
 
   2. Despues del código de inicialización de la libraría HAL y de la configuración del RCC del micro (que por cierto utiliza la función HAL_GetTick) se procede a ejecutar la siguiente porción de código:
   
+
   .. code-block:: C
     :linenos:
 
@@ -385,7 +384,6 @@ Algunos detalles importantes
       {
       }
 
-    
 
   La función ``osKernelInitialize`` inicializa el Sistema Operativo. La función ``init_Threads`` contiene el código de creación de los recursos necesarios en este ejemplo, y ``osKernelStart`` comienza la ejecución de los diferentes objetos del SO sin retornar.
   Eso quiere decir que la porción del código while es código muerto.

@@ -58,7 +58,7 @@ HAL y CMSIS RTOS
 - **HAL (Hardware Abstraction Layer)**: se utiliza para configurar e inicializar los pines GPIO de forma sencilla y portable.
 - **CMSIS RTOS v2**: proporciona las funciones para crear y gestionar hilos, como ``osThreadNew`` y ``osDelay``.
 
-------
+
 Código
 ------
 
@@ -132,11 +132,10 @@ Dependencias
 - CMSIS RTOS v2.
 
 
-Preguntas y respuestas sobre **ejemplothreads**
------------------------------------------------
+Preguntas y respuestas sobre **ejemplothreads** 
+------------------------------------------------
 
 Esta sección contiene una serie de preguntas con sus respectivas respuestas sobre el funcionamiento del código que utiliza CMSIS RTOS v2 para controlar LEDs en una placa STM32.
-
 
 
 ¿Qué función hace este código?
@@ -145,7 +144,6 @@ Esta sección contiene una serie de preguntas con sus respectivas respuestas sob
 Este código crea dos hilos (threads) que controlan dos LEDs conectados a los pines PB0 y PB7 de una placa STM32F4. Cada hilo alterna el estado del LED (encendido/apagado) con una frecuencia determinada utilizando funciones del sistema operativo en tiempo real CMSIS RTOS v2.
 Es importante entender que el mismo código (funcion Thread) es ejecutado por dos hilos diferentes, cada uno con sus propios parámetros, que se reciben en el argumento de la función.
 Es de tipo ``void`` para poder pasar cualquier tipo de estructura como argumento. Dentro del código del Thread se realiza un casting al tipo de estructura que se utiliza en el ejemplo
-
 
 
 ¿Qué  función tiene `mygpio_pin`?
