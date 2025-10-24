@@ -1,8 +1,9 @@
 .. _ejemplothread:
 
 
- Uso básico de un thread en CMSIS RTOS v2
-=========================================
+Uso básico de un thread en CMSIS RTOS v2
+========================================
+
 
 Esta sección describe el funcionamiento de un programa (**ejemplothread**) en C que utiliza CMSIS RTOS v2 y la biblioteca HAL de STM32 para controlar un LED mediante un hilo.
 

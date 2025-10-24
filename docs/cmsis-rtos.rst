@@ -395,3 +395,5 @@ Algunos detalles importantes
      .. note::
 
         No se recomienda el uso de la función HAL_Delay cuando se esta ejecutando el SO porque la función se puede quedar bloqueada.
+
+
