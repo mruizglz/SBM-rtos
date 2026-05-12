@@ -1,0 +1,37 @@
+# A project translates into one executable or library.
+project:
+
+  groups:
+    - group: Source Files
+      files:
+        - file: ./main.c
+        - file: main.h
+        - file: Thread.c
+        - file: Thread.h
+
+  misc:
+    - for-compiler: AC6
+      C:
+        - -fshort-wchar
+        - -fshort-enums
+        
+  # List components to use for your application.
+  # A software component is a re-usable unit that may be configurable.
+  components:
+    - component: ARM::CMSIS:CORE
+    - component: Device:Startup
+    - component: Device:STM32Cube Framework:Classic
+    - component: Device:STM32Cube HAL:Common
+    - component: Device:STM32Cube HAL:Cortex
+    - component: Device:STM32Cube HAL:DMA
+    - component: Device:STM32Cube HAL:GPIO
+    - component: Device:STM32Cube HAL:PWR
+    - component: Device:STM32Cube HAL:RCC
+    - component: CMSIS:RTOS2:Keil RTX5&Library
+
+  # List executable file formats to be generated.
+  output:
+    type:
+      - elf
+      - hex
+      - map
