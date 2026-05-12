@@ -1,4 +1,4 @@
-# Ejecutar como Administrador
+# Ejecutar c# Ejecutar como Administrador
 $ErrorActionPreference = "Stop"
 trap { Write-Host "[ERROR] $($_.Exception.Message)" -ForegroundColor Red; exit 1 }
 
@@ -141,7 +141,7 @@ if (-not (Test-Path "$ac6Bin\armclang.exe")) {
 # Registrar variable de entorno para CMSIS-Toolbox
 $ac6EnvVar = "AC6_TOOLCHAIN_" + $ac6Version.Replace(".", "_")
 [Environment]::SetEnvironmentVariable($ac6EnvVar, $ac6Bin, "Machine")
-$env:$ac6EnvVar = $ac6Bin
+Set-Item -Path "env:$ac6EnvVar" -Value $ac6Bin
 Write-Host "[OK] Variable $ac6EnvVar configurada: $ac6Bin" -ForegroundColor Green
 
 # --- Recargar PATH ---
