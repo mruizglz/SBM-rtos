@@ -95,16 +95,54 @@ if (Test-Path $toolboxBin) {
 Add-ToMachinePath $toolboxBin
 
 # --- CMake ---
+# Nota: winget instala CMake a nivel de maquina, accesible para todos los usuarios
 Write-Host "[PASO 5/10] Comprobando CMake..." -ForegroundColor Magenta
 Install-WingetPackageIfMissing "Kitware.CMake" "CMake"
 
 # --- Ninja ---
+# Nota: winget instala Ninja a nivel de maquina, accesible para todos los usuarios
 Write-Host "[PASO 6/10] Comprobando Ninja..." -ForegroundColor Magenta
 Install-WingetPackageIfMissing "Ninja-build.Ninja" "Ninja"
 
-# --- GNU Arm Toolchain ---
-Write-Host "[PASO 7/10] Comprobando GNU Arm Embedded Toolchain..." -ForegroundColor Magenta
-Install-WingetPackageIfMissing "Arm.GnuArmEmbeddedToolchain" "GNU Arm Embedded Toolchain"
+# --- Arm Compiler 6 (AC6) ---
+# Nota: actualizar $ac6VersionBuild segun la build disponible en:
+# https://artifacts.tools.arm.com/arm-compiler/<version>/
+$ac6Version      = "6.24.0"
+$ac6VersionBuild = "19"
+$ac6Zip          = "C:\ARM-Shared\downloads\armclang-$ac6Version-windows.zip"
+$ac6Dir          = "C:\ARM-Shared\ArmCompilerforEmbedded$ac6Version"
+$ac6Bin          = "$ac6Dir\bin"
+
+Write-Host "[PASO 7/10] Comprobando Arm Compiler 6 (AC6)..." -ForegroundColor Magenta
+if (-not (Test-Path "$ac6Bin\armclang.exe")) {
+    if (-not (Test-Path $ac6Zip)) {
+        Write-Host "[...] Descargando Arm Compiler 6 $ac6Version (build $ac6VersionBuild)..." -ForegroundColor Gray
+        Invoke-WebRequest -Uri "https://artifacts.tools.arm.com/arm-compiler/$ac6Version/$ac6VersionBuild/standalone-windows-x86_64-rel.zip" `
+            -OutFile $ac6Zip -UseBasicParsing
+        Write-Host "[OK] Descarga completada" -ForegroundColor Green
+    } else {
+        Write-Host "[OK] ZIP ya descargado, omitiendo descarga" -ForegroundColor Green
+    }
+    Write-Host "[...] Extrayendo Arm Compiler 6..." -ForegroundColor Gray
+    New-Item -ItemType Directory -Force -Path $ac6Dir | Out-Null
+    tar -xf $ac6Zip -C $ac6Dir --strip-components=1
+
+    # Permisos para todos los usuarios
+    icacls $ac6Dir /grant "*S-1-5-32-545:(OI)(CI)RX" /T | Out-Null
+    icacls $ac6Dir /grant "*S-1-5-32-544:(OI)(CI)F" /T | Out-Null
+
+    Add-ToMachinePath $ac6Bin
+    Write-Host "[OK] Arm Compiler 6 instalado en $ac6Dir" -ForegroundColor Green
+} else {
+    Add-ToMachinePath $ac6Bin  # asegurar PATH tambien en ejecuciones posteriores
+    Write-Host "[OK] Arm Compiler 6 ya instalado" -ForegroundColor Green
+}
+
+# Registrar variable de entorno para CMSIS-Toolbox
+$ac6EnvVar = "AC6_TOOLCHAIN_" + $ac6Version.Replace(".", "_")
+[Environment]::SetEnvironmentVariable($ac6EnvVar, $ac6Bin, "Machine")
+$env:$ac6EnvVar = $ac6Bin
+Write-Host "[OK] Variable $ac6EnvVar configurada: $ac6Bin" -ForegroundColor Green
 
 # --- Recargar PATH ---
 Write-Host "[INFO] Recargando PATH..." -ForegroundColor Yellow
@@ -153,8 +191,7 @@ function Install-CmsisPackIfMissing {
 Write-Host "[PASO 9/10] Instalando CMSIS Packs..." -ForegroundColor Magenta
 Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS"         -Version "5.8.0"
 Install-CmsisPackIfMissing -Vendor "Keil" -Pack "STM32F4xx_DFP" -Version "2.15.0"
-Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-Driver"         -Version "2.6.1"
-#Install-CmsisPackIfMissing -Vendor "Keil" -Pack "CMSIS-RTOS2" -Version "2.2.0"
+Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-Driver"  -Version "2.6.1"
 Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-RTX"     -Version "5.9.0"
 Install-CmsisPackIfMissing -Vendor "Keil" -Pack "MDK-Middleware" -Version "7.13.0"
 Write-Host "[INFO] Lista de packs instalados:" -ForegroundColor Yellow
