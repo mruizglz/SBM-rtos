@@ -81,8 +81,7 @@ if (Test-Path $toolboxBin) {
 } else {
     if (-not (Test-Path $toolboxZip)) {
         Write-Host "[...] Descargando CMSIS-Toolbox..." -ForegroundColor Gray
-        Invoke-WebRequest -Uri https://artifacts.tools.arm.com/cmsis-toolbox/2.13.0/cmsis-toolbox-windows-amd64.zip `
-            -OutFile $toolboxZip -UseBasicParsing
+        Invoke-WebRequest -Uri https://artifacts.tools.arm.com/cmsis-toolbox/2.13.0/cmsis-toolbox-windows-amd64.zip -OutFile $toolboxZip -UseBasicParsing
         Write-Host "[OK] Descarga completada" -ForegroundColor Green
     } else {
         Write-Host "[OK] ZIP ya descargado, omitiendo descarga" -ForegroundColor Green
@@ -107,18 +106,17 @@ Install-WingetPackageIfMissing "Ninja-build.Ninja" "Ninja"
 # --- Arm Compiler 6 (AC6) ---
 # Nota: actualizar $ac6VersionBuild segun la build disponible en:
 # https://artifacts.tools.arm.com/arm-compiler/<version>/
-$ac6Version      = "6.24.0"
+$ac6Version      = "6.24"
 $ac6VersionBuild = "19"
 $ac6Zip          = "C:\ARM-Shared\downloads\armclang-$ac6Version-windows.zip"
-$ac6Dir          = "C:\ARM-Shared\ArmCompilerforEmbedded$ac6Version"
+$ac6Dir          = "C:\ARM-Shared\ArmCompilerforEmbedded"
 $ac6Bin          = "$ac6Dir\bin"
 
 Write-Host "[PASO 7/10] Comprobando Arm Compiler 6 (AC6)..." -ForegroundColor Magenta
 if (-not (Test-Path "$ac6Bin\armclang.exe")) {
     if (-not (Test-Path $ac6Zip)) {
         Write-Host "[...] Descargando Arm Compiler 6 $ac6Version (build $ac6VersionBuild)..." -ForegroundColor Gray
-        Invoke-WebRequest -Uri "https://artifacts.tools.arm.com/arm-compiler/$ac6Version/$ac6VersionBuild/standalone-windows-x86_64-rel.zip" `
-            -OutFile $ac6Zip -UseBasicParsing
+        Invoke-WebRequest -Uri "https://artifacts.tools.arm.com/arm-compiler/$ac6Version/$ac6VersionBuild/standalone-win-x86_64-rel.zip" -OutFile $ac6Zip -UseBasicParsing
         Write-Host "[OK] Descarga completada" -ForegroundColor Green
     } else {
         Write-Host "[OK] ZIP ya descargado, omitiendo descarga" -ForegroundColor Green
@@ -128,8 +126,8 @@ if (-not (Test-Path "$ac6Bin\armclang.exe")) {
     tar -xf $ac6Zip -C $ac6Dir --strip-components=1
 
     # Permisos para todos los usuarios
-    icacls $ac6Dir /grant "*S-1-5-32-545:(OI)(CI)RX" /T | Out-Null
-    icacls $ac6Dir /grant "*S-1-5-32-544:(OI)(CI)F" /T | Out-Null
+    #icacls $ac6Dir /grant "*S-1-5-32-545:(OI)(CI)RX" /T | Out-Null
+    #icacls $ac6Dir /grant "*S-1-5-32-544:(OI)(CI)F" /T | Out-Null
 
     Add-ToMachinePath $ac6Bin
     Write-Host "[OK] Arm Compiler 6 instalado en $ac6Dir" -ForegroundColor Green
@@ -192,7 +190,7 @@ Write-Host "[PASO 9/10] Instalando CMSIS Packs..." -ForegroundColor Magenta
 Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS"         -Version "5.8.0"
 Install-CmsisPackIfMissing -Vendor "Keil" -Pack "STM32F4xx_DFP" -Version "2.15.0"
 Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-Driver"  -Version "2.6.1"
-Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-RTX"     -Version "5.9.0"
+#Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-RTX"     -Version "5.5.2 "
 Install-CmsisPackIfMissing -Vendor "Keil" -Pack "MDK-Middleware" -Version "7.13.0"
 Write-Host "[INFO] Lista de packs instalados:" -ForegroundColor Yellow
 cpackget list
