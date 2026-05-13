@@ -241,6 +241,8 @@ function Install-VSCodeExtensionIfMissing {
 Install-VSCodeExtensionIfMissing "Arm.keil-studio-pack"
 Install-VSCodeExtensionIfMissing "ms-vscode.cpptools"
 Install-VSCodeExtensionIfMissing "ms-vscode.cmake-tools"
+# tengo dudas del nombre de la extension para el XRTOS viewer
+Install-VSCodeExtensionIfMissing "mcu-debug"
 
 Write-Host ""
 Write-Host "===========================================" -ForegroundColor Green
