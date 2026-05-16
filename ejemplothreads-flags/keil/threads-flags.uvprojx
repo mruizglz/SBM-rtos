@@ -386,17 +386,12 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
+              <FilePath>..\src\main.c</FilePath>
             </File>
             <File>
               <FileName>Thread.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Thread.c</FilePath>
-            </File>
-            <File>
-              <FileName>Thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Thread.h</FilePath>
+              <FilePath>..\src\Thread.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -538,5 +533,14 @@
       </file>
     </files>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>threads-flags</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

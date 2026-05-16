@@ -1,0 +1,7 @@
+{
+    "debug.hideSlowPreLaunchWarning": true,
+    "debug.showInStatusBar": "never",
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\sbm\\SBM-rtos\\ejemplothreads-flags\\vc\\out\\threads-flags\\Target_1"
+    ]
+}
