@@ -1,0 +1,7 @@
+{
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\sbm\\SBM-rtos\\ejemplothreads-timers\\vc\\out\\threads-timers\\Target_1"
+    ],
+    "debug.hideSlowPreLaunchWarning": true,
+    "debug.showInStatusBar": "never"
+}
