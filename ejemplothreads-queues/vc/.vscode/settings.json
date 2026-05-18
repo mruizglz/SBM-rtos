@@ -1,0 +1,7 @@
+{
+    "debug.hideSlowPreLaunchWarning": true,
+    "debug.showInStatusBar": "never",
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\sbm\\SBM-rtos\\ejemplothreads-queues\\vc\\out\\threads-queues\\Target_1"
+    ]
+}
