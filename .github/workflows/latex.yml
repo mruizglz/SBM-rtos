@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-release-asset@v1 
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: UPMSBM-CMSIS-RTOS.pdf 
+          asset_path: ./presentation/UPMSBM-CMSIS-RTOS.pdf 
           asset_name: UPMSBM-CMSIS-RTOS.pdf 
           asset_content_type: application/pdf
         env: 
@@ -94,7 +94,7 @@ jobs:
         uses: actions/upload-release-asset@v1 
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: UPMSBM-CMSIS-RTOS_en.pdf 
+          asset_path: ./presentation/UPMSBM-CMSIS-RTOS_en.pdf 
           asset_name: UPMSBM-CMSIS-RTOS_en.pdf 
           asset_content_type: application/pdf
         env: 
