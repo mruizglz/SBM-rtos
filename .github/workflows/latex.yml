@@ -35,7 +35,8 @@ jobs:
         uses: dante-ev/latex-action@2021-A
         with:
           # The root LaTeX file to be compiled
-          root_file: presentation/UPMSBM-CMSIS-RTOS.tex
+          root_file: UPMSBM-CMSIS-RTOS.tex
+          working_directory: presentation
           args: -pdf -shell-escape -f
           
       - name: LaTeX compilation II
@@ -44,7 +45,8 @@ jobs:
         uses: dante-ev/latex-action@2021-A
         with:
           # The root LaTeX file to be compiled
-          root_file: presentation/UPMSBM-CMSIS-RTOS_en.tex
+          root_file: UPMSBM-CMSIS-RTOS_en.tex
+          working_directory: presentation
           args: -pdf -shell-escape -f
       
 
@@ -52,7 +54,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: UPMSBM-CMSIS-RTOS.pdf
-          path: UPMSBM-CMSIS-RTOS.pdf UPMSBM-CMSIS-RTOS_en.pdf
+          path: presentation/UPMSBM-CMSIS-RTOS.pdf presentation/UPMSBM-CMSIS-RTOS_en.pdf
           
           
       - name: Delete Release
