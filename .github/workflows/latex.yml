@@ -35,7 +35,7 @@ jobs:
         uses: dante-ev/latex-action@2021-A
         with:
           # The root LaTeX file to be compiled
-          root_file: UPMSBM-CMSIS-RTOS.tex
+          root_file: ./presentation/UPMSBM-CMSIS-RTOS.tex
           args: -pdf -shell-escape -f
           # The working directory for the latex compiler to be invoked
           working_directory: .
@@ -46,7 +46,7 @@ jobs:
         uses: dante-ev/latex-action@2021-A
         with:
           # The root LaTeX file to be compiled
-          root_file: UPMSBM-CMSIS-RTOS_en.tex
+          root_file: ./presentation/UPMSBM-CMSIS-RTOS_en.tex
           args: -pdf -shell-escape -f
           # The working directory for the latex compiler to be invoked
           working_directory: .
