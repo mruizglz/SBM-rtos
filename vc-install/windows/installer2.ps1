@@ -81,7 +81,7 @@ if (Test-Path $toolboxBin) {
 } else {
     if (-not (Test-Path $toolboxZip)) {
         Write-Host "[...] Descargando CMSIS-Toolbox..." -ForegroundColor Gray
-        Invoke-WebRequest -Uri https://artifacts.tools.arm.com/cmsis-toolbox/2.13.0/cmsis-toolbox-windows-amd64.zip -OutFile $toolboxZip -UseBasicParsing
+        Invoke-WebRequest -Uri https://artifacts.tools.arm.com/cmsis-toolbox/2.14.1/cmsis-toolbox-windows-amd64.zip -OutFile $toolboxZip -UseBasicParsing
         Write-Host "[OK] Descarga completada" -ForegroundColor Green
     } else {
         Write-Host "[OK] ZIP ya descargado, omitiendo descarga" -ForegroundColor Green
@@ -187,11 +187,11 @@ function Install-CmsisPackIfMissing {
 
 # --- CMSIS Packs ---
 Write-Host "[PASO 9/10] Instalando CMSIS Packs..." -ForegroundColor Magenta
-Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS"         -Version "5.8.0"
-Install-CmsisPackIfMissing -Vendor "Keil" -Pack "STM32F4xx_DFP" -Version "2.15.0"
-Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-Driver"  -Version "2.6.1"
-#Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-RTX"     -Version "5.5.2 "
-Install-CmsisPackIfMissing -Vendor "Keil" -Pack "MDK-Middleware" -Version "7.13.0"
+Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS"         -Version "6.3.0"
+Install-CmsisPackIfMissing -Vendor "Keil" -Pack "STM32F4xx_DFP" -Version "2.17.1"
+Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-Driver"  -Version "2.10.0"
+Install-CmsisPackIfMissing -Vendor "ARM"  -Pack "CMSIS-RTX"     -Version "5.9.1"
+Install-CmsisPackIfMissing -Vendor "Keil" -Pack "MDK-Middleware" -Version "8.1.0"
 Write-Host "[INFO] Lista de packs instalados:" -ForegroundColor Yellow
 cpackget list
 
