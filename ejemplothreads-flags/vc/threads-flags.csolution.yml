@@ -1,6 +1,6 @@
 solution:
   created-by: uv2csolution@1.6.0
-  created-for: CMSIS-Toolbox@2.12.0
+  created-for: CMSIS-Toolbox@2.13.0
   compiler: AC6
   target-types:
     - type: Target_1
@@ -11,8 +11,8 @@ solution:
           images:
             - project-context: threads-flags
           debugger:
-            name: ST-Link@pyOCD
-            clock: 4000000
+            name: CMSIS-DAP@pyOCD
+            clock: 10000000
             protocol: swd
   projects:
     - project: threads-flags.cproject.yml

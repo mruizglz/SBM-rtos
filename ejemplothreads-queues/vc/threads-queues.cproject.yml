@@ -1,9 +1,9 @@
 project:
   packs:
-    - pack: ARM::CMSIS@^5.9.0
-    - pack: Keil::STM32F4xx_DFP@^2.17.1
-    - pack: ARM::CMSIS-NN@^4.0.0
-    - pack: ARM::CMSIS-DSP@^1.10.1
+    - pack: ARM::CMSIS@6.3.0
+    - pack: Keil::STM32F4xx_DFP@2.17.1
+    - pack: ARM::CMSIS-RTX@5.9.1
+      
   setups:
     - setup: Options for Target_1
       processor:
@@ -13,12 +13,12 @@ project:
         - HSE_VALUE: "8000000"
       misc:
         - C:
-            - -std=c99
+            - -std=c11
           C-CPP:
             - -fno-rtti
             - -funsigned-char
-            - -fshort-enums
-            - -fshort-wchar
+            #- -fshort-enums
+            #- -fshort-wchar
             - -ffunction-sections
             - -Wno-packed
             - -Wno-missing-variable-declarations
@@ -69,3 +69,4 @@ project:
     - component: Keil::Device:STM32Cube HAL:PWR
     - component: Keil::Device:STM32Cube HAL:RCC
     - component: Keil::Device:Startup
+    - component: CMSIS:OS Tick:SysTick

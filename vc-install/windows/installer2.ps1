@@ -81,7 +81,7 @@ if (Test-Path $toolboxBin) {
 } else {
     if (-not (Test-Path $toolboxZip)) {
         Write-Host "[...] Descargando CMSIS-Toolbox..." -ForegroundColor Gray
-        Invoke-WebRequest -Uri https://artifacts.tools.arm.com/cmsis-toolbox/2.14.1/cmsis-toolbox-windows-amd64.zip -OutFile $toolboxZip -UseBasicParsing
+        Invoke-WebRequest -Uri https://artifacts.tools.arm.com/cmsis-toolbox/2.13.0/cmsis-toolbox-windows-amd64.zip -OutFile $toolboxZip -UseBasicParsing
         Write-Host "[OK] Descarga completada" -ForegroundColor Green
     } else {
         Write-Host "[OK] ZIP ya descargado, omitiendo descarga" -ForegroundColor Green
