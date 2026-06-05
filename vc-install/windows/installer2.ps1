@@ -139,7 +139,7 @@ if (-not (Test-Path "$ac6Bin\armclang.exe")) {
 }
 
 # Registrar variable de entorno para CMSIS-Toolbox
-$ac6EnvVar = "AC6_TOOLCHAIN_" + $ac6Version.Replace(".", "_")
+$ac6EnvVar = "AC6_TOOLCHAIN_" + $ac6Version.Replace(".", "_") + "_0"
 [Environment]::SetEnvironmentVariable($ac6EnvVar, $ac6Bin, "Machine")
 Set-Item -Path "env:$ac6EnvVar" -Value $ac6Bin
 Write-Host "[OK] Variable $ac6EnvVar configurada: $ac6Bin" -ForegroundColor Green
