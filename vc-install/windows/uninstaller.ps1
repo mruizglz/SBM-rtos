@@ -86,6 +86,7 @@ Uninstall-WingetPackageIfInstalled "Ninja-build.Ninja"           "Ninja"
 Uninstall-WingetPackageIfInstalled "Kitware.CMake"               "CMake"
 
 # --- VS Code y extensiones ---
+
 Write-Host "[PASO 6/6] Desinstalando extensiones de VS Code..." -ForegroundColor Magenta
 if (Get-Command code -ErrorAction SilentlyContinue) {
     $extensions = @(
@@ -93,10 +94,28 @@ if (Get-Command code -ErrorAction SilentlyContinue) {
         "ms-vscode.cpptools",
         "ms-vscode.cmake-tools"
     )
+    $env:NODE_NO_WARNINGS = "1"
+    $env:NODE_OPTIONS = "--no-deprecation"
+
     foreach ($ext in $extensions) {
         Write-Host "[...] Desinstalando extension $ext..." -ForegroundColor Gray
-        code --uninstall-extension $ext 2>$null
-        Write-Host "[OK] Extension desinstalada: $ext" -ForegroundColor Green
+
+        # Comprobar si está instalada antes de intentar desinstalar
+        $installed = code --list-extensions 2>$null | Where-Object { $_ -eq $ext }
+
+        if ($installed) {
+            code --uninstall-extension $ext 2>$null | Out-Null
+
+            # Verificar que realmente se desinstaló
+            $stillInstalled = code --list-extensions 2>$null | Where-Object { $_ -eq $ext }
+            if ($stillInstalled) {
+                Write-Host "[ERROR] Fallo al desinstalar $ext" -ForegroundColor Red
+            } else {
+                Write-Host "[OK] Extension desinstalada: $ext" -ForegroundColor Green
+            }
+        } else {
+            Write-Host "[OK] Extension no estaba instalada: $ext" -ForegroundColor DarkGray
+        }
     }
 } else {
     Write-Host "[AVISO] VS Code no encontrado en PATH, omitiendo extensiones" -ForegroundColor Yellow

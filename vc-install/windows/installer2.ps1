@@ -123,8 +123,10 @@ if (-not (Test-Path "$ac6Bin\armclang.exe")) {
     }
     Write-Host "[...] Extrayendo Arm Compiler 6..." -ForegroundColor Gray
     New-Item -ItemType Directory -Force -Path $ac6Dir | Out-Null
-    tar -xf $ac6Zip -C $ac6Dir --strip-components=1
-
+	$sevenZip = "C:\Program Files\7-Zip\7z.exe"
+    #tar -xf $ac6Zip -C $ac6Dir --strip-components=1
+	#Expand-Archive -Path $ac6Zip -DestinationPath $ac6Dir -Force
+    & $sevenZip x $ac6Zip -o"$ac6Dir" -y | Out-Null
     # Permisos para todos los usuarios
     #icacls $ac6Dir /grant "*S-1-5-32-545:(OI)(CI)RX" /T | Out-Null
     #icacls $ac6Dir /grant "*S-1-5-32-544:(OI)(CI)F" /T | Out-Null
@@ -241,6 +243,7 @@ function Install-VSCodeExtensionIfMissing {
 Install-VSCodeExtensionIfMissing "Arm.keil-studio-pack"
 Install-VSCodeExtensionIfMissing "ms-vscode.cpptools"
 Install-VSCodeExtensionIfMissing "ms-vscode.cmake-tools"
+Install-VSCodeExtensionIfMissing "marus25.cortex-debug"
 
 Write-Host ""
 Write-Host "===========================================" -ForegroundColor Green
