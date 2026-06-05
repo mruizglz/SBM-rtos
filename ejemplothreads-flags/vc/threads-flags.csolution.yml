@@ -11,8 +11,8 @@ solution:
           images:
             - project-context: threads-flags
           debugger:
-            name: CMSIS-DAP@pyOCD
-            clock: 10000000
+            name: ST-Link@pyOCD
+            clock: 4000000
             protocol: swd
   projects:
     - project: threads-flags.cproject.yml
