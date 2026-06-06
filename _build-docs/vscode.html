@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8. Entorno Visual Studio Code para SBM-RTOS &mdash; CMSIS-RTOS V2 Ejemplos 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="7. Requisitos previos" href="requisitos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            CMSIS-RTOS V2 Ejemplos
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cmsis-rtos.html">1. Ejemplos básicos CMSIS RTOS V2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothread.html">2. Uso básico de un thread en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads.html">3. Uso básico de threads en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-queues.html">4. Uso básico de threads y colas en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-flags.html">5. Uso básico de threads y flags en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejemplothreads-software-timers.html">6. Uso básico de threads y software timers en CMSIS RTOS v2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requisitos.html">7. Requisitos previos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Entorno Visual Studio Code para SBM-RTOS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#que-instala-el-entorno">8.1. Qué instala el entorno</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#componentes-principales">8.1.1. Componentes principales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#packs-cmsis-instalados">8.1.2. Packs CMSIS instalados</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#linux">8.2. Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sistema-objetivo">8.2.1. Sistema objetivo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requisitos-previos">8.2.2. Requisitos previos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#archivos-implicados">8.2.3. Archivos implicados</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#como-ejecutar-la-instalacion">8.2.4. Cómo ejecutar la instalación</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#que-hace-el-script-paso-a-paso">8.2.5. Qué hace el script paso a paso</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variables-y-rutas-configuradas">8.2.6. Variables y rutas configuradas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuracion-global-de-vs-code-que-genera-el-script">8.2.7. Configuración global de VS Code que genera el script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verificacion-posterior">8.2.8. Verificación posterior</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#incidencias-tipicas">8.2.9. Incidencias típicas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#desinstalacion-en-linux">8.2.10. Desinstalación en Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#windows">8.3. Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">8.3.1. Sistema objetivo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">8.3.2. Archivos implicados</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">8.3.3. Cómo ejecutar la instalación</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">8.3.4. Qué hace el script paso a paso</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#herramientas-instaladas-con-winget">8.3.5. Herramientas instaladas con winget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">8.3.6. Variables y rutas configuradas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extensiones-instaladas-en-vs-code">8.3.7. Extensiones instaladas en VS Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">8.3.8. Verificación posterior</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">8.3.9. Incidencias típicas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#desinstalacion-en-windows">8.3.10. Desinstalación en Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#recomendaciones-de-uso">8.4. Recomendaciones de uso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resumen-rapido">8.5. Resumen rápido</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CMSIS-RTOS V2 Ejemplos</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">8. </span>Entorno Visual Studio Code para SBM-RTOS</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/vscode.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="entorno-visual-studio-code-para-sbm-rtos">
+<span id="vscode"></span><h1><span class="section-number">8. </span>Entorno Visual Studio Code para SBM-RTOS<a class="headerlink" href="#entorno-visual-studio-code-para-sbm-rtos" title="Link to this heading"></a></h1>
+<p>Esta guía documenta la instalación del entorno de trabajo a partir de los
+scripts incluidos en <code class="docutils literal notranslate"><span class="pre">/tmp/workspace/mruizglz/SBM-rtos/vc-install</span></code>. El
+objetivo es dejar una máquina preparada para abrir, compilar y depurar los
+ejemplos del repositorio con Visual Studio Code y el ecosistema CMSIS.</p>
+<p>Los scripts disponibles son:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Script</p></th>
+<th class="head"><p>Propósito</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vc-install/linux/install.sh</span></code></p></td>
+<td><p>Instalación completa del entorno en Linux</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vc-install/linux/uninstall.sh</span></code></p></td>
+<td><p>Desinstalación del entorno en Linux</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vc-install/windows/installer2.ps1</span></code></p></td>
+<td><p>Instalación completa del entorno en Windows</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vc-install/windows/uninstaller.ps1</span></code></p></td>
+<td><p>Desinstalación del entorno en Windows</p></td>
+</tr>
+</tbody>
+</table>
+<section id="que-instala-el-entorno">
+<h2><span class="section-number">8.1. </span>Qué instala el entorno<a class="headerlink" href="#que-instala-el-entorno" title="Link to this heading"></a></h2>
+<p>Ambos instaladores persiguen la misma idea: centralizar las herramientas y los
+packs CMSIS en una ubicación compartida de sistema y dejar VS Code listo para
+trabajar con proyectos ARM/CMSIS.</p>
+<section id="componentes-principales">
+<h3><span class="section-number">8.1.1. </span>Componentes principales<a class="headerlink" href="#componentes-principales" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 25.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Componente</p></th>
+<th class="head"><p>Versión / identificador</p></th>
+<th class="head"><p>Notas</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CMSIS-Toolbox</p></td>
+<td><p>Linux <code class="docutils literal notranslate"><span class="pre">2.14.1</span></code> / Windows <code class="docutils literal notranslate"><span class="pre">2.13.0</span></code></p></td>
+<td><p>Aporta <code class="docutils literal notranslate"><span class="pre">cbuild</span></code> y <code class="docutils literal notranslate"><span class="pre">cpackget</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Arm Compiler 6</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">6.24</span></code> build <code class="docutils literal notranslate"><span class="pre">19</span></code></p></td>
+<td><p>Se expone mediante <code class="docutils literal notranslate"><span class="pre">AC6_TOOLCHAIN_6_24_0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>CMake</p></td>
+<td><p>Versión disponible en el gestor del sistema</p></td>
+<td><p>Dependencia de <code class="docutils literal notranslate"><span class="pre">cbuild</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Ninja</p></td>
+<td><p>Versión disponible en el gestor del sistema</p></td>
+<td><p>Generador usado por CMake</p></td>
+</tr>
+<tr class="row-even"><td><p>Visual Studio Code</p></td>
+<td><p>Última disponible en el gestor del sistema</p></td>
+<td><p>Editor principal</p></td>
+</tr>
+<tr class="row-odd"><td><p>Extensión ARM</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Arm.keil-studio-pack</span></code></p></td>
+<td><p>Pack de extensiones para CMSIS/ARM</p></td>
+</tr>
+<tr class="row-even"><td><p>Extensión C/C++</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ms-vscode.cpptools</span></code></p></td>
+<td><p>IntelliSense y soporte C/C++</p></td>
+</tr>
+<tr class="row-odd"><td><p>Extensión CMake</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ms-vscode.cmake-tools</span></code></p></td>
+<td><p>Integración de CMake en VS Code</p></td>
+</tr>
+<tr class="row-even"><td><p>Extensión de depuración Cortex-M</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">marus25.cortex-debug</span></code></p></td>
+<td><p>Instalada por ambos scripts</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="packs-cmsis-instalados">
+<h3><span class="section-number">8.1.2. </span>Packs CMSIS instalados<a class="headerlink" href="#packs-cmsis-instalados" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pack</p></th>
+<th class="head"><p>Versión</p></th>
+<th class="head"><p>Uso</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ARM::CMSIS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">6.3.0</span></code></p></td>
+<td><p>Núcleo CMSIS y cabeceras base</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Keil::STM32F4xx_DFP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2.17.1</span></code></p></td>
+<td><p>Soporte de dispositivos STM32F4</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ARM::CMSIS-Driver</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2.10.0</span></code></p></td>
+<td><p>Drivers CMSIS</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ARM::CMSIS-RTX</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5.9.1</span></code></p></td>
+<td><p>Implementación RTX5 / CMSIS-RTOS2</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Keil::MDK-Middleware</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8.1.0</span></code></p></td>
+<td><p>Middleware Keil</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Los instaladores no compilan el repositorio. Su función es preparar el
+entorno de herramientas, variables, extensiones y paquetes.</p>
+</div>
+</section>
+</section>
+<section id="linux">
+<h2><span class="section-number">8.2. </span>Linux<a class="headerlink" href="#linux" title="Link to this heading"></a></h2>
+<p>El instalador Linux está pensado para Ubuntu LTS de 64 bits y debe ejecutarse
+como <code class="docutils literal notranslate"><span class="pre">root</span></code>.</p>
+<section id="sistema-objetivo">
+<h3><span class="section-number">8.2.1. </span>Sistema objetivo<a class="headerlink" href="#sistema-objetivo" title="Link to this heading"></a></h3>
+<p>Según el encabezado del script, el flujo ha sido probado en:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Ubuntu</span> <span class="pre">22.04</span> <span class="pre">LTS</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Ubuntu</span> <span class="pre">24.04</span> <span class="pre">LTS</span></code></p></li>
+<li><p>Arquitectura <code class="docutils literal notranslate"><span class="pre">x86_64</span></code></p></li>
+</ul>
+</section>
+<section id="requisitos-previos">
+<h3><span class="section-number">8.2.2. </span>Requisitos previos<a class="headerlink" href="#requisitos-previos" title="Link to this heading"></a></h3>
+<p>Antes de lanzar el script, verifica:</p>
+<ul class="simple">
+<li><p>Acceso a Internet para descargar herramientas, paquetes CMSIS y VS Code.</p></li>
+<li><p>Usuario con privilegios <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p></li>
+<li><p>Que el usuario final tenga una <code class="docutils literal notranslate"><span class="pre">home</span></code> válida, ya que el instalador modifica
+<code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> y <code class="docutils literal notranslate"><span class="pre">~/.config/Code/User/settings.json</span></code> del usuario que invoca
+<code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p></li>
+<li><p>Espacio en disco suficiente en <code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared</span></code>.</p></li>
+</ul>
+</section>
+<section id="archivos-implicados">
+<h3><span class="section-number">8.2.3. </span>Archivos implicados<a class="headerlink" href="#archivos-implicados" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Instalador: <code class="docutils literal notranslate"><span class="pre">/tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/install.sh</span></code></p></li>
+<li><p>Desinstalador: <code class="docutils literal notranslate"><span class="pre">/tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/uninstall.sh</span></code></p></li>
+</ul>
+</section>
+<section id="como-ejecutar-la-instalacion">
+<h3><span class="section-number">8.2.4. </span>Cómo ejecutar la instalación<a class="headerlink" href="#como-ejecutar-la-instalacion" title="Link to this heading"></a></h3>
+<p>Desde la raíz del repositorio:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/tmp/workspace/mruizglz/SBM-rtos
+sudo<span class="w"> </span>bash<span class="w"> </span>/tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/install.sh
+</pre></div>
+</div>
+</section>
+<section id="que-hace-el-script-paso-a-paso">
+<h3><span class="section-number">8.2.5. </span>Qué hace el script paso a paso<a class="headerlink" href="#que-hace-el-script-paso-a-paso" title="Link to this heading"></a></h3>
+<p>El script implementa diez pasos principales:</p>
+<ol class="arabic">
+<li><p><strong>Crea la estructura base</strong> en <code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/Packs</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/downloads</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Define ``CMSIS_PACK_ROOT``</strong> en el fichero global:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/etc/profile.d/sbm-rtos.sh
+</pre></div>
+</div>
+</li>
+<li><p><strong>Aplica permisos</strong> sobre <code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/Packs</span></code>.</p></li>
+<li><p><strong>Descarga y extrae CMSIS-Toolbox</strong> en:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/opt/ARM-Shared/cmsis-toolbox-linux-amd64
+</pre></div>
+</div>
+</li>
+<li><p><strong>Instala CMake</strong> con <code class="docutils literal notranslate"><span class="pre">apt</span></code> si no está disponible.</p></li>
+<li><p><strong>Instala Ninja</strong> con <code class="docutils literal notranslate"><span class="pre">apt</span></code> si no está disponible.</p></li>
+<li><p><strong>Descarga e instala Arm Compiler 6</strong> en:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/opt/ARM-Shared/ArmCompilerforEmbedded
+</pre></div>
+</div>
+<p>y publica la variable:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>AC6_TOOLCHAIN_6_24_0
+</pre></div>
+</div>
+</li>
+<li><p><strong>Inicializa ``cpackget``</strong> con el índice público:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>https://www.keil.com/pack/index.pidx
+</pre></div>
+</div>
+</li>
+<li><p><strong>Instala los packs CMSIS</strong> listados en la sección anterior.</p></li>
+<li><p><strong>Instala Visual Studio Code y extensiones</strong>, y además escribe
+configuración global de VS Code para el usuario real.</p></li>
+</ol>
+</section>
+<section id="variables-y-rutas-configuradas">
+<h3><span class="section-number">8.2.6. </span>Variables y rutas configuradas<a class="headerlink" href="#variables-y-rutas-configuradas" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Elemento</p></th>
+<th class="head"><p>Valor</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CMSIS_PACK_ROOT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/Packs</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AC6_TOOLCHAIN_6_24_0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/ArmCompilerforEmbedded/bin</span></code> o el <code class="docutils literal notranslate"><span class="pre">bin</span></code> real detectado</p></td>
+</tr>
+<tr class="row-even"><td><p>Perfil global</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/etc/profile.d/sbm-rtos.sh</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Toolbox</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/cmsis-toolbox-linux-amd64/bin</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Compilador AC6</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/ArmCompilerforEmbedded/bin</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Descargas</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/downloads</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Para evitar que el terminal integrado de VS Code ignore las variables cargadas
+en <code class="docutils literal notranslate"><span class="pre">/etc/profile.d</span></code>, el instalador añade un bloque a <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> del
+usuario invocador y genera <code class="docutils literal notranslate"><span class="pre">~/.config/Code/User/settings.json</span></code>.</p>
+</section>
+<section id="configuracion-global-de-vs-code-que-genera-el-script">
+<h3><span class="section-number">8.2.7. </span>Configuración global de VS Code que genera el script<a class="headerlink" href="#configuracion-global-de-vs-code-que-genera-el-script" title="Link to this heading"></a></h3>
+<p>En Linux, el script modifica el fichero:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>~/.config/Code/User/settings.json
+</pre></div>
+</div>
+<p>Las claves que se escriben son:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;terminal.integrated.env.linux&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;CMSIS_PACK_ROOT&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/ARM-Shared/Packs&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;AC6_TOOLCHAIN_6_24_0&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/ARM-Shared/ArmCompilerforEmbedded/bin&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/ARM-Shared/ArmCompilerforEmbedded/bin:/opt/ARM-Shared/cmsis-toolbox-linux-amd64/bin:${env:PATH}&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;cmake.environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;CMSIS_PACK_ROOT&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/ARM-Shared/Packs&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;AC6_TOOLCHAIN_6_24_0&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/ARM-Shared/ArmCompilerforEmbedded/bin&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;vcpkg.enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;arm-tools.autoActivate&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;debug.hideSlowPreLaunchWarning&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>En Linux el instalador también descarga e instala <code class="docutils literal notranslate"><span class="pre">stlink</span></code> desde un
+paquete <code class="docutils literal notranslate"><span class="pre">.deb</span></code> de GitHub Releases. Ese paso no existe en el instalador de
+Windows.</p>
+</div>
+</section>
+<section id="verificacion-posterior">
+<h3><span class="section-number">8.2.8. </span>Verificación posterior<a class="headerlink" href="#verificacion-posterior" title="Link to this heading"></a></h3>
+<p>Después de instalar, cierra la sesión o ejecuta:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/etc/profile.d/sbm-rtos.sh
+<span class="nb">source</span><span class="w"> </span>~/.bashrc
+</pre></div>
+</div>
+<p>Comprueba el entorno:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CMSIS_PACK_ROOT</span><span class="s2">&quot;</span>
+which<span class="w"> </span>cpackget
+cbuild<span class="w"> </span>--version
+cpackget<span class="w"> </span>list
+code<span class="w"> </span>--list-extensions<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;Arm.keil-studio-pack|ms-vscode.cpptools|ms-vscode.cmake-tools|marus25.cortex-debug&#39;</span>
+</pre></div>
+</div>
+<p>Resultado esperado:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CMSIS_PACK_ROOT</span></code> debe apuntar a <code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/Packs</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cpackget</span></code> debe resolverse desde el directorio de CMSIS-Toolbox.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cpackget</span> <span class="pre">list</span></code> debe mostrar los cinco packs instalados.</p></li>
+<li><p>El listado de extensiones debe incluir las cuatro extensiones configuradas por
+el script.</p></li>
+</ul>
+</section>
+<section id="incidencias-tipicas">
+<h3><span class="section-number">8.2.9. </span>Incidencias típicas<a class="headerlink" href="#incidencias-tipicas" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>``cpackget`` no aparece en PATH</strong>: abre una terminal nueva o ejecuta
+<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/etc/profile.d/sbm-rtos.sh</span></code>.</p></li>
+<li><p><strong>VS Code no ve las variables</strong>: cierra y vuelve a abrir VS Code; el script
+prepara <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> y <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, pero una sesión ya abierta no relee
+esas variables.</p></li>
+<li><p><strong>Descargas repetidas</strong>: el script evita redescargar ficheros ya presentes en
+<code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared/downloads</span></code>.</p></li>
+<li><p><strong>Packs con licencia embebida</strong>: el instalador Linux ejecuta <code class="docutils literal notranslate"><span class="pre">cpackget</span> <span class="pre">add</span></code>
+con <code class="docutils literal notranslate"><span class="pre">--agree-embedded-license</span></code> para evitar preguntas interactivas.</p></li>
+</ul>
+</section>
+<section id="desinstalacion-en-linux">
+<h3><span class="section-number">8.2.10. </span>Desinstalación en Linux<a class="headerlink" href="#desinstalacion-en-linux" title="Link to this heading"></a></h3>
+<p>Para revertir la instalación:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/tmp/workspace/mruizglz/SBM-rtos
+sudo<span class="w"> </span>bash<span class="w"> </span>/tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/uninstall.sh
+</pre></div>
+</div>
+<p>El desinstalador:</p>
+<ul class="simple">
+<li><p>Elimina los packs CMSIS instalados.</p></li>
+<li><p>Borra <code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared</span></code>.</p></li>
+<li><p>Elimina <code class="docutils literal notranslate"><span class="pre">/etc/profile.d/sbm-rtos.sh</span></code>.</p></li>
+<li><p>Desinstala <code class="docutils literal notranslate"><span class="pre">cmake</span></code> y <code class="docutils literal notranslate"><span class="pre">ninja-build</span></code> si fueron instalados por <code class="docutils literal notranslate"><span class="pre">apt</span></code>.</p></li>
+<li><p>Desinstala las extensiones de VS Code.</p></li>
+<li><p>Ofrece opcionalmente desinstalar VS Code y su repositorio <code class="docutils literal notranslate"><span class="pre">apt</span></code>.</p></li>
+<li><p>Intenta purgar el paquete <code class="docutils literal notranslate"><span class="pre">stlink</span></code> detectado en el sistema.</p></li>
+</ul>
+</section>
+</section>
+<section id="windows">
+<h2><span class="section-number">8.3. </span>Windows<a class="headerlink" href="#windows" title="Link to this heading"></a></h2>
+<p>El instalador Windows está escrito en PowerShell y debe ejecutarse como
+Administrador.</p>
+<section id="id1">
+<h3><span class="section-number">8.3.1. </span>Sistema objetivo<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>El script no fija una versión concreta de Windows, pero por las herramientas
+utilizadas requiere un entorno con:</p>
+<ul class="simple">
+<li><p>PowerShell</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">winget</span></code></p></li>
+<li><p>permisos de Administrador</p></li>
+<li><p>acceso a Internet</p></li>
+</ul>
+<p>Además, el instalador asume la existencia de:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Program Files\7-Zip\7z.exe
+</pre></div>
+</div>
+<p>Ese ejecutable se usa para descomprimir Arm Compiler 6.</p>
+</section>
+<section id="id2">
+<h3><span class="section-number">8.3.2. </span>Archivos implicados<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Instalador: <code class="docutils literal notranslate"><span class="pre">/tmp/workspace/mruizglz/SBM-rtos/vc-install/windows/installer2.ps1</span></code></p></li>
+<li><p>Desinstalador: <code class="docutils literal notranslate"><span class="pre">/tmp/workspace/mruizglz/SBM-rtos/vc-install/windows/uninstaller.ps1</span></code></p></li>
+</ul>
+</section>
+<section id="id3">
+<h3><span class="section-number">8.3.3. </span>Cómo ejecutar la instalación<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>Abre <strong>PowerShell como Administrador</strong> y ejecuta:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Set-ExecutionPolicy</span> <span class="n">-Scope</span> <span class="k">Process</span> <span class="n">Bypass</span> <span class="n">-Force</span>
+<span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">ruta</span><span class="p">\</span><span class="n">al</span><span class="p">\</span><span class="n">repositorio</span><span class="p">\</span><span class="n">SBM-rtos</span>
+<span class="p">.\</span><span class="n">vc-install</span><span class="p">\</span><span class="n">windows</span><span class="p">\</span><span class="n">installer2</span><span class="p">.</span><span class="n">ps1</span>
+</pre></div>
+</div>
+<p>Si quieres ejecutarlo usando la ruta absoluta del clon de trabajo:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Set-ExecutionPolicy</span> <span class="n">-Scope</span> <span class="k">Process</span> <span class="n">Bypass</span> <span class="n">-Force</span>
+<span class="p">&amp;</span> <span class="s2">&quot;C:\ruta\al\repositorio\SBM-rtos\vc-install\windows\installer2.ps1&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">8.3.4. </span>Qué hace el script paso a paso<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>El flujo Windows también se divide en diez pasos:</p>
+<ol class="arabic">
+<li><p><strong>Crea carpetas base</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\Packs</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\downloads</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Define la variable de sistema</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>CMSIS_PACK_ROOT=C:\ARM-Shared\Packs
+</pre></div>
+</div>
+</li>
+<li><p><strong>Configura permisos</strong> en <code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\Packs</span></code> con <code class="docutils literal notranslate"><span class="pre">icacls</span></code>.</p></li>
+<li><p><strong>Descarga y extrae CMSIS-Toolbox</strong> en:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\ARM-Shared\cmsis-toolbox-windows-amd64
+</pre></div>
+</div>
+</li>
+<li><p><strong>Instala CMake</strong> mediante <code class="docutils literal notranslate"><span class="pre">winget</span></code>.</p></li>
+<li><p><strong>Instala Ninja</strong> mediante <code class="docutils literal notranslate"><span class="pre">winget</span></code>.</p></li>
+<li><p><strong>Descarga y extrae Arm Compiler 6</strong> en:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\ARM-Shared\ArmCompilerforEmbedded
+</pre></div>
+</div>
+<p>y define:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>AC6_TOOLCHAIN_6_24_0
+</pre></div>
+</div>
+</li>
+<li><p><strong>Inicializa ``cpackget``</strong> con el índice público.</p></li>
+<li><p><strong>Instala los packs CMSIS</strong> necesarios.</p></li>
+<li><p><strong>Instala Visual Studio Code y extensiones</strong>.</p></li>
+</ol>
+</section>
+<section id="herramientas-instaladas-con-winget">
+<h3><span class="section-number">8.3.5. </span>Herramientas instaladas con winget<a class="headerlink" href="#herramientas-instaladas-con-winget" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Id de <code class="docutils literal notranslate"><span class="pre">winget</span></code></p></th>
+<th class="head"><p>Componente</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Kitware.CMake</span></code></p></td>
+<td><p>CMake</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Ninja-build.Ninja</span></code></p></td>
+<td><p>Ninja</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Microsoft.VisualStudioCode</span></code></p></td>
+<td><p>Visual Studio Code</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id5">
+<h3><span class="section-number">8.3.6. </span>Variables y rutas configuradas<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Elemento</p></th>
+<th class="head"><p>Valor</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CMSIS_PACK_ROOT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\Packs</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AC6_TOOLCHAIN_6_24_0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\ArmCompilerforEmbedded\bin</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Toolbox</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\cmsis-toolbox-windows-amd64\bin</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Descargas</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\downloads</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>El script también añade al <code class="docutils literal notranslate"><span class="pre">PATH</span></code> de máquina:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\cmsis-toolbox-windows-amd64\bin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\ArmCompilerforEmbedded\bin</span></code></p></li>
+</ul>
+</section>
+<section id="extensiones-instaladas-en-vs-code">
+<h3><span class="section-number">8.3.7. </span>Extensiones instaladas en VS Code<a class="headerlink" href="#extensiones-instaladas-en-vs-code" title="Link to this heading"></a></h3>
+<p>El instalador Windows ejecuta:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">Arm</span><span class="p">.</span><span class="n">keil-studio-pack</span> <span class="p">-</span><span class="n">-force</span>
+<span class="n">code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">ms-vscode</span><span class="p">.</span><span class="n">cpptools</span> <span class="p">-</span><span class="n">-force</span>
+<span class="n">code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">ms-vscode</span><span class="p">.</span><span class="n">cmake-tools</span> <span class="p">-</span><span class="n">-force</span>
+<span class="n">code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">marus25</span><span class="p">.</span><span class="n">cortex-debug</span> <span class="p">-</span><span class="n">-force</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A diferencia del instalador Linux, el script de Windows no escribe un
+<code class="docutils literal notranslate"><span class="pre">settings.json</span></code> global para VS Code. Configura herramientas, PATH,
+variables de entorno y extensiones, pero no añade ajustes adicionales de
+editor o CMake.</p>
+</div>
+</section>
+<section id="id6">
+<h3><span class="section-number">8.3.8. </span>Verificación posterior<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>Abre una <strong>nueva</strong> consola PowerShell y ejecuta:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo </span><span class="nv">$env:CMSIS_PACK_ROOT</span>
+<span class="nb">Get-Command</span> <span class="n">cpackget</span>
+<span class="n">cbuild</span> <span class="p">-</span><span class="n">-version</span>
+<span class="n">cpackget</span> <span class="n">list</span>
+<span class="n">code</span> <span class="p">-</span><span class="n">-list-extensions</span> <span class="p">|</span> <span class="nb">Select-String</span> <span class="s2">&quot;Arm.keil-studio-pack|ms-vscode.cpptools|ms-vscode.cmake-tools|marus25.cortex-debug&quot;</span>
+</pre></div>
+</div>
+<p>Resultado esperado:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CMSIS_PACK_ROOT</span></code> debe ser <code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared\Packs</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Get-Command</span> <span class="pre">cpackget</span></code> debe resolver el ejecutable del toolbox.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cpackget</span> <span class="pre">list</span></code> debe listar los cinco packs instalados por el script.</p></li>
+<li><p>VS Code debe mostrar las cuatro extensiones requeridas.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3><span class="section-number">8.3.9. </span>Incidencias típicas<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>``winget`` no está disponible</strong>: actualiza <em>App Installer</em> o ejecuta el
+script en una versión de Windows que ya lo incluya.</p></li>
+<li><p><strong>Falta 7-Zip</strong>: el script usa <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\7-Zip\7z.exe</span></code> para extraer
+Arm Compiler 6; si no existe, la instalación fallará.</p></li>
+<li><p><strong>``code`` no aparece en PATH</strong>: el script intenta localizar <code class="docutils literal notranslate"><span class="pre">code.cmd</span></code> en
+rutas conocidas de VS Code y añadirlo a la sesión actual, pero para usos
+futuros conviene abrir una consola nueva.</p></li>
+<li><p><strong>Variables no visibles en una consola antigua</strong>: reinicia PowerShell o el
+equipo para recargar PATH y variables de entorno de máquina.</p></li>
+</ul>
+</section>
+<section id="desinstalacion-en-windows">
+<h3><span class="section-number">8.3.10. </span>Desinstalación en Windows<a class="headerlink" href="#desinstalacion-en-windows" title="Link to this heading"></a></h3>
+<p>Abre <strong>PowerShell como Administrador</strong> y ejecuta:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Set-ExecutionPolicy</span> <span class="n">-Scope</span> <span class="k">Process</span> <span class="n">Bypass</span> <span class="n">-Force</span>
+<span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">ruta</span><span class="p">\</span><span class="n">al</span><span class="p">\</span><span class="n">repositorio</span><span class="p">\</span><span class="n">SBM-rtos</span>
+<span class="p">.\</span><span class="n">vc-install</span><span class="p">\</span><span class="n">windows</span><span class="p">\</span><span class="n">uninstaller</span><span class="p">.</span><span class="n">ps1</span>
+</pre></div>
+</div>
+<p>El desinstalador:</p>
+<ul class="simple">
+<li><p>Elimina <code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared</span></code>.</p></li>
+<li><p>Borra <code class="docutils literal notranslate"><span class="pre">CMSIS_PACK_ROOT</span></code>.</p></li>
+<li><p>Limpia el <code class="docutils literal notranslate"><span class="pre">PATH</span></code> de máquina del toolbox.</p></li>
+<li><p>Desinstala <code class="docutils literal notranslate"><span class="pre">Ninja</span></code> y <code class="docutils literal notranslate"><span class="pre">CMake</span></code> mediante <code class="docutils literal notranslate"><span class="pre">winget</span></code>.</p></li>
+<li><p>Desinstala las extensiones de VS Code.</p></li>
+<li><p>Pregunta opcionalmente si también debe desinstalar Visual Studio Code.</p></li>
+</ul>
+</section>
+</section>
+<section id="recomendaciones-de-uso">
+<h2><span class="section-number">8.4. </span>Recomendaciones de uso<a class="headerlink" href="#recomendaciones-de-uso" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Ejecuta los instaladores siempre con privilegios de administrador.</p></li>
+<li><p>Mantén <code class="docutils literal notranslate"><span class="pre">CMSIS_PACK_ROOT</span></code> en una ruta compartida y estable.</p></li>
+<li><p>Abre una consola nueva tras la instalación antes de validar comandos.</p></li>
+<li><p>Si trabajas en laboratorios o equipos compartidos, evita mover
+manualmente <code class="docutils literal notranslate"><span class="pre">/opt/ARM-Shared</span></code> o <code class="docutils literal notranslate"><span class="pre">C:\ARM-Shared</span></code> después de instalar.</p></li>
+<li><p>Si necesitas rehacer la instalación, usa primero el desinstalador del mismo
+sistema operativo.</p></li>
+</ol>
+</section>
+<section id="resumen-rapido">
+<h2><span class="section-number">8.5. </span>Resumen rápido<a class="headerlink" href="#resumen-rapido" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Sistema</p></th>
+<th class="head"><p>Instalación</p></th>
+<th class="head"><p>Desinstalación</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Linux</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">bash</span> <span class="pre">/tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/install.sh</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">bash</span> <span class="pre">/tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/uninstall.sh</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Windows</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.\vc-install\windows\installer2.ps1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.\vc-install\windows\uninstaller.ps1</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="requisitos.html" class="btn btn-neutral float-left" title="7. Requisitos previos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Universidad Politécnica de Madrid.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
