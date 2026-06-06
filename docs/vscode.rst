@@ -1,739 +1,546 @@
 .. _vscode:
 
-================================
-Instalación de Visual Studio Code
-================================
+=========================================
+Entorno Visual Studio Code para SBM-RTOS
+=========================================
 
-Descarga
-========
+Esta guía documenta la instalación del entorno de trabajo a partir de los
+scripts incluidos en ``/tmp/workspace/mruizglz/SBM-rtos/vc-install``. El
+objetivo es dejar una máquina preparada para abrir, compilar y depurar los
+ejemplos del repositorio con Visual Studio Code y el ecosistema CMSIS.
 
-1. Abre el navegador y ve a https://code.visualstudio.com/download
-2. Haz clic en el botón **Windows** (descarga el instalador ``.exe`` de 64 bits).
-
-.. tip::
-
-   Descarga el instalador de **sistema** (*System Installer*) en lugar del
-   de usuario si quieres que VS Code quede disponible para todos los usuarios
-   de la máquina:
-   ``VSCodeSetup-x64-<version>.exe``
-
-Instalación
-===========
-
-1. Ejecuta el instalador descargado (doble clic).
-2. Acepta el acuerdo de licencia.
-3. En la pantalla **Seleccionar tareas adicionales**, marca **todas** las opciones:
-
-   * Agregar acción «Abrir con Code» al menú contextual de archivos.
-   * Agregar acción «Abrir con Code» al menú contextual de directorios.
-   * Registrar Code como editor predeterminado para los tipos de archivo compatibles.
-   * **Agregar a PATH** *(imprescindible)*.
-
-4. Haz clic en **Instalar** y espera a que finalice.
-5. Haz clic en **Finalizar** con la opción *Iniciar Visual Studio Code* marcada.
-
-Verificación
-============
-
-Abre un terminal (``Win + R`` → ``cmd``) y ejecuta:
-
-.. code-block:: powershell
-
-   code --version
-
-Deberías ver una salida similar a:
-
-.. code-block:: text
-
-   1.89.1
-   b58957e67ee1e712cebf466b995adf4c5307b2bd
-   x64
-
-.. note::
-
-   Si el comando ``code`` no se reconoce, cierra y vuelve a abrir el terminal
-   para que recoja la actualización del PATH realizada por el instalador.
-
-Configuración recomendada del editor
-=====================================
-
-Abre VS Code y accede a la configuración con :kbd:`Ctrl+,`.
-Busca y ajusta los siguientes parámetros:
+Los scripts disponibles son:
 
 .. list-table::
    :header-rows: 1
-   :widths: 40 60
-
-   * - Parámetro
-     - Valor recomendado
-   * - ``editor.formatOnSave``
-     - ``true``
-   * - ``editor.tabSize``
-     - ``4``
-   * - ``files.encoding``
-     - ``utf8``
-   * - ``files.eol``
-     - ``\\n`` (LF)
-   * - ``terminal.integrated.defaultProfile.windows``
-     - ``PowerShell``
-
-.. _extension:
-
-====================================
-Instalación de ARM Keil Studio Pack
-====================================
-
-La extensión **ARM Keil Studio Pack** (MDK v6) agrupa todas las extensiones
-necesarias para desarrollo embebido ARM en un único paquete que se instala
-con un solo clic.
-
-Extensiones incluidas en el pack
-=================================
-
-.. list-table::
-   :header-rows: 1
-   :widths: 40 60
-
-   * - Extensión
-     - Función
-   * - Arm CMSIS Solution
-     - Gestión de proyectos ``.csolution.yml``
-   * - Arm Device Manager
-     - Detección y gestión de placas conectadas
-   * - Arm Tools Environment Manager
-     - Gestión de toolchain vía vcpkg
-   * - Arm Embedded Debugger
-     - Depuración con GDB / CMSIS-DAP
-   * - Arm Virtual Hardware
-     - Simulación con modelos FVP (Corstone)
-   * - Microsoft C/C++
-     - IntelliSense y resaltado de sintaxis
-
-Instalación paso a paso
-========================
-
-**Desde el Marketplace de VS Code:**
-
-1. Abre VS Code.
-2. Pulsa :kbd:`Ctrl+Shift+X` para abrir el panel de extensiones.
-3. En el campo de búsqueda escribe:
-
-   .. code-block:: text
-
-      Keil Studio Pack
-
-4. Selecciona la extensión publicada por **Arm**.
-5. Haz clic en **Install**.
-
-   La instalación descarga e instala automáticamente todas las extensiones
-   del pack. Puede tardar 1-2 minutos.
-
-6. Cuando aparezca el botón **Reload Required**, haz clic en él para
-   reiniciar VS Code.
-
-**Alternativa — instalación desde línea de comandos:**
-
-.. code-block:: powershell
-
-   code --install-extension Arm.keil-studio-pack
-
-Verificación de la instalación
-================================
-
-1. Pulsa :kbd:`Ctrl+Shift+X`.
-2. Filtra por ``@installed Keil``.
-3. Debes ver las extensiones listadas en la tabla anterior con estado **Enabled**.
-
-También puedes verificarlo desde el terminal:
-
-.. code-block:: powershell
-
-   code --list-extensions | findstr -i arm
-
-Salida esperada:
-
-.. code-block:: text
-
-   Arm.cmsis-csolution
-   Arm.device-manager
-   Arm.embedded-debug
-   Arm.keil-studio-pack
-   Arm.tool-manager
-
-Activación de licencia (si aplica)
-====================================
-
-Las herramientas de código abierto (Arm GNU Toolchain, CMSIS-Toolbox,
-Arm CMSIS Debugger) **no requieren licencia**.
-
-Si usas el compilador comercial **Arm Compiler 6 (AC6)**, necesitas
-una licencia UBL (User-Based License):
-
-1. Pulsa :kbd:`Ctrl+Shift+P`.
-2. Escribe ``Arm: Activate or manage Arm licenses``.
-3. Introduce tu código de activación o dirección del servidor UBL.
-
-.. note::
-
-   Para proyectos con GCC (``arm-none-eabi-gcc``) no se necesita ninguna
-   licencia. Esta guía usa GCC por defecto.
-
-   .. _entorno:
-
-====================================
-Variable de entorno CMSIS_PACK_ROOT
-====================================
-
-``CMSIS_PACK_ROOT`` define la carpeta donde se almacenan todos los paquetes
-CMSIS descargados (``.pack``). Configurarla correctamente permite:
-
-* Compartir los paquetes entre todos los usuarios de la máquina.
-* Evitar descargas duplicadas.
-* Apuntar a una unidad de red en entornos corporativos.
-
-Valor por defecto
-=================
-
-Si no se define ``CMSIS_PACK_ROOT``, el toolbox usa la ruta por defecto de
-cada usuario:
-
-.. code-block:: text
-
-   %LOCALAPPDATA%\Arm\Packs
-   (equivale a: C:\Users\<nombre_usuario>\AppData\Local\Arm\Packs)
-
-Este comportamiento hace que **cada usuario descargue sus propios paquetes**,
-lo que consume espacio innecesario en máquinas compartidas.
-
-Configuración de la variable (Administrador)
-============================================
-
-El siguiente procedimiento define ``CMSIS_PACK_ROOT`` a nivel de **sistema**,
-de modo que aplica a todos los usuarios.
-
-Paso 1 — Crear la carpeta compartida
--------------------------------------
-
-.. code-block:: powershell
-
-   # Ejecutar como Administrador
-   New-Item -ItemType Directory -Force -Path "C:\ARM-Shared\Packs"
-
-Paso 2 — Definir la variable de sistema
------------------------------------------
-
-.. code-block:: powershell
-
-   # Ejecutar como Administrador
-   [System.Environment]::SetEnvironmentVariable(
-       "CMSIS_PACK_ROOT",
-       "C:\ARM-Shared\Packs",
-       "Machine"
-   )
-
-.. warning::
-
-   El parámetro ``"Machine"`` aplica la variable a **todo el sistema**.
-   Usa ``"User"`` si solo quieres afectar al usuario actual.
-
-Paso 3 — Establecer permisos de carpeta
------------------------------------------
-
-Otorga permisos de **lectura** a todos los usuarios y **escritura** solo
-a los administradores:
-
-.. code-block:: powershell
-
-   # Ejecutar como Administrador
-   icacls "C:\ARM-Shared\Packs" /grant "Users:(OI)(CI)R"  /T
-   icacls "C:\ARM-Shared\Packs" /grant "Administrators:(OI)(CI)F" /T
-
-Verificación en VS Code
-========================
-
-Abre el terminal integrado de VS Code (:kbd:`Ctrl+`` `) y ejecuta:
-
-.. code-block:: powershell
-
-   # PowerShell
-   echo $env:CMSIS_PACK_ROOT
-
-   # CMD
-   echo %CMSIS_PACK_ROOT%
-
-La salida debe mostrar exactamente:
-
-.. code-block:: text
-
-   C:\ARM-Shared\Packs
-
-Para ver todas las variables de entorno relacionadas con ARM:
-
-.. code-block:: powershell
-
-   Get-ChildItem Env: | Where-Object {
-       $_.Name -like "*CMSIS*" -or
-       $_.Name -like "*ARM*"  -or
-       $_.Name -like "*VCPKG*"
-   }
-
-.. important::
-
-   Si la variable se definió mientras VS Code estaba abierto, **cierra y
-   vuelve a abrir VS Code** para que recoja el nuevo valor. No basta con
-   abrir un terminal nuevo dentro de VS Code.
-
-Estructura de la carpeta de paquetes
-======================================
-
-Una vez inicializada, la carpeta ``CMSIS_PACK_ROOT`` tendrá esta estructura:
-
-.. code-block:: text
-
-   C:\ARM-Shared\Packs\
-   ├── .Download\          ← archivos .pack descargados (caché)
-   ├── .Local\             ← paquetes locales / privados
-   ├── .Web\
-   │   └── index.pidx     ← índice público de paquetes disponibles
-   ├── ARM\
-   │   └── CMSIS\
-   │       └── 6.x.x\     ← pack descomprimido
-   └── Keil\
-       └── STM32F4xx_DFP\
-           └── 2.x.x\
-
-
-.. _paquetes:
-
-=========================
-Descarga de paquetes CMSIS
-=========================
-
-Inicialización del repositorio de paquetes
-==========================================
-
-Antes de instalar cualquier paquete hay que inicializar la carpeta
-``CMSIS_PACK_ROOT`` con el índice público. Ejecuta el siguiente comando
-**una sola vez** desde el terminal de VS Code (como Administrador si usas
-ruta compartida):
-
-.. code-block:: powershell
-
-   cpackget init https://www.keil.com/pack/index.pidx
-
-Este comando descarga el índice de todos los paquetes públicos disponibles
-(``index.pidx``) y lo almacena en ``CMSIS_PACK_ROOT\.Web\``.
-
-Paquetes necesarios para STM32F429
-====================================
-
-Instala los siguientes paquetes en orden:
-
-Paquete 1 — CMSIS Core
-------------------------
-
-Proporciona los headers del núcleo Cortex-M (``core_cm4.h``,
-``cmsis_gcc.h``, etc.):
-
-.. code-block:: powershell
-
-   cpackget add ARM::CMSIS@6.1.0
-
-Paquete 2 — Device Family Pack (DFP) de STM32F4
--------------------------------------------------
-
-Proporciona soporte completo para todos los dispositivos de la familia
-STM32F4: archivos de startup, linker scripts, headers de periféricos y
-algoritmos de flash:
-
-.. code-block:: powershell
-
-   cpackget add Keil::STM32F4xx_DFP@2.17.1
-
-.. note::
-
-   Para instalar siempre la versión más reciente disponible, omite el
-   número de versión:
-
-   .. code-block:: powershell
-
-      cpackget add Keil::STM32F4xx_DFP
-
-Paquete 3 — CMSIS-RTX (FreeRTOS / RTX5) — opcional
------------------------------------------------------
-
-Necesario si usas el RTOS RTX5 de Keil:
-
-.. code-block:: powershell
-
-   cpackget add ARM::CMSIS-RTX@5.9.0
-
-Paquete 4 — MDK Middleware — opcional
---------------------------------------
-
-Proporciona pilas USB, TCP/IP y sistema de ficheros:
-
-.. code-block:: powershell
-
-   cpackget add Keil::MDK-Middleware@8.0.0
-
-Paquete 5 — CMSIS-Compiler — recomendado
------------------------------------------
-
-Abstracción del compilador para redirección de ``printf`` por UART/ITM:
-
-.. code-block:: powershell
-
-   cpackget add ARM::CMSIS-Compiler@2.0.0
-
-Instalación en bloque
+   :widths: 35 65
+
+   * - Script
+     - Propósito
+   * - ``vc-install/linux/install.sh``
+     - Instalación completa del entorno en Linux
+   * - ``vc-install/linux/uninstall.sh``
+     - Desinstalación del entorno en Linux
+   * - ``vc-install/windows/installer2.ps1``
+     - Instalación completa del entorno en Windows
+   * - ``vc-install/windows/uninstaller.ps1``
+     - Desinstalación del entorno en Windows
+
+Qué instala el entorno
 ======================
 
-Puedes instalar todos los paquetes necesarios de una vez copiando el
-bloque completo:
+Ambos instaladores persiguen la misma idea: centralizar las herramientas y los
+packs CMSIS en una ubicación compartida de sistema y dejar VS Code listo para
+trabajar con proyectos ARM/CMSIS.
 
-.. code-block:: powershell
-
-   cpackget add ARM::CMSIS@6.1.0
-   cpackget add Keil::STM32F4xx_DFP@2.17.1
-   cpackget add ARM::CMSIS-RTX@5.9.0
-   cpackget add ARM::CMSIS-Compiler@2.0.0
-
-Verificación de paquetes instalados
-=====================================
-
-Lista todos los paquetes instalados actualmente:
-
-.. code-block:: powershell
-
-   cpackget list
-
-Salida esperada:
-
-.. code-block:: text
-
-   i ARM::CMSIS@6.1.0
-   i ARM::CMSIS-Compiler@2.0.0
-   i ARM::CMSIS-RTX@5.9.0
-   i Keil::STM32F4xx_DFP@2.17.1
-
-El prefijo ``i`` indica que el paquete está instalado correctamente.
-
-Actualización del índice de paquetes
-=====================================
-
-Para obtener las versiones más recientes disponibles en el repositorio
-público, actualiza el índice periódicamente:
-
-.. code-block:: powershell
-
-   cpackget update-index
-
-Desinstalación de un paquete
-==============================
-
-.. code-block:: powershell
-
-   cpackget rm Keil::STM32F4xx_DFP@2.17.1
-
-Resumen de paquetes
-====================
+Componentes principales
+-----------------------
 
 .. list-table::
    :header-rows: 1
-   :widths: 35 20 15 30
+   :widths: 35 25 40
 
-   * - Paquete
+   * - Componente
+     - Versión / identificador
+     - Notas
+   * - CMSIS-Toolbox
+     - Linux ``2.14.1`` / Windows ``2.13.0``
+     - Aporta ``cbuild`` y ``cpackget``
+   * - Arm Compiler 6
+     - ``6.24`` build ``19``
+     - Se expone mediante ``AC6_TOOLCHAIN_6_24_0``
+   * - CMake
+     - Versión disponible en el gestor del sistema
+     - Dependencia de ``cbuild``
+   * - Ninja
+     - Versión disponible en el gestor del sistema
+     - Generador usado por CMake
+   * - Visual Studio Code
+     - Última disponible en el gestor del sistema
+     - Editor principal
+   * - Extensión ARM
+     - ``Arm.keil-studio-pack``
+     - Pack de extensiones para CMSIS/ARM
+   * - Extensión C/C++
+     - ``ms-vscode.cpptools``
+     - IntelliSense y soporte C/C++
+   * - Extensión CMake
+     - ``ms-vscode.cmake-tools``
+     - Integración de CMake en VS Code
+   * - Extensión de depuración Cortex-M
+     - ``marus25.cortex-debug``
+     - Instalada por ambos scripts
+
+Packs CMSIS instalados
+----------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 20 45
+
+   * - Pack
      - Versión
-     - Obligatorio
-     - Contenido principal
+     - Uso
    * - ``ARM::CMSIS``
-     - 6.1.0
-     - Sí
-     - Headers Cortex-M4, CMSIS-Core
+     - ``6.3.0``
+     - Núcleo CMSIS y cabeceras base
    * - ``Keil::STM32F4xx_DFP``
-     - 2.17.1
-     - Sí
-     - Startup, linker, headers STM32F4
+     - ``2.17.1``
+     - Soporte de dispositivos STM32F4
+   * - ``ARM::CMSIS-Driver``
+     - ``2.10.0``
+     - Drivers CMSIS
    * - ``ARM::CMSIS-RTX``
-     - 5.9.0
-     - Si usas RTOS
-     - RTX5 / CMSIS-RTOS2
-   * - ``ARM::CMSIS-Compiler``
-     - 2.0.0
-     - Recomendado
-     - Redirección de stdio (ITM/UART)
+     - ``5.9.1``
+     - Implementación RTX5 / CMSIS-RTOS2
    * - ``Keil::MDK-Middleware``
-     - 8.0.0
-     - Opcional
-     - USB, TCP/IP, FileSystem
+     - ``8.1.0``
+     - Middleware Keil
 
-.. _verificacion:
+.. note::
 
-========================
-Verificación del entorno
-========================
+   Los instaladores no compilan el repositorio. Su función es preparar el
+   entorno de herramientas, variables, extensiones y paquetes.
 
-Lista de verificación completa
-================================
 
-Ejecuta cada comando desde el **terminal integrado de VS Code** y comprueba
-que la salida coincide con la esperada.
+Linux
+=====
 
-Paso 1 — Variable de entorno
+El instalador Linux está pensado para Ubuntu LTS de 64 bits y debe ejecutarse
+como ``root``.
+
+Sistema objetivo
+----------------
+
+Según el encabezado del script, el flujo ha sido probado en:
+
+* ``Ubuntu 22.04 LTS``
+* ``Ubuntu 24.04 LTS``
+* Arquitectura ``x86_64``
+
+Requisitos previos
+------------------
+
+Antes de lanzar el script, verifica:
+
+* Acceso a Internet para descargar herramientas, paquetes CMSIS y VS Code.
+* Usuario con privilegios ``sudo``.
+* Que el usuario final tenga una ``home`` válida, ya que el instalador modifica
+  ``~/.bashrc`` y ``~/.config/Code/User/settings.json`` del usuario que invoca
+  ``sudo``.
+* Espacio en disco suficiente en ``/opt/ARM-Shared``.
+
+Archivos implicados
+-------------------
+
+* Instalador: ``/tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/install.sh``
+* Desinstalador: ``/tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/uninstall.sh``
+
+Cómo ejecutar la instalación
+----------------------------
+
+Desde la raíz del repositorio:
+
+.. code-block:: bash
+
+   cd /tmp/workspace/mruizglz/SBM-rtos
+   sudo bash /tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/install.sh
+
+Qué hace el script paso a paso
 ------------------------------
 
-.. code-block:: powershell
+El script implementa diez pasos principales:
 
-   echo $env:CMSIS_PACK_ROOT
+1. **Crea la estructura base** en ``/opt/ARM-Shared``:
 
-Salida esperada:
+   * ``/opt/ARM-Shared/Packs``
+   * ``/opt/ARM-Shared/downloads``
 
-.. code-block:: text
-
-   C:\ARM-Shared\Packs
-
-Paso 2 — CMSIS-Toolbox
-------------------------
-
-.. code-block:: powershell
-
-   cbuild --version
-
-Salida esperada (versión puede variar):
-
-.. code-block:: text
-
-   cbuild: Build Invocation 2.7.0 (C) 2022-2026 Arm Ltd.
-
-Paso 3 — Gestor de paquetes
------------------------------
-
-.. code-block:: powershell
-
-   cpackget list
-
-Salida esperada:
-
-.. code-block:: text
-
-   i ARM::CMSIS@6.1.0
-   i ARM::CMSIS-Compiler@2.0.0
-   i ARM::CMSIS-RTX@5.9.0
-   i Keil::STM32F4xx_DFP@2.17.1
-
-Paso 4 — Compilador GCC
--------------------------
-
-.. code-block:: powershell
-
-   arm-none-eabi-gcc --version
-
-Salida esperada:
-
-.. code-block:: text
-
-   arm-none-eabi-gcc (Arm GNU Toolchain 13.x) 13.x.x
-   Copyright (C) 2023 Free Software Foundation, Inc.
-
-Paso 5 — Entorno completo
----------------------------
-
-.. code-block:: powershell
-
-   cbuild list environment
-
-Salida esperada:
-
-.. code-block:: text
-
-   CMSIS-Toolbox version: 2.7.0
-   CMake: 3.31.5
-   Ninja: 1.12.0
-
-Crear y compilar un proyecto de prueba
-=======================================
-
-El método más fiable para verificar la instalación completa es crear un
-proyecto mínimo y compilarlo.
-
-1. Crea una carpeta de prueba:
-
-   .. code-block:: powershell
-
-      mkdir C:\test-stm32 ; cd C:\test-stm32
-
-2. Desde VS Code: :kbd:`Ctrl+Shift+P` → ``CMSIS: Create a new solution``.
-3. Selecciona:
-
-   * **Device:** ``STM32F429ZITx``
-   * **Compiler:** ``GCC``
-   * **Template:** ``Blinky``
-
-4. Pulsa el botón **Build** (martillo) en la vista CMSIS.
-
-5. Resultado esperado en el terminal:
+2. **Define ``CMSIS_PACK_ROOT``** en el fichero global:
 
    .. code-block:: text
 
-      Building CMake target 'Blinky+Target_1'
-      Using compiler: GCC xx.x.x
-      [x/x] Linking C executable Blinky.axf
-      Program Size: Code=xxxx  RO-data=xxx  RW-data=xx  ZI-data=xxxxx
-      ✅ Completed: cbuild succeed with exit code 0
+      /etc/profile.d/sbm-rtos.sh
+
+3. **Aplica permisos** sobre ``/opt/ARM-Shared/Packs``.
+4. **Descarga y extrae CMSIS-Toolbox** en:
+
+   .. code-block:: text
+
+      /opt/ARM-Shared/cmsis-toolbox-linux-amd64
+
+5. **Instala CMake** con ``apt`` si no está disponible.
+6. **Instala Ninja** con ``apt`` si no está disponible.
+7. **Descarga e instala Arm Compiler 6** en:
+
+   .. code-block:: text
+
+      /opt/ARM-Shared/ArmCompilerforEmbedded
+
+   y publica la variable:
+
+   .. code-block:: text
+
+      AC6_TOOLCHAIN_6_24_0
+
+8. **Inicializa ``cpackget``** con el índice público:
+
+   .. code-block:: text
+
+      https://www.keil.com/pack/index.pidx
+
+9. **Instala los packs CMSIS** listados en la sección anterior.
+10. **Instala Visual Studio Code y extensiones**, y además escribe
+    configuración global de VS Code para el usuario real.
+
+Variables y rutas configuradas
+------------------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Elemento
+     - Valor
+   * - ``CMSIS_PACK_ROOT``
+     - ``/opt/ARM-Shared/Packs``
+   * - ``AC6_TOOLCHAIN_6_24_0``
+     - ``/opt/ARM-Shared/ArmCompilerforEmbedded/bin`` o el ``bin`` real detectado
+   * - Perfil global
+     - ``/etc/profile.d/sbm-rtos.sh``
+   * - Toolbox
+     - ``/opt/ARM-Shared/cmsis-toolbox-linux-amd64/bin``
+   * - Compilador AC6
+     - ``/opt/ARM-Shared/ArmCompilerforEmbedded/bin``
+   * - Descargas
+     - ``/opt/ARM-Shared/downloads``
+
+Para evitar que el terminal integrado de VS Code ignore las variables cargadas
+en ``/etc/profile.d``, el instalador añade un bloque a ``~/.bashrc`` del
+usuario invocador y genera ``~/.config/Code/User/settings.json``.
+
+Configuración global de VS Code que genera el script
+----------------------------------------------------
+
+En Linux, el script modifica el fichero:
+
+.. code-block:: text
+
+   ~/.config/Code/User/settings.json
+
+Las claves que se escriben son:
+
+.. code-block:: json
+
+   {
+       "terminal.integrated.env.linux": {
+           "CMSIS_PACK_ROOT": "/opt/ARM-Shared/Packs",
+           "AC6_TOOLCHAIN_6_24_0": "/opt/ARM-Shared/ArmCompilerforEmbedded/bin",
+           "PATH": "/opt/ARM-Shared/ArmCompilerforEmbedded/bin:/opt/ARM-Shared/cmsis-toolbox-linux-amd64/bin:${env:PATH}"
+       },
+       "cmake.environment": {
+           "CMSIS_PACK_ROOT": "/opt/ARM-Shared/Packs",
+           "AC6_TOOLCHAIN_6_24_0": "/opt/ARM-Shared/ArmCompilerforEmbedded/bin"
+       },
+       "vcpkg.enabled": false,
+       "arm-tools.autoActivate": false,
+       "debug.hideSlowPreLaunchWarning": true
+   }
 
 .. important::
 
-   Si la compilación falla con errores de paquetes no encontrados, ejecuta:
+   En Linux el instalador también descarga e instala ``stlink`` desde un
+   paquete ``.deb`` de GitHub Releases. Ese paso no existe en el instalador de
+   Windows.
 
-   .. code-block:: powershell
+Verificación posterior
+----------------------
 
-      cbuild Blinky.csolution.yml --packs
+Después de instalar, cierra la sesión o ejecuta:
 
-   El flag ``--packs`` fuerza la descarga de cualquier paquete faltante.
+.. code-block:: bash
 
-Tabla resumen de verificación
-================================
+   source /etc/profile.d/sbm-rtos.sh
+   source ~/.bashrc
 
-.. list-table::
-   :header-rows: 1
-   :widths: 40 30 30
+Comprueba el entorno:
 
-   * - Verificación
-     - Comando
-     - Resultado esperado
-   * - Variable CMSIS_PACK_ROOT
-     - ``echo $env:CMSIS_PACK_ROOT``
-     - ``C:\ARM-Shared\Packs``
-   * - CMSIS-Toolbox
-     - ``cbuild --version``
-     - ``2.x.x``
-   * - Paquetes instalados
-     - ``cpackget list``
-     - Lista con prefijo ``i``
-   * - Compilador GCC
-     - ``arm-none-eabi-gcc --version``
-     - ``13.x.x``
-   * - Build de prueba
-     - Botón Build en VS Code
-     - ``exit code 0``
+.. code-block:: bash
 
-     .. _multiusuario:
+   echo "$CMSIS_PACK_ROOT"
+   which cpackget
+   cbuild --version
+   cpackget list
+   code --list-extensions | grep -E 'Arm.keil-studio-pack|ms-vscode.cpptools|ms-vscode.cmake-tools|marus25.cortex-debug'
 
-=========================
-Configuración multiusuario
-=========================
+Resultado esperado:
 
-Esta sección describe cómo compartir los paquetes y herramientas entre
-varios usuarios de la misma máquina Windows, evitando descargas duplicadas.
+* ``CMSIS_PACK_ROOT`` debe apuntar a ``/opt/ARM-Shared/Packs``.
+* ``cpackget`` debe resolverse desde el directorio de CMSIS-Toolbox.
+* ``cpackget list`` debe mostrar los cinco packs instalados.
+* El listado de extensiones debe incluir las cuatro extensiones configuradas por
+  el script.
 
-Qué se puede compartir
-=======================
+Incidencias típicas
+-------------------
 
-.. list-table::
-   :header-rows: 1
-   :widths: 30 15 55
+* **``cpackget`` no aparece en PATH**: abre una terminal nueva o ejecuta
+  ``source /etc/profile.d/sbm-rtos.sh``.
+* **VS Code no ve las variables**: cierra y vuelve a abrir VS Code; el script
+  prepara ``settings.json`` y ``.bashrc``, pero una sesión ya abierta no relee
+  esas variables.
+* **Descargas repetidas**: el script evita redescargar ficheros ya presentes en
+  ``/opt/ARM-Shared/downloads``.
+* **Packs con licencia embebida**: el instalador Linux ejecuta ``cpackget add``
+  con ``--agree-embedded-license`` para evitar preguntas interactivas.
 
-   * - Componente
-     - Compartible
-     - Notas
-   * - Paquetes CMSIS (``.pack``)
-     - ✅ Sí
-     - Via ``CMSIS_PACK_ROOT`` apuntando a carpeta compartida
-   * - CMSIS-Toolbox (binarios)
-     - ✅ Sí
-     - Instalar en ``C:\ARM-Shared\cmsis-toolbox\`` y añadir al PATH de sistema
-   * - Arm GNU Toolchain
-     - ✅ Sí
-     - Instalar en ``C:\ARM-Shared\gcc-arm\`` y añadir al PATH de sistema
-   * - VS Code
-     - ✅ Sí
-     - Usar el instalador *System* en lugar del *User*
-   * - Extensiones de VS Code
-     - ⚠️ Parcial
-     - Cada usuario tiene su propio directorio de extensiones
-   * - Artefactos vcpkg
-     - ✅ Sí
-     - Via ``VCPKG_ROOT`` apuntando a carpeta compartida
+Desinstalación en Linux
+-----------------------
 
-Configuración en una máquina compartida
-========================================
+Para revertir la instalación:
 
-Ejecuta el siguiente script completo como **Administrador** para configurar
-el entorno compartido de una sola vez:
+.. code-block:: bash
+
+   cd /tmp/workspace/mruizglz/SBM-rtos
+   sudo bash /tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/uninstall.sh
+
+El desinstalador:
+
+* Elimina los packs CMSIS instalados.
+* Borra ``/opt/ARM-Shared``.
+* Elimina ``/etc/profile.d/sbm-rtos.sh``.
+* Desinstala ``cmake`` y ``ninja-build`` si fueron instalados por ``apt``.
+* Desinstala las extensiones de VS Code.
+* Ofrece opcionalmente desinstalar VS Code y su repositorio ``apt``.
+* Intenta purgar el paquete ``stlink`` detectado en el sistema.
+
+
+Windows
+=======
+
+El instalador Windows está escrito en PowerShell y debe ejecutarse como
+Administrador.
+
+Sistema objetivo
+----------------
+
+El script no fija una versión concreta de Windows, pero por las herramientas
+utilizadas requiere un entorno con:
+
+* PowerShell
+* ``winget``
+* permisos de Administrador
+* acceso a Internet
+
+Además, el instalador asume la existencia de:
+
+.. code-block:: text
+
+   C:\Program Files\7-Zip\7z.exe
+
+Ese ejecutable se usa para descomprimir Arm Compiler 6.
+
+Archivos implicados
+-------------------
+
+* Instalador: ``/tmp/workspace/mruizglz/SBM-rtos/vc-install/windows/installer2.ps1``
+* Desinstalador: ``/tmp/workspace/mruizglz/SBM-rtos/vc-install/windows/uninstaller.ps1``
+
+Cómo ejecutar la instalación
+----------------------------
+
+Abre **PowerShell como Administrador** y ejecuta:
 
 .. code-block:: powershell
 
-   # ── Crear carpetas compartidas ───────────────────────────────────────────
-   New-Item -ItemType Directory -Force -Path "C:\ARM-Shared\Packs"
-   New-Item -ItemType Directory -Force -Path "C:\ARM-Shared\cmsis-toolbox"
-   New-Item -ItemType Directory -Force -Path "C:\ARM-Shared\vcpkg"
+   Set-ExecutionPolicy -Scope Process Bypass -Force
+   cd C:\ruta\al\repositorio\SBM-rtos
+   .\vc-install\windows\installer2.ps1
 
-   # ── Permisos: lectura para todos, escritura para admins ──────────────────
-   icacls "C:\ARM-Shared" /grant "Users:(OI)(CI)R"          /T
-   icacls "C:\ARM-Shared" /grant "Administrators:(OI)(CI)F"  /T
+Si quieres ejecutarlo usando la ruta absoluta del clon de trabajo:
 
-   # ── Variables de entorno de sistema ─────────────────────────────────────
-   [System.Environment]::SetEnvironmentVariable(
-       "CMSIS_PACK_ROOT", "C:\ARM-Shared\Packs",   "Machine")
-   [System.Environment]::SetEnvironmentVariable(
-       "VCPKG_ROOT",      "C:\ARM-Shared\vcpkg",   "Machine")
-   [System.Environment]::SetEnvironmentVariable(
-       "VCPKG_DOWNLOADS", "C:\ARM-Shared\vcpkg\downloads", "Machine")
+.. code-block:: powershell
 
-   # ── Añadir CMSIS-Toolbox al PATH de sistema ──────────────────────────────
-   $oldPath = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
-   $toolboxBin = "C:\ARM-Shared\cmsis-toolbox\bin"
-   if ($oldPath -notlike "*$toolboxBin*") {
-       [System.Environment]::SetEnvironmentVariable(
-           "PATH", "$oldPath;$toolboxBin", "Machine")
-   }
+   Set-ExecutionPolicy -Scope Process Bypass -Force
+   & "C:\ruta\al\repositorio\SBM-rtos\vc-install\windows\installer2.ps1"
 
-   Write-Host "Entorno compartido configurado correctamente." -ForegroundColor Green
+Qué hace el script paso a paso
+------------------------------
 
-Configuración de VS Code por usuario
-======================================
+El flujo Windows también se divide en diez pasos:
 
-Cada usuario debe añadir la siguiente configuración en sus *User Settings*
-de VS Code (:kbd:`Ctrl+,` → icono de archivo JSON):
+1. **Crea carpetas base**:
 
-.. code-block:: json
+   * ``C:\ARM-Shared\Packs``
+   * ``C:\ARM-Shared\downloads``
 
-   {
-     "cmsis-csolution.packRoot": "C:\\ARM-Shared\\Packs"
-   }
+2. **Define la variable de sistema**:
 
-O bien propagarlo a través de un archivo ``.vscode/settings.json`` en cada
-repositorio de proyecto (se aplica a todos los usuarios que abran ese proyecto):
+   .. code-block:: text
 
-.. code-block:: json
+      CMSIS_PACK_ROOT=C:\ARM-Shared\Packs
 
-   {
-     "cmsis-csolution.packRoot": "C:\\ARM-Shared\\Packs"
-   }
+3. **Configura permisos** en ``C:\ARM-Shared\Packs`` con ``icacls``.
+4. **Descarga y extrae CMSIS-Toolbox** en:
 
-.. tip::
+   .. code-block:: text
 
-   Commitea el archivo ``.vscode/settings.json`` en el repositorio Git del
-   proyecto para que todos los desarrolladores hereden la configuración
-   automáticamente al clonar.
+      C:\ARM-Shared\cmsis-toolbox-windows-amd64
 
-Tareas de mantenimiento
-========================
+5. **Instala CMake** mediante ``winget``.
+6. **Instala Ninja** mediante ``winget``.
+7. **Descarga y extrae Arm Compiler 6** en:
 
-Las siguientes tareas deben realizarse por un **Administrador**:
+   .. code-block:: text
+
+      C:\ARM-Shared\ArmCompilerforEmbedded
+
+   y define:
+
+   .. code-block:: text
+
+      AC6_TOOLCHAIN_6_24_0
+
+8. **Inicializa ``cpackget``** con el índice público.
+9. **Instala los packs CMSIS** necesarios.
+10. **Instala Visual Studio Code y extensiones**.
+
+Herramientas instaladas con winget
+----------------------------------
 
 .. list-table::
    :header-rows: 1
    :widths: 40 60
 
-   * - Tarea
-     - Comando
-   * - Actualizar el índice de paquetes
-     - ``cpackget update-index``
-   * - Instalar un paquete nuevo para todos
-     - ``cpackget add Vendor::PackName``
-   * - Actualizar un paquete existente
-     - ``cpackget update Vendor::PackName``
-   * - Ver paquetes instalados
-     - ``cpackget list``
+   * - Id de ``winget``
+     - Componente
+   * - ``Kitware.CMake``
+     - CMake
+   * - ``Ninja-build.Ninja``
+     - Ninja
+   * - ``Microsoft.VisualStudioCode``
+     - Visual Studio Code
+
+Variables y rutas configuradas
+------------------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Elemento
+     - Valor
+   * - ``CMSIS_PACK_ROOT``
+     - ``C:\ARM-Shared\Packs``
+   * - ``AC6_TOOLCHAIN_6_24_0``
+     - ``C:\ARM-Shared\ArmCompilerforEmbedded\bin``
+   * - Toolbox
+     - ``C:\ARM-Shared\cmsis-toolbox-windows-amd64\bin``
+   * - Descargas
+     - ``C:\ARM-Shared\downloads``
+
+El script también añade al ``PATH`` de máquina:
+
+* ``C:\ARM-Shared\cmsis-toolbox-windows-amd64\bin``
+* ``C:\ARM-Shared\ArmCompilerforEmbedded\bin``
+
+Extensiones instaladas en VS Code
+---------------------------------
+
+El instalador Windows ejecuta:
+
+.. code-block:: powershell
+
+   code --install-extension Arm.keil-studio-pack --force
+   code --install-extension ms-vscode.cpptools --force
+   code --install-extension ms-vscode.cmake-tools --force
+   code --install-extension marus25.cortex-debug --force
+
+.. note::
+
+   A diferencia del instalador Linux, el script de Windows no escribe un
+   ``settings.json`` global para VS Code. Configura herramientas, PATH,
+   variables de entorno y extensiones, pero no añade ajustes adicionales de
+   editor o CMake.
+
+Verificación posterior
+----------------------
+
+Abre una **nueva** consola PowerShell y ejecuta:
+
+.. code-block:: powershell
+
+   echo $env:CMSIS_PACK_ROOT
+   Get-Command cpackget
+   cbuild --version
+   cpackget list
+   code --list-extensions | Select-String "Arm.keil-studio-pack|ms-vscode.cpptools|ms-vscode.cmake-tools|marus25.cortex-debug"
+
+Resultado esperado:
+
+* ``CMSIS_PACK_ROOT`` debe ser ``C:\ARM-Shared\Packs``.
+* ``Get-Command cpackget`` debe resolver el ejecutable del toolbox.
+* ``cpackget list`` debe listar los cinco packs instalados por el script.
+* VS Code debe mostrar las cuatro extensiones requeridas.
+
+Incidencias típicas
+-------------------
+
+* **``winget`` no está disponible**: actualiza *App Installer* o ejecuta el
+  script en una versión de Windows que ya lo incluya.
+* **Falta 7-Zip**: el script usa ``C:\Program Files\7-Zip\7z.exe`` para extraer
+  Arm Compiler 6; si no existe, la instalación fallará.
+* **``code`` no aparece en PATH**: el script intenta localizar ``code.cmd`` en
+  rutas conocidas de VS Code y añadirlo a la sesión actual, pero para usos
+  futuros conviene abrir una consola nueva.
+* **Variables no visibles en una consola antigua**: reinicia PowerShell o el
+  equipo para recargar PATH y variables de entorno de máquina.
+
+Desinstalación en Windows
+-------------------------
+
+Abre **PowerShell como Administrador** y ejecuta:
+
+.. code-block:: powershell
+
+   Set-ExecutionPolicy -Scope Process Bypass -Force
+   cd C:\ruta\al\repositorio\SBM-rtos
+   .\vc-install\windows\uninstaller.ps1
+
+El desinstalador:
+
+* Elimina ``C:\ARM-Shared``.
+* Borra ``CMSIS_PACK_ROOT``.
+* Limpia el ``PATH`` de máquina del toolbox.
+* Desinstala ``Ninja`` y ``CMake`` mediante ``winget``.
+* Desinstala las extensiones de VS Code.
+* Pregunta opcionalmente si también debe desinstalar Visual Studio Code.
+
+
+Recomendaciones de uso
+======================
+
+1. Ejecuta los instaladores siempre con privilegios de administrador.
+2. Mantén ``CMSIS_PACK_ROOT`` en una ruta compartida y estable.
+3. Abre una consola nueva tras la instalación antes de validar comandos.
+4. Si trabajas en laboratorios o equipos compartidos, evita mover
+   manualmente ``/opt/ARM-Shared`` o ``C:\ARM-Shared`` después de instalar.
+5. Si necesitas rehacer la instalación, usa primero el desinstalador del mismo
+   sistema operativo.
+
+Resumen rápido
+==============
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 40 40
+
+   * - Sistema
+     - Instalación
+     - Desinstalación
+   * - Linux
+     - ``sudo bash /tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/install.sh``
+     - ``sudo bash /tmp/workspace/mruizglz/SBM-rtos/vc-install/linux/uninstall.sh``
+   * - Windows
+     - ``.\vc-install\windows\installer2.ps1``
+     - ``.\vc-install\windows\uninstaller.ps1``
