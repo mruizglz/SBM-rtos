@@ -28,7 +28,7 @@
 
 % -- Diagrama ecosistema CMSIS --------------------------------
 \begin{frame}{CMSIS-RTOS}
-    \includegraphics[scale=0.35]{presentation/cmsis_components.png}
+    \includegraphics[scale=0.35]{cmsis_components.png}
     \begin{block}{}
         \centering
         En esta asignatura usamos \textbf{CMSIS-RTOS2} y \textbf{CMSIS-Driver}
@@ -317,7 +317,7 @@ for (;;) {
             \end{tabular}
         \end{column}
         \begin{column}{0.45\textwidth}
-            \includegraphics[scale=0.05]{presentation/threads.jpg}
+            \includegraphics[scale=0.05]{threads.jpg}
         \end{column}
     \end{columns}
 \end{frame}
@@ -337,7 +337,7 @@ for (;;) {
             \end{itemize}
         \end{column}
         \begin{column}{0.50\textwidth}
-            \includegraphics[scale=0.05]{presentation/threads-sync.jpg}
+            \includegraphics[scale=0.05]{threads-sync.jpg}
         \end{column}
     \end{columns}
 \end{frame}
@@ -352,7 +352,7 @@ for (;;) {
     \end{itemize}
     \begin{columns}
         \begin{column}{0.48\textwidth}
-            \includegraphics[scale=0.25]{presentation/flags.jpg}
+            \includegraphics[scale=0.25]{flags.jpg}
             \begin{itemize}
                 \item Thread~2 pasa a \textbf{Blocked} hasta que Thread~1
                       activa el flag.
@@ -552,7 +552,7 @@ void Consumer(void *arg) {
             \end{minted}
         \end{column}
         \begin{column}{0.50\textwidth}
-            \includegraphics[scale=0.35]{presentation/queues.drawio.png}
+            \includegraphics[scale=0.35]{queues.drawio.png}
             \begin{itemize}
                 \item Si la cola está \textbf{llena}, \texttt{Put}
                       bloquea el productor (o retorna error si
@@ -622,7 +622,7 @@ osStatus_t osMessageQueueDelete(osMessageQueueId_t mq_id)
             \end{alertblock}
         \end{column}
         \begin{column}{0.42\textwidth}
-            \includegraphics[scale=0.25]{presentation/softwaretimers.drawio.png}
+            \includegraphics[scale=0.25]{softwaretimers.drawio.png}
         \end{column}
     \end{columns}
 \end{frame}
@@ -767,7 +767,7 @@ osStatus_t osTimerDelete(osTimerId_t timer_id)
 \begin{frame}{Watch Window RTX — Depuración del RTOS}
     \begin{columns}
         \begin{column}{0.52\textwidth}
-            \includegraphics[width=\textwidth]{presentation/watchwindowRTX.png}
+            \includegraphics[width=\textwidth]{watchwindowRTX.png}
         \end{column}
         \begin{column}{0.46\textwidth}
             \begin{itemize}
