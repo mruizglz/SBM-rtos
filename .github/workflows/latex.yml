@@ -58,43 +58,18 @@ jobs:
           
           
       - name: Delete Release
-        run:
-           gh release delete 1.0 --cleanup-tag --yes || echo "Release 1.0 not found, skipping."
-           git tag -d 1.0 || echo "Tag 1.0 not found, skipping."
-          
-        env: 
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
-           
-      - name: Create Release 
-        id: create_release 
-        uses: actions/create-release@v1 
-        with: 
-             tag_name: 1.0 
-             release_name: 1.0
-             draft: false 
-             prerelease: false 
-             body: | 
-                Release notes for 1.0: This presentation always contains the last version of the slides
-        env: 
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
-           
-      - name: Upload Release Asset ES
-        uses: actions/upload-release-asset@v1 
-        with: 
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./presentation/UPMSBM-CMSIS-RTOS.pdf 
-          asset_name: UPMSBM-CMSIS-RTOS.pdf 
-          asset_content_type: application/pdf
-        env: 
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           
-      - name: Upload Release Asset EN
-        uses: actions/upload-release-asset@v1 
-        with: 
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./presentation/UPMSBM-CMSIS-RTOS_en.pdf 
-          asset_name: UPMSBM-CMSIS-RTOS_en.pdf 
-          asset_content_type: application/pdf
-        env: 
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete 1.0 --cleanup-tag --yes || echo "Release 1.0 not found, skipping."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release and Upload Assets
+        run: |
+          gh release create 1.0 \
+            --title "1.0" \
+            --notes "Release notes for 1.0: This presentation always contains the last version of the slides" \
+            ./presentation/UPMSBM-CMSIS-RTOS.pdf \
+            ./presentation/UPMSBM-CMSIS-RTOS_en.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
