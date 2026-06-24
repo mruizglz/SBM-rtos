@@ -49,7 +49,7 @@
 \end{frame}
 
 % ============================================================
-\section{CMSIS-RTOS: Características}
+\section[Características]{CMSIS-RTOS: Características}
 % ============================================================
 
 \begin{frame}{CMSIS-RTOS: Características}
@@ -133,8 +133,8 @@
                 (running)  edge [bend right=15] node {preempt} (ready)
                 (running)  edge [bend left=20]
                                node {\textcolor{blue}{wait}} (blocked)
-                (blocked)  edge [bend left=20]
-                               node {events occur}      (running)
+                %(blocked)  edge [bend left=20]
+                %               node {events occur}      (running)
                 (blocked)  edge [bend right=35]
                                node {events occur}      (ready)
                 (running)  edge node {terminate}        (term)
@@ -150,7 +150,7 @@
 \end{frame}
 
 % ============================================================
-\section{Código básico}
+\section[Código]{Código básico}
 % ============================================================
 
 % -- Crear un thread: estructura mínima ----------------------
@@ -244,7 +244,7 @@ int main(void) {
             \end{minted}
             \begin{block}{Buena práctica}
                 Cada periférico $\rightarrow$ un módulo
-                \texttt{ThX.c / ThX.h} con su thread
+                \texttt{ThX.c/ThX.h} con su thread
                 y sus objetos de sincronización.
             \end{block}
         \end{column}
@@ -294,14 +294,11 @@ for (;;) {
 % -- Motivación sincronización --------------------------------
 \begin{frame}{CMSIS-RTOS: Sincronización — el problema}
     \begin{columns}
-        \begin{column}{0.52\textwidth}
+        \begin{column}{0.6\textwidth}
             \begin{itemize}
-                \item Varios threads se ejecutan \textbf{concurrentemente}
-                      y pueden acceder al mismo recurso hardware o software.
-                \item Sin control: los accesos se \textbf{entrelazan} y el
-                      recurso queda en estado inconsistente.
-                \item El SO proporciona mecanismos para garantizar el acceso
-                      \textbf{secuencial}.
+                \item Varios threads se ejecutan \textbf{concurrentemente} y pueden acceder al mismo recurso hardware o software.
+                \item Sin control: los accesos se \textbf{entrelazan} y el recurso queda en estado inconsistente.
+                \item El SO proporciona mecanismos para garantizar el acceso \textbf{secuencial}.
             \end{itemize}
             \vspace{6pt}
             \begin{tabular}{ll}
@@ -309,17 +306,20 @@ for (;;) {
                 \textbf{Mecanismo} & \textbf{Uso principal} \\
                 \hline
                 Mutex        & Exclusión mutua \\
-                Semáforo     & Señalización / conteo \\
+                Semáforo     & Señalización/conteo \\
                 Thread Flags & Señal a un thread \\
                 Event Flags  & Señal a N threads \\
                 Cola         & Paso de datos \\
                 \hline
             \end{tabular}
         \end{column}
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.40\textwidth}
             \includegraphics[scale=0.05]{threads.jpg}
         \end{column}
     \end{columns}
+     \begin{exampleblock}{Importante}
+        En SBM no vamos a usar Event Flags, ni Mutex ni los semáforos porque vamos a simplificar la sincronización usando Colas y Thread Flags fundamentalmente
+     \end{exampleblock}
 \end{frame}
 
 % -- Solución con cola ----------------------------------------
@@ -515,8 +515,7 @@ uint32_t osThreadFlagsGet(void)
 % -- Colas: ejemplo -------------------------------------------
 \begin{frame}[fragile]{CMSIS-RTOS: Colas (Message Queue)}
     \begin{itemize}
-        \item Patrón \textbf{Productor/Consumidor}: un thread (o ISR)
-              produce datos y otro los consume de forma segura.
+        \item Patrón \textbf{Productor/Consumidor}: un thread (o ISR)               produce datos y otro los consume de forma segura.
         \item La cola almacena \textbf{copias} del mensaje, no punteros.
     \end{itemize}
     \begin{columns}
@@ -535,7 +534,7 @@ void Producer(void *arg) {
     uint8_t idx = 0;
     while (1) {
         osMessageQueuePut(
-            q_datos, &idx, 0U, 0U);
+            q_datos, &idx, 0U, 10U);
         idx++;
         osDelay(100);
     }
@@ -700,7 +699,7 @@ osStatus_t osTimerDelete(osTimerId_t timer_id)
 \end{frame}
 
 % ============================================================
-\section{Configuración y herramientas}
+\section[Configuración]{Configuración y herramientas}
 % ============================================================
 
 \begin{frame}{Estructura de un proyecto con CMSIS-RTOS}
@@ -789,50 +788,48 @@ osStatus_t osTimerDelete(osTimerId_t timer_id)
 \end{frame}
 
 % ============================================================
-\section{Consideraciones finales}
+\section[Consideraciones]{Consideraciones finales}
 % ============================================================
 
-\begin{frame}{CMSIS-RTOS: Consideraciones de diseño}
+\begin{frame}{CMSIS-RTOS: Consideraciones de diseño para SBM}
     \begin{itemize}
-        \item Diseñar la estructura antes de codificar: cada periférico
-              gestionado por un módulo con su thread, señales, colas y
-              estructuras de datos.
-        \item Las ISRs serán cortas: la HAL llama a las callbacks; desde
-              ellas solo \texttt{Set}/\texttt{Release}, nunca bucles ni
-              funciones bloqueantes. Verificar qué funciones del SO se
-              pueden usar en su interior.
-        \item Prestar especial atención a la sincronización entre threads.
-        \item Reducir al mínimo el uso de variables globales: pasar datos
-              mediante colas o semáforos.
+        \item Diseñar la estructura antes de codificar. Prestar especial atención a la sincronización entre threads.
+        \item Cada periférico está gestionado por un módulo con su thread, señales, colas y estructuras de datos. Todas las operaciones con el periférico se gestionan a través de su cola.
+        \item Las ISRs serán cortas: la HAL llama a las callbacks; desde ellas solo se activa flag o se envia mensaje a cola, nunca bucles ni funciones bloqueantes. Verificar qué funciones del SO se pueden usar en una ISR.
+        \item Reducir al mínimo el uso de variables globales: pasar datos mediante colas o semáforos.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Buenas prácticas}
     \begin{itemize}
-        \item \textbf{Dimensionar la pila correctamente}: usar la Watch
-              Window para comprobar el uso real. Un desbordamiento de pila
-              produce comportamiento impredecible.
-        \item \textbf{No bloquear en callbacks de timer}: el
-              \texttt{osRtxTimerThread} es compartido por todos los timers;
-              bloquearlo afecta a todos ellos.
-        \item \textbf{Cuidado con las prioridades}: un thread de alta
-              prioridad que nunca se bloquea impide la ejecución del resto.
-        \item \textbf{Mutex para exclusión mutua, semáforo para
-              señalización}: no intercambiarlos — el mutex tiene propietario,
-              el semáforo no.
-        \item \textbf{Nombrar los objetos del SO} con \texttt{osThreadAttr\_t},
-              \texttt{osMutexAttr\_t}\ldots: aparecen en la Watch Window y
-              facilitan enormemente la depuración.
+        \item \textbf{Dimensionar la pila correctamente}: usar la Watch Window para comprobar el uso real. Un desbordamiento de pila  produce comportamiento impredecible.
+        \item \textbf{No bloquear en callbacks de timer}: el \texttt{osRtxTimerThread} es compartido por todos los timers; bloquearlo afecta a todos ellos.
+        \item \textbf{Cuidado con las prioridades}: Mantener todos los threads con la misma prioridad salvo causa justificada. Un thread de alta prioridad que nunca se bloquea impide la ejecución del resto. 
+        \item En SBM no se van a utilizar Event Flags, ni\textbf{Mutex}, ni \textbf{semáforo}. En caso muy justificados puede ser necesario. Están explicados en la parte Avanzada
+        \item Optativo: \textbf{Nombrar los objetos del SO} con \texttt{osThreadAttr\_t},             \texttt{osMutexAttr\_t}\ldots: aparecen en la Watch Window y facilitan la depuración.
     \end{itemize}
 \end{frame}
 
 % -- Tabla resumen --------------------------------------------
 \begin{frame}{¿Qué mecanismo de sincronización usar?}
+    \scriptsize
     \begin{table}[H]
     \centering
-    \begin{tabular}{|p{2.6cm}|p{4.0cm}|p{2.8cm}|}
+    \begin{tabular}{|p{3.2cm}|p{4.5cm}|p{3.2cm}|}
     \hline
     \textbf{Mecanismo} & \textbf{Cuándo usarlo} & \textbf{Desde ISR} \\
+    \hline
+    \textbf{Thread Flags}
+        & Señal a un thread concreto (se conoce el \texttt{identificador})
+        & Sí (\texttt{osThreadFlagsSet}) \\
+    \hline
+    \textbf{Cola}
+        & Paso de datos entre threads o ISR~$\to$~thread
+        & Sí (\texttt{osMessageQueuePut }, \texttt{timeout=0}) \\
+    \hline
+    \textbf{Event Flags}
+        & Señal broadcast a varios threads
+        & Sí (\texttt{Set}) \\
     \hline
     \textbf{Mutex}
         & Proteger recurso compartido (threads únicamente)
@@ -846,27 +843,18 @@ osStatus_t osTimerDelete(osTimerId_t timer_id)
         & Pool de N recursos; conteo de eventos
         & Sí (\texttt{Release}) \\
     \hline
-    \textbf{Thread Flags}
-        & Señal a un thread concreto (se conoce el \texttt{tid})
-        & Sí (\texttt{Set}) \\
-    \hline
-    \textbf{Event Flags}
-        & Señal broadcast a varios threads
-        & Sí (\texttt{Set}) \\
-    \hline
-    \textbf{Cola}
-        & Paso de datos entre threads o ISR~$\to$~thread
-        & Sí (\texttt{Put}, \texttt{timeout=0}) \\
-    \hline
     \end{tabular}
     \end{table}
+    \begin{exampleblock}{Importante}
+         En la asignatura no vamos a usar Event Flags, ni Mutex ni los semáforos porque vamos a simplificar la sincronización usando Colas y Thread Flags fundamentalmente
+     \end{exampleblock}
 \end{frame}
 
 \begin{frame}{Ejercicios — Repositorio de ejemplos}
     \begin{itemize}
         \item Código en GitHub:
               \href{https://github.com/mruizglz/SBM-rtos}{mruizglz/SBM-rtos}
-              \quad Documentación:
+        \item Documentación:
               \href{https://mruizglz.github.io/SBM-rtos}{Sphinx HTML} |
               \href{https://mruizglz.github.io/SBM-rtos/simplepdf/SBM-CMSIS-RTOS-V2.pdf}{PDF}
         \item Ejemplos disponibles:
@@ -882,14 +870,14 @@ osStatus_t osTimerDelete(osTimerId_t timer_id)
     \end{itemize}
 \end{frame}
 
-
+\section[Avanzado]{Uso avanzado de la sincronización}
 % -- Mutex: concepto ------------------------------------------
 \begin{frame}[fragile]{Mutex — Exclusión Mutua}
     \begin{itemize}
         \item Un \textbf{mutex} garantiza que solo \emph{un} thread a la
               vez accede a un recurso compartido.
         \item El thread que lo adquiere es el \textbf{propietario único};
-              debe liberarlo cuando termina de usar el recurso.
+              debe liberarlo cuando termine de usar el recurso.
         \item RTX5 soporta \textbf{priority inheritance}: eleva
               temporalmente la prioridad del propietario para evitar
               inversión de prioridad.
@@ -910,6 +898,7 @@ osMutexAcquire(mutex_display, osWaitForever);
     /* --- sección crítica --- */
 osMutexRelease(mutex_display);
     \end{minted}
+    \scriptsize
     \begin{alertblock}{Regla}
         El mismo thread que adquiere el mutex \textbf{debe} liberarlo.
         \texttt{osMutexAcquire/Release} \textbf{no se pueden llamar
@@ -944,6 +933,7 @@ osStatus_t osMutexDelete(osMutexId_t mutex_id)
     \href{https://arm-software.github.io/CMSIS_5/RTOS2/html/group__CMSIS__RTOS__MutexMgmt.html}
     {CMSIS-RTOS2 Mutex reference}
 \end{frame}
+
 
 % -- Semáforo: concepto ---------------------------------------
 \begin{frame}[fragile]{Semáforo — Señalización y Conteo}
