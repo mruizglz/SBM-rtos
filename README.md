@@ -26,7 +26,8 @@ code
 ## Instalación de las herramientas para Visual Code
 
 La carpeta `vc-install` contiene los scripts para instalar Visual Code en Windows y Linux, así como el soporte para usar CMSIS.
-La asignatura continúa usando de manera oficial Keil µVision, pero debido a que ARM va a dejar de actualizar esas herramientas y migrar a VC, se proporciona la opción de comenzar a utilizarlo.
+La asignatura continúa usando oficialmente Keil µVision, pero, dado que ARM dejará de actualizar esas herramientas y migrará a VC, se ofrece la opción de comenzar a utilizarlo.<img width="1654" height="886" alt="SFS53958" src="https://github.com/user-attachments/assets/7a810d83-c033-4eeb-9b89-aa328cc0d363" />
+
 
 - `vc-install/windows/installer2.ps1` y `vc-install/windows/uninstaller.ps1` - Instalación y desinstalación completas del entorno en Windows.
 - `vc-install/linux/install.sh` y `vc-install/linux/uninstall.sh` - Instalación y desinstalación completas del entorno en Linux (Ubuntu 24.04).
