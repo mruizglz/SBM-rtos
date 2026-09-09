@@ -1,6 +1,6 @@
 # Sistemas Basados en Microprocesador (ETSI Sistemas de Telecomunicación-Campus Sur UPM)
 
-<img width="827" height="443" alt="SFS53958" src="https://github.com/user-attachments/assets/7a810d83-c033-4eeb-9b89-aa328cc0d363" />
+<img width="413" height="221" alt="SFS53958" src="https://github.com/user-attachments/assets/7a810d83-c033-4eeb-9b89-aa328cc0d363" />
 
 Repositorio con información sobre la asignatura Sistemas Basados en Microprocesador de la ETSIS Telecomunicación de la UPM. 
 
